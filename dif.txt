@@ -1,0 +1,145 @@
+25,26d24
+< class DataStore():
+<     specs = None
+28d25
+< data = DataStore()
+44,46c41
+<     specs1=session.get("specs")
+< 
+<     return render_template("input_user.html", data=temp, specs1=specs1)
+---
+>     return render_template("input_user.html", data=temp)
+50c45
+<     global select, text, text1, text3, text4, specs, text2, text5, text6
+---
+>     global select, text
+54,78d48
+< 
+<     text1 = request.form['amplitudine']
+<     session['text1'] = text1
+<     processed_text1 = text1.upper()
+< 
+<     text3 = request.form['valinit']
+<     session['text3'] = text3
+<     processed_text3 = text3.upper()
+< 
+<     text2 = request.form['valinit2']
+<     session['text2'] = text2
+<     processed_text2 = text2.upper()
+< 
+<     text5 = request.form['valinit3']
+<     session['text5'] = text5
+<     processed_text5 = text5.upper()
+< 
+<     text4 = request.form['valk']
+<     session['text4'] = text4
+<     processed_text4 = text4.upper()
+< 
+<     text6 = request.form['valk2']
+<     session['text6'] = text6
+<     processed_text6 = text6.upper()
+< 
+81,82d50
+<     specs1=session.get("specs")
+<     print(specs1)
+85,86c53
+<     print(text3)
+<     print(text2)
+---
+> #    return(str(select), text) # just to see what select is
+88d54
+< 
+92a59,60
+> #    FigureCanvas(fig).print_png(output)
+> #    return Response(output.getvalue(), mimetype='image/png')
+94d61
+< 
+96,97c63
+<     global select
+<     session['select']=select
+---
+>     session['select'] = select
+99a66
+>     #print(select)
+103,108d69
+<     session['text1'] = text1
+<     session['text3'] = text3
+<     session['text2'] = text2
+<     session['text4'] = text4
+<     session['text5'] = text5
+< 
+111,112c72,73
+<     print(text3)
+<     print(text2)
+---
+> #teltest =' -> A; k1\n2 A + 3 B -> 4 C; k2*A*A*B*B*B\n4 C -> 2 A + 3 B; k3*C*C*C*C\n2 B -> C + 3 A; k4*B*B\n2 B -> C; k5*B*B\nC -> 2 B; k6*C\nC -> ; k7*C\n\nk1 = 7;\nk2 = 7;\nk3 = 7;\nk4 = 7;\nk5 = 7;\nk6 = 7;\nk7 = 7;\n\n\nA = 1;\nB = 1;\nC = 1;\n'
+> #simu = te.loada(teltest)
+115,116c76,77
+<     simu.simulate(int(text1), int(text), 50)
+< 
+---
+>     simu.simulate(0, int(text), 50)
+> #    array=simu.simulate(0, 500, 100)
+121c82,83
+< 
+---
+> #    return render_template('user_input.html', data=temp)
+> #    return fig
+125a88,89
+>     ## filename = 'crn_a_b_c.txt'
+> #    filename = 'crn.txt'
+127a92
+>     #print(a)
+129a95,97
+>     #print(b)
+> 
+> 
+149c117,118
+<     kcont = 1   # cate reactii sunt
+---
+> 
+>     kcont = 0   # cate reactii sunt
+175c144
+<     global specs
+---
+> 
+189c158
+<     session["specs"]=specs
+---
+> 
+191c160
+<     print( specs )
+---
+>     #print( specs )
+250,255c219,222
+<     session['text4'] = text4
+<     session['text6'] = text6
+<     valk=[str(text4), str(text6), str(1)]
+<     #valk = .1   # valoarea pentru constantele de reactie
+<     for k in range(0,len(reacts)):
+<         tel = tel + 'k' + str(k+1) + ' = ' + str( valk[k] ) + ';\n'
+---
+> 
+>     valk = .1   # valoarea pentru constantele de reactie
+>     for k in range(kcont):
+>         tel = tel + 'k' + str(k+1) + ' = ' + str( valk ) + ';\n'
+260,267c227,229
+<     session['text3'] = text3
+<     session['text2'] = text2
+<     session['text5'] = text5
+<     print (text3)
+<     print(text2)
+<     valinit = [str(text3), str(text2), str(text5)]  # valoarea pentru conditiile initiale
+<     for i in range(0,len(specs)):
+<         tel = tel + specs[i] + ' = ' + str( valinit[i] ) + ';\n'
+---
+>     valinit = 1  # valoarea pentru conditiile initiale
+>     for x in specs:
+>         tel = tel + x + ' = ' + str( valinit ) + ';\n'
+273,274d234
+<     specs1=session.get("specs")
+<     print(specs1)
+304c264
+<     app.run(host="192.168.71.50", port ='5000', debug=True)
+---
+>     app.run(host="192.168.0.50", port ='5000', debug=True)

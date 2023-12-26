@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html>
+	<title>Flask Graph</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="styles/reset.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="styles/default.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="styles/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" media="screen">
+	<script type="text/javascript" src="scripts/deployJava.js"></script>
+	<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery.fancybox-1.3.4.js"></script>
+	<script type="text/javascript" src="scripts/control.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript">
+			// <![CDATA[
+			var siteURL = 'https://control.math.wvu.edu/';
+			var csrf_token = '0e1458089b8fdf8f2d9e7ee1ba429876f86f0e29b039ead8385bd794560aa1fd';
+			var test_timeout_limit = 60;
+			var timer_id = 0;
+			var number_of_reactions = 0;
+			if( !number_of_reactions ) ++number_of_reactions;
+			// ]]>
+		</script>
+	
+	<style>
+		body,h1 {font-family: "Montserrat", sans-serif}
+		img {margin-bottom: -7px}
+		.w3-row-padding img {margin-bottom: 12px}
+		
+		input[type=text]:focus {
+      border: 3px solid #555;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    select {
+      border: 0 !important;
+      /*Removes border*/
+      -webkit-appearance: none;
+      /*Removes default chrome and safari style*/
+      -moz-appearance: none;
+      /* Removes Default Firefox style*/
+      background: #0088cc url(img/select-arrow.png) no-repeat 90% center;
+      width: 50px;
+      /*Width of select dropdown to give space for arrow image*/
+      text-indent: 0.01px;
+      /* Removes default arrow from firefox*/
+      text-overflow: "";
+      /*Removes default arrow from firefox*/
+      /*My custom style for fonts*/
+      color: white;
+      padding: 5px;
+      box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5);
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 33%;
+      padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+	
+	
+	
+	#download_network_file_button
+	{
+		background-image: url('../images/download.png');
+	}
+	
+	
+	</style>
+
+	<body>
+
+		<!-- Sidebar -->
+<nav class="w3-sidebar w3-black w3-animate-top w3-xxlarge" style="display:none;padding-top:150px" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-black w3-xxlarge w3-padding w3-display-topright" style="padding:6px 24px">
+    	<i class="fa fa-remove"></i>
+  	</a>
+ 	<div class="w3-bar-block w3-center">
+    	<a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
+        <a href="http://192.168.1.50:5000/input_user" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Show The Graph</a>
+	<a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Details</a>
+	</div>
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+	<!-- Header -->
+<div class="w3-opacity">
+<span class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+<div class="w3-clear"></div>
+<header class="w31-center w3-margin-bottom">
+   
+<h1 style="text-align:center;"><b>Chemical Reaction Network (CRN)</b></h1>
+<div style="width: 60%; left: 21%; padding-top:2%; position: relative">
+<!--  <p><b>Apasa pentru a afisa graficul.</b></p>
+  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
+-->
+<div class="content">
+Chemical reaction network theory is an area of applied mathematics
+ that attempts to model the behavior of real-world chemical systems.
+Since its foundation in the 1960s, it has attracted a growing research community,
+ mainly due to its applications in biochemistry and theoretical chemistry</div>
+
+<div class="content" style="padding-top:1%">
+A chemical reaction network (CRN) comprises a set of reactants, a set of products and a 
+set of reactions. For example, the pair of combustion reactions:</div>
+<div class="content" style="padding-top:1%">
+2H<p style="font-size:9px; display:inline">2</p> + O<p style="font-size:9px; display:inline">2
+</p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
+&nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p style="font-size:9px; display:inline">2</p>
+</div>
+</div>
+
+
+<!-- Am adaugat aici!!!   --------------------------------------- -->
+
+<div id="container">
+			<div id="header">
+				<h1><a href="https://control.math.wvu.edu/" title="CoNtRol main page">CoNtRol</a></h1>
+				<h2><a href="https://control.math.wvu.edu/" title="CoNtRol main page">Chemical <span class="non_mobile"><br></span>Reaction <span class="non_mobile"><br></span>Network <span class="non_mobile"><br></span>analysis tool</a></h2>
+			</div>
+			<div id="content">
+				<noscript><p>Sorry, this page requires JavaScript to work correctly.</p></noscript>
+				<div id="error_message_holder">
+				</div><!-- error_message_holder -->
+				<div id="reaction_input_holder">
+					<form id="reaction_input_form" action="handlers/download-network-file.php" method="post">
+						<p>
+							<input type="hidden" name="csrf_token" value="0e1458089b8fdf8f2d9e7ee1ba429876f86f0e29b039ead8385bd794560aa1fd">
+							<a class="button" id="add_reaction_button" href="#" title="Add new reaction" style="height: 24px; width: 24px;">+</a>
+							<a class="button disabled" id="remove_reaction_button" href="#" title="Remove last reaction" style="height: 24px; width: 24px;">–</a>
+							<a class="button" id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 24px; width: 24px;">--</a>
+						</p>
+						<fieldset class="reaction_input_row">
+							<!--input type="number" size="3" maxlength="10" class="reaction_forward_rate_constant" name="reaction_forward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /><br /-->
+							1. <input type="text" size="10" maxlength="64" class="reaction_left_hand_side" name="reaction_left_hand_side[]" value="" spellcheck="false" placeholder="∅">
+							<select class="reaction_direction" name="reaction_direction[]">
+								<option value="left">←</option>
+								<option value="both" selected="selected">⇌</option>
+								<option value="right">→</option>
+							</select>
+							<input type="text" size="10" maxlength="64" class="reaction_right_hand_side" name="reaction_right_hand_side[]" value="" spellcheck="false" placeholder="∅"><!--br />
+							<input type="number" size="3" maxlength="10" class="reaction_backward_rate_constant" name="reaction_backward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /-->
+						</fieldset><!-- reaction_input_row -->
+						<div id="tools_holder">
+							<div id="tools_header">
+								<h2>File Input</h2>
+							</div>
+							<p id="tools_buttons_slidedown" style="display: block;">
+								<a class="button fancybox" href="#reaction_upload_form" id="reaction_upload_button" title="Upload a text file describing a single CRN for immediate analysis">Upload<br>CRN File</a>
+								<a class="button fancybox" href="#batch_upload_form" id="batch_upload_button" title="Upload an archive containing several text files representing different CRNs for batch processing">Upload Batch<br>CRN File</a>
+							</p>
+							<span id="tools_show">Hide</span>
+						</div><!-- tools_holder -->
+						<div id="actions_holder">
+							<h2>Analysis</h2>
+							<div>
+								<a class="button fancybox_dynamic" href="#calculation_output_holder" id="process_network_button" title="Run a number of tests on the current CRN and display the results">Analyse<br>CRN</a>
+								<a class="button fancybox" href="#option_holder" id="options_button" title="Configure options such as which tests to run during analysis">Options</a>
+								<div id="more_actions_slidedown" style="display: block;">
+									<button class="button" id="download_network_file_button" type="submit" title="Download a text file describing the current CRN for later analysis">Download<br>CRN File</button>
+									<a class="button fancybox_dynamic" href="#latex_output_holder" id="latex_output_button" title="Automatically generate LaTeX markup describing the current CRN">Generate<br>LaTeX</a>
+									<a class="button" href="#missing_java_warning_holder" id="dsr_graph_button" title="Generate and display the DSR graph for the current CRN (note: requires Java)">View CRN<br>DSR Graph</a>
+								</div><!-- more_actions_slidedown -->
+								<span id="more_actions_show">Less</span>
+							</div>
+						</div><!-- actions_holder -->
+					</form>
+				</div><!-- reaction_input_holder -->
+				<div id="popup_hider">
+					<form id="reaction_upload_form" action="handlers/upload-network-file.php" method="post" enctype="multipart/form-data">
+						<p>
+							<input type="hidden" name="csrf_token" value="0e1458089b8fdf8f2d9e7ee1ba429876f86f0e29b039ead8385bd794560aa1fd">
+							<label for="upload_network_file_input">Choose a file to upload:</label>
+							<input type="file" id="upload_network_file_input" name="upload_network_file_input" accept="text/*,application/xml,application/sbml+xml">
+						</p>
+						<p class="left_centred">
+							File format:<br><input type="radio" name="upload_network_file_format" value="human" checked="checked" id="upload_network_file_format_human"><label for="upload_network_file_format_human">Human readable <a href="https://reaction-networks.net/wiki/CoNtRol#Human_Readable">(details)</a> e.g. A + 2B --&gt; C</label><br>
+<input type="radio" name="upload_network_file_format" value="stoichiometry" id="upload_network_file_format_stoichiometry"><label for="upload_network_file_format_stoichiometry">Net Stoichiometry <a href="https://reaction-networks.net/wiki/CoNtRol#Net_Stoichiometry">(details)</a> e.g. -1 -2 1</label><br>
+<input type="radio" name="upload_network_file_format" value="source_target" id="upload_network_file_format_source_target"><label for="upload_network_file_format_source_target">Source and Target Stoichiometry <a href="https://reaction-networks.net/wiki/CoNtRol#Source_Stoichiometry_.2B_Target_Stoichiometry">(details)</a> </label><br>
+<input type="radio" name="upload_network_file_format" value="sauro" id="upload_network_file_format_sauro"><label for="upload_network_file_format_sauro">Sauro e.g. 1 4 0 1 0 2 3 0 4 0</label><br>
+<input type="radio" name="upload_network_file_format" value="sbml" id="upload_network_file_format_sbml"><label for="upload_network_file_format_sbml">Systems Biology Markup Language (SBML) Levels 1, 2, 3 </label><br>
+						</p>
+						<p>
+							<button class="button disabled" id="upload_network_file_button" type="submit" disabled="disabled">Upload reaction network</button>
+						</p>
+					</form><!-- reaction_upload_form -->
+					<form id="batch_upload_form" action="handlers/upload-batch-file.php" method="post" enctype="multipart/form-data" class="left_centred">
+						<p>
+							<input type="hidden" name="csrf_token" value="0e1458089b8fdf8f2d9e7ee1ba429876f86f0e29b039ead8385bd794560aa1fd">
+							<label for="upload_batch_file_input">Choose a file to upload:</label>
+							<input type="file" id="upload_batch_file_input" name="upload_batch_file_input" required="" accept="application/zip,application/octet-stream"><br>
+							<span class="small">Maximum file size:
+512M</span><br><span class="small">
+							Supported archive types: zip</span>
+						</p>
+						<p>
+							<label for="upload_batch_file_email">Email address for results:</label>
+							<input type="email" id="upload_batch_file_email" name="upload_batch_file_email" required="" size="32" placeholder="you@example.com"><br>
+							<span id="upload_batch_file_email_error">&nbsp;</span>
+						</p>
+						<p>
+							<label for="upload_batch_file_label">(Optional) label for results:</label>
+							<input type="text" id="upload_batch_file_label" name="upload_batch_file_label" size="32" autocomplete="off" spellcheck="false" placeholder="Example label">
+						</p>
+						<p>
+							File format:<br>
+<input type="radio" name="upload_batch_file_format" value="human" checked="checked" id="upload_batch_file_format_human"><label for="upload_batch_file_format_human">Human readable <a href="https://reaction-networks.net/wiki/CoNtRol#Human_Readable">(details)</a> e.g. A + 2B --&gt; C</label><br>
+<input type="radio" name="upload_batch_file_format" value="stoichiometry" id="upload_batch_file_format_stoichiometry"><label for="upload_batch_file_format_stoichiometry">Net Stoichiometry <a href="https://reaction-networks.net/wiki/CoNtRol#Net_Stoichiometry">(details)</a> e.g. -1 -2 1</label><br>
+<input type="radio" name="upload_batch_file_format" value="source_target" id="upload_batch_file_format_source_target"><label for="upload_batch_file_format_source_target">Source and Target Stoichiometry <a href="https://reaction-networks.net/wiki/CoNtRol#Source_Stoichiometry_.2B_Target_Stoichiometry">(details)</a> </label><br>
+<input type="radio" name="upload_batch_file_format" value="sauro" id="upload_batch_file_format_sauro"><label for="upload_batch_file_format_sauro">Sauro e.g. 1 4 0 1 0 2 3 0 4 0</label><br>
+<input type="radio" name="upload_batch_file_format" value="sbml" id="upload_batch_file_format_sbml"><label for="upload_batch_file_format_sbml">Systems Biology Markup Language (SBML) Levels 1, 2, 3 </label><br>
+						</p>
+						<div>
+							<p>Enter security code (required):<br>
+								<span class="bold"><label for="batch_security_code" id="batch_security_code_label">­1­C­Y­V­I</label></span>
+								<input type="text" name="batch_security_code" id="batch_security_code" required="" autocomplete="off" spellcheck="false" placeholder="XXXXX">
+							</p>
+						</div>
+						<p>
+							<button class="button disabled" id="upload_batch_file_button" type="submit" disabled="disabled">Upload batch file</button>
+						</p>
+					</form><!-- batch_upload_form -->
+					<div id="missing_java_warning_holder">
+						<p>The DSR graph requires Java to view, which is not installed on your system. Please <a href="https://java.com/">download Java</a> to enable this functionality.</p>
+					</div><!-- missing_java_warning_holder -->
+					<div id="calculation_output_holder">
+						<p>Processing...<span class="blink">_</span></p>
+					</div><!-- calculation_output_holder -->
+					<div id="latex_output_holder">
+					</div><!-- latex_output_holder -->
+					<form id="option_holder" action=".">
+						<h2>Tests:</h2>
+						<p>
+							Tick/untick the checkboxes to enable/disable each test.
+							<input type="hidden" name="csrf_token" value="0e1458089b8fdf8f2d9e7ee1ba429876f86f0e29b039ead8385bd794560aa1fd">
+						</p>
+						<table>
+							<thead>
+								<tr>
+									<th class="test_checkboxes">✓</th>
+									<th>Test name</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th class="test_checkboxes">✓</th>
+									<th>Test name</th>
+									<th>Description</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[dsr]" id="test_checkbox_dsr"></td>
+									<td><label for="test_checkbox_dsr">DSR</label></td>
+									<td>Checks condition (*) for the DSR graph. Implemented using <a href="https://www.gnu.org/software/octave/">GNU Octave</a> by Casian Pantea, based on <a href="http://projecteuclid.org/euclid.cms/1264434136">M. Banaji and G. Craciun, “Graph-theoretic approaches to injectivity and multiple equilibria in systems of interacting elements.”</a></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[analysereacs]" id="test_checkbox_analysereacs"></td>
+									<td><label for="test_checkbox_analysereacs">General analysis</label></td>
+									<td>Runs a number of tests on the system. These are mainly matrix-tests, and relate to multistationarity, stability and persistence. Implemented by Murad Banaji.</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[endotactic]" id="test_checkbox_endotactic"></td>
+									<td><label for="test_checkbox_endotactic">Endotactic</label></td>
+									<td>Tests whether the network is endotactic, strongly endotactic, or not endotactic. Implemented using <a href="https://www.gnu.org/software/glpk/">GLPK</a> and <a href="https://scip.zib.de/">SCIP</a> by Matthew Johnston, Pete Donnell and Casian Pantea, based on <a href="https://arxiv.org/abs/1412.4662">“A computational approach to persistence, permanence, and endotacticity of biochemical reaction systems”</a>.</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[isomorphic]" id="test_checkbox_isomorphic"></td>
+									<td><label for="test_checkbox_isomorphic">Isomorphism lookup</label></td>
+									<td>Tests whether the network is isomorphic to a known network with interesting properties. Implemented in <a href="http://www.sagemath.org/">Sage</a> by Pete Donnell, Casian Pantea and Murad Banaji.</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[3d-global-convergence]" id="test_checkbox_3d-global-convergence"></td>
+									<td><label for="test_checkbox_3d-global-convergence">Convergence to equilibrium in 3D</label></td>
+									<td>Tests whether the CRN has a 3D stoichiometric subspace and always converges to equilibrium, based on a theoretical result by Li. Note: this is a work in progress. Implemented by Pete Donnell.</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" checked="checked" name="test_checkbox[calc-jacobian]" id="test_checkbox_calc-jacobian"></td>
+									<td><label for="test_checkbox_calc-jacobian">Jacobian matrix</label></td>
+									<td>Pseudo-test: this test calculates the Jacobian matrix and its second additive compound symbolically, but does not perform any analysis on either. Can be useful in spotting CRNs that are cooperative, competitive, otherwise monotone (in forward or backwards time) with respect to an orthant ordering, contractive and/or nonexpansive, or in ruling out Hopf bifurcations via the DSR<sup>[2]</sup> condition. Implemented in <a href="http://maxima.sourceforge.net/">Maxima</a> by Pete Donnell.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h2>Other options:</h2>
+						<p><input type="checkbox" name="detailed_output" id="detailed_output_checkbox"> <label for="detailed_output_checkbox">Show detailed test output</label></p>
+					</form><!-- option_holder -->
+				</div><!-- popup_hider -->
+				<div id="hidden_character_warning">
+					<p>You entered the following invalid character: <span id="invalid_character_span"></span></p>
+				</div><!-- hidden_character_warning -->
+				<div id="missing_reactant_warning" style="display: none;">
+					<p>There is a reactant missing.</p>
+				</div><!-- missing_reactant_warning -->
+				<div id="removed_reaction_warning">
+					<p>Removed reaction <span id="removed_reaction_span"></span></p>
+				</div><!-- removed_reaction_warning -->
+			</div><!-- content -->
+			<div id="footer">
+				<div id="credits_hider">
+					<div id="feedback_holder">
+						<h2>Feedback</h2>
+						<p>
+							Please send bug reports, feature requests and other comments to <strong><em>pete dot donnell at port dot ac dot uk</em></strong>. When reporting bugs, please describe the problem in as much detail as possible, and provide screenshots where relevant.
+						</p>
+						<p>
+							To submit a CRN with known interesting properties to the CoNtRol database for the isomorphism test, please use the <a href="submit-known-crn.php">CRN submission form</a>.
+						</p>
+					</div>
+					<div id="privacy_holder">
+						<h2>Privacy Statement</h2>
+						<p>
+							CoNtRol requires the use of temporary session cookies to provide functionality. It does not store any identifiable user information when used in interactive mode (all data displayed in browser).
+						</p>
+						<p>
+							Some user data is permanently stored when using the batch processing mode, or when <a href="submit-known-crn.php">submitting new CRNs for the isomorphism test</a>. Data is stored solely for the purposes of providing functionality, security, spam prevention, and attributing submissions. Please do not use batch processing or submit new CRN data if you are concerned about this.
+						</p>
+					</div>
+					<div id="credits_holder">
+						<h2>Credits, Acknowledgements &amp; Licensing</h2>
+						<h3>Credits</h3>
+						<ul>
+							<li>DSR graph Java application: Anca Marginean &amp; Casian Pantea</li>
+							<li>DSR test: Casian Pantea</li>
+							<li>General analysis tests: Murad Banaji</li>
+							<li>Endotacticity test: Matthew Johnston, Pete Donnell &amp; Casian Pantea</li>
+							<li>Isomorphism test: Pete Donnell, Casian Pantea &amp; Murad Banaji</li>
+							<li>Graphic design: Pete Donnell &amp; Kitson Consulting</li>
+							<li>Web interface architecture &amp; programming: Pete Donnell &amp; Kitson Consulting</li>
+						</ul>
+						<h3>Acknowledgements</h3>
+						<ul>
+							<li>This work was supported by grants F/07 058/BU (Leverhulme, to C.P. and M.B.) and EP/J008826/1 (EPSRC, to P.D. and M.B.) and also by <a href="https://kitson-consulting.co.uk/" title="Science and IT Consultants">Kitson Consulting Limited</a>.</li>
+							<li>P.D. wishes to acknowledge Mark Donnell, Polly Hember, Matt Kingston, Olaf Mayer and Casian Pantea for their assistance with typing.</li>
+						</ul>
+						<h3>Licensing &amp; Copyright</h3>
+						<ul>
+							<li><a href="https://github.com/megamattron/collections-generic">Collections</a> is © Matt Hall. Used and distributed under the <a href="https://github.com/megamattron/collections-generic/blob/master/LICENSE.txt">Apache Licence</a>.</li>
+							<li><a href="https://www.java.com/js/deployJava.txt"><code>deployJava.js</code></a> is © 2006, 2016 Oracle. Used and distributed under Oracle's licence terms.</li>
+							<li><a href="http://fancybox.net/">Fancybox 1.3.4</a> is © 2008–2010 Janis Skarnelis. Used and distributed under the <a href="https://www.gnu.org/licenses/gpl.html">GPL v3 or later</a>.</li>
+							<li><a href="https://jquery.com/">jQuery v1.8.3</a> is © 2012 the jQuery Foundation et al. Used and distributed under the <a href="https://opensource.org/licenses/MIT">MIT Licence</a>.</li>
+							<li><a href="http://jung.sourceforge.net/site/jung-graph-impl/project-summary.html">JUNG</a> is © the JUNG development team. Used and distributed under the <a href="http://jung.sourceforge.net/site/jung-graph-impl/license.html">BSD Licence</a>.</li>
+							<li><a href="https://www.theleagueofmoveabletype.com/orbitron">Orbitron</a> is © 2009 <a href="https://matt.cc/">Matt McInerney</a> and released under the <a href="https://scripts.sil.org/OFL">Open Font Licence</a>.</li>
+							<li>Icons from the GNOME, KDE and XFCE desktop icon sets.</li>
+							<li>All other code and content is © 2012–2022 the authors and released under the <a href="https://www.gnu.org/licenses/gpl.html">GPL v3 or later</a>.</li>
+						</ul>
+					</div><!-- credits_holder -->
+				</div><!-- credits_hider -->
+				<p id="credits">
+					<a href="/#" title="Start of page">⇧</a>
+					<a href="#feedback_holder" class="fancybox">Feedback</a>
+					<span class="non_mobile">•</span>
+					<a href="submit-known-crn.php">Submit a CRN</a>
+					<span class="non_mobile">•</span>
+					<a href="#privacy_holder" class="fancybox">Privacy</a>
+					<span class="non_mobile">•</span>
+					<a href="https://reaction-networks.net/wiki/CoNtRol" title="View documentation for CoNtRol in a new tab">Documentation</a>
+					<span class="non_mobile">•</span>
+					<a href="#credits_holder" class="fancybox">Credits</a>
+					<span class="non_mobile">•</span>
+					<span id="version">Version 1.5.3</span>
+				</p><!-- credits -->
+			</div><!-- footer -->
+		</div>
+		
+		
+		<div id="fancybox-tmp"></div>
+		
+		<div id="fancybox-loading"><div></div></div>
+		<div id="fancybox-overlay"></div>
+		<div id="fancybox-wrap">
+			<div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div>
+			<div class="fancybox-bg" id="fancybox-bg-ne"></div>
+			<div class="fancybox-bg" id="fancybox-bg-e"></div>
+			<div class="fancybox-bg" id="fancybox-bg-se"></div>
+			<div class="fancybox-bg" id="fancybox-bg-s"></div>
+			<div class="fancybox-bg" id="fancybox-bg-sw"></div>
+			<div class="fancybox-bg" id="fancybox-bg-w"></div>
+			<div class="fancybox-bg" id="fancybox-bg-nw"></div>
+			<div id="fancybox-content"></div>
+			<a id="fancybox-close"></a>
+			<div id="fancybox-title"></div>
+			<a href="javascript:;" id="fancybox-left">
+			<span class="fancy-ico" id="fancybox-left-ico"></span></a>
+			<a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>
+			</div>
+		</div>
+
+
+						<p><center>
+							<button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button> 
+							<button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button> 
+							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
+							<div><br><input id='right_reaction' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+				                        <select id='selection' class='reaction_direction' >
+										<option value='left'> &#8592 </option>
+										<option value='both' selected='selected'>⇌</option> 
+										<option value='right'> &#8594 </option>
+										</select>	
+										<input id='left_reaction' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+								<br>
+							</div>
+							<div id="textboxDiv"></div>
+						</p>
+
+
+
+<!-- Pana aici!!! ----------------------------------------------------- -->
+<div style="position: relative; left: 21%">
+  <!--<p><b>Creare grafic personalizat.</b></p>-->
+  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='input_user';">Generate Graph</button></p>
+</div>
+        <div>
+            <input type="button" id="bt" value="Save data to file" onclick="saveFile()" />
+        </div>
+<center>
+<!--<img src="/static/grafic.jpg" alt="my plot" width="150" height="150">-->
+</center>
+
+</header>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge" style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
+  <p class="w3-medium">2022@  <target="_blank" class="w3-hover-text-green"></a></p>
+</footer>
+<script>
+
+
+/**
+ * Main CoNtRol JavaScript file
+ *
+ * @author     Pete Donnell <pete-dot-donnell-at-port-dot-ac-dot-uk>
+ * @copyright  2012-2019 University of Portsmouth & Kitson Consulting Limited
+ * @license    https://gnu.org/licenses/gpl-3.0-standalone.html GPLv3 or later
+ * @see        https://reaction-networks.net/control/documentation/
+ * @package    CoNtRol
+ * @created    01/10/2012
+ * @modified   04/09/2019
+ */
+
+/**
+ * Adds a row to the reaction input form
+ */
+function addReaction()
+{
+	++number_of_reactions;
+
+	$( '#tools_holder' ).before( '<fieldset class="reaction_input_row"><!--input type="number" size="3" maxlength="10" class="reaction_forward_rate_constant" name="reaction_forward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /><br /-->' + number_of_reactions + '. <input type="text" size="10" maxlength="64" class="reaction_left_hand_side" name="reaction_left_hand_side[]" spellcheck="false" placeholder="&empty;" /> <select class="reaction_direction" name="reaction_direction[]"><option value="left">&larr;</option><option value="both" selected="selected">&#x21cc;</option><option value="right">&rarr;</option></select> <input type="text" size="10" maxlength="64" class="reaction_right_hand_side" name="reaction_right_hand_side[]" spellcheck="false" placeholder="&empty;" /><!--br /><input type="number" size="3" maxlength="10" class="reaction_backward_rate_constant" name="reaction_backward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /--></fieldset>' );
+
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	{
+		// Prevent double binding
+		$( this ).off( 'keydown keyup' );
+		// Capture Enter key
+		$( this ).on( 'keydown', function( e )
+		{
+			if( e.which == 13 ) e.preventDefault();
+		} );
+		// Validate input and check for network submission
+		$( this ).on( 'keyup', function( e )
+		{
+			if( validateKeyPress( $( this ) ) )
+			{
+				if( e.which == 13 )
+				{
+					$( '#process_network_button' ).click();
+				}
+			}
+		} );
+	} );
+}
+
+/**
+ * Get the size of the visible area of the browser
+ */
+function detectWindowSize()
+{
+	if( $( window ).innerWidth() > 800 ) popupWidth = $( window ).innerWidth() - 256;
+	else popupWidth = $( window ).innerWidth() - 16;
+	if( $( window ).innerHeight() > 800 ) popupHeight = $( window ).innerHeight() - 256;
+	else popupHeight = $( window ).innerHeight() - 16;
+}
+
+/**
+ * Disables reaction reset, DSR graph and analysis buttons
+ */
+function disableButtons()
+{
+	$( '#dsr_graph_button' ).addClass( 'disabled' );
+	$( '#process_network_button' ).addClass( 'disabled' );
+	$( '#download_network_file_button' ).addClass( 'disabled' );
+	$( '#latex_output_button' ).addClass( 'disabled' );
+	$( '#reset_reaction_button' ).addClass( 'disabled' );
+}
+
+/**
+ * Enables reaction reset, DSR graph and analysis buttons
+ */
+function enableButtons()
+{
+	// Remove reaction button doesn't need to be enabled, as it is automatically enabled/disabled based on the number of reactions
+	$( '#dsr_graph_button' ).removeClass( 'disabled' );
+	$( '#process_network_button' ).removeClass( 'disabled' );
+	$( '#download_network_file_button' ).removeClass( 'disabled' );
+	$( '#download_network_file_button' ).removeAttr( 'disabled' );
+	$( '#latex_output_button' ).removeClass( 'disabled' );
+	$( '#reset_reaction_button' ).removeClass( 'disabled' );
+}
+
+/**
+ * Generates LaTeX markup for a set of reactions and displays it in a popover
+ */
+function generateLaTeX()
+{
+	var numberOfRows = $( '.reaction_input_row' ).length;
+	var numberOfColumns = 0;
+	var textOutput = '\\begin{array}{rcl}\n';
+	$( '.reaction_input_row' ).each( function( index, element )
+	{
+		if( $( '.reaction_left_hand_side', $( this ) ).val() == '' || $( '.reaction_left_hand_side', $( this ) ).val() == ' ' || $( '.reaction_left_hand_side', $( this ) ).val() == '  ' ) textOutput += '\\emptyset';
+		else textOutput += $( '.reaction_left_hand_side', $( this ) ).val().replace( '&', '\\&amp;' );
+		textOutput += ' &amp; ';
+		switch( $( 'select.reaction_direction option:selected', $( this ) ).val())
+		{
+			case 'left':
+				textOutput += '\\leftarrow';
+				break;
+			case 'right':
+				textOutput += '\\rightarrow';
+				break;
+			case 'both':
+				textOutput += '\\rightleftharpoons';
+				break;
+			default:
+				textOutput += ' ? ';
+		}
+		textOutput += ' &amp; ';
+		if( $( '.reaction_right_hand_side', $( this ) ).val() == '' || $( '.reaction_right_hand_side', $( this ) ).val() == ' ' || $( '.reaction_right_hand_side', $( this ) ).val() == '  ' ) textOutput += '\\emptyset';
+		else textOutput += $( '.reaction_right_hand_side', $( this ) ).val().replace( '&', '\\&' );
+		textOutput = textOutput.replace( '$', '\\$' );
+		textOutput += ' ';
+		if( index < numberOfRows - 1 ) textOutput += '\\\\';
+		textOutput += '\n';
+	});
+	var allLines = textOutput.split( '\n' );
+	for( i = 0; i < allLines.length; ++i )
+	{
+		if( allLines[i].length > numberOfColumns ) numberOfColumns = allLines[i].length;
+	}
+	numberOfColumns *= 2;
+	numberOfRows += 3;
+	textOutput = '<p>Reactions:</p><textarea rows="' + numberOfRows + '" cols="' + numberOfColumns + '">\n' + textOutput + '\\end{array}</textarea><p>Stoichiometry matrix:</p><textarea rows="' + numberOfRows*2 + '" cols="' + numberOfColumns + '">\\Gamma = ';
+	var url = 'handlers/get-net-stoichiometry.php';
+	var data = { csrf_token: csrf_token };
+	$.post( url, data, function( returndata )
+	{
+		textOutput += returndata.replace( '&', '&amp;' ) + '\n</textarea>\n<p>Reaction rate Jacobian:</p><textarea rows="' + numberOfRows*2 + '" cols="' + numberOfColumns + '">V^T = ';
+		url = 'handlers/get-v-matrix.php';
+		$.post( url, data, function( returndata )
+		{
+			textOutput += returndata.replace( '&', '&amp;' ) + '\n</textarea>\n';
+			$( '#latex_output_holder' ).html( textOutput );
+		} );
+	} );
+}
+
+/**
+ * Calls the test handler for all selected tests and then redirects to the results
+ */
+function processTests( test_number )
+{
+	setTimeout( function()
+	{
+		var url = 'handlers/process-tests.php';
+		data = { csrf_token: csrf_token };
+		var timeout_countdown = test_timeout_limit;
+		$( '#calculation_output_holder' ).append( '<p id="timeout_countdown_holder">Processing test ' + test_number + '... <span id="timeout_countdown">' + test_timeout_limit + '</span> seconds until timeout.</p>' );
+		clearInterval( timer_id );
+		timer_id = setInterval( function()
+		{
+			if ( timeout_countdown )
+			{
+				--timeout_countdown;
+				$( '#timeout_countdown') .html( timeout_countdown );
+			}
+			else
+			{
+				$( '#calculation_output_holder' ).append( '<p>Test timed out.</p>' );
+				clearInterval( timer_id );
+			}
+		}, 1000 );
+		$.post( url, data, function( returndata )
+		{
+			showTestOutput( returndata );
+			$( '#timeout_countdown_holder' ).remove();
+			// All tests complete:
+			if( returndata == '<p>All tests completed. Redirecting to results.</p>' ) window.location.href = 'results.php';
+			// A bug occurred:
+			else if( returndata == '<p>Error: CSRF detected or CRN not set up.</p>' ) window.location.reload();
+			// Proceed to the next test:
+			else processTests( ++test_number );
+		} );
+	}, 100 );
+}
+
+/**
+ * Removes a row from the reaction input form
+ *
+ * N.B. This function does NOT check whether there is only one reaction left.
+ * Consequently, calling it when there is only one reaction left will result
+ * in no reactions being left. Calling it again may trigger a JavaScript error
+ * in the user's browser.
+ */
+function removeReaction( notify_user )
+{
+	if( notify_user )
+	{
+		$( '#removed_reaction_span' ).html( number_of_reactions );
+		var position = $( '#remove_reaction_button' ).position();
+		$( '#removed_reaction_warning' ).css( 'top', position.top + 24 );
+		$( '#removed_reaction_warning' ).css( 'left', position.left - 56 );
+		$( '#removed_reaction_warning' ).show();
+		setTimeout( function()
+		{
+			$( '#removed_reaction_warning' ).hide();
+		}, 1500 );
+	}
+
+	$( '#reaction_input_form fieldset' ).filter( ':last' ).remove();
+	--number_of_reactions;
+	saveNetwork();
+}
+
+/**
+ * Clears the results popup.
+ */
+function resetPopup()
+{
+	$( '#calculation_output_holder' ).html( '<p>Processing selected tests. This may take some time, please be patient. Do not close this popup window!</p>' );
+}
+
+/**
+ * Resets all reactions in the input form
+ *
+ * Disables the various reaction network processing buttons, clears all reactions in the form,
+ * removes all reactions except the first, and clears any saved reactions from the session.
+ */
+function resetReactions()
+{
+	$( '#reaction_input_form fieldset input' ).val( '' );
+	$( '#reaction_input_form fieldset select option[value=both]' ).attr( 'selected', true );
+	disableButtons();
+	while( $( '#reaction_input_form fieldset' ).length - 1 ) removeReaction( false );
+	$( '#remove_reaction_button' ).addClass( 'disabled' );
+	var url = 'handlers/reset-reactions.php';
+	var data = { reset_reactions: 1, csrf_token: csrf_token };
+	$.post( url, data );
+	if( $( '#error_message_holder' ) ) $( '#error_message_holder' ).hide();
+	if( $( '#results_link' ) ) $( '#results_link' ).hide();
+}
+
+/**
+ * Saves the network in the session via AJAX
+ */
+var validNetwork = true;
+function saveNetwork()
+{
+	validNetwork = true;
+	var url = 'handlers/process-network.php';
+	var reactionsLeftHandSide = new Array();
+	$.each( $( '.reaction_left_hand_side' ), function( index, value )
+	{
+		reactionsLeftHandSide.push( value.value );
+	} );
+	var reactionsRightHandSide = new Array();
+	$.each( $( '.reaction_right_hand_side' ), function( index, value )
+	{
+		reactionsRightHandSide.push( value.value );
+	} );
+	var reactionsDirection = new Array();
+	$.each( $( '.reaction_direction :selected' ), function( index, value )
+	{
+		reactionsDirection.push( value.value );
+	} );
+	var reactionsForwardRateConstants = new Array();
+	$.each( $( '.reaction_forward_rate_constant' ), function( index, value )
+	{
+		reactionsForwardRateConstants.push( value.value );
+	} );
+	var reactionsBackwardRateConstants = new Array();
+	$.each( $( '.reaction_backward_rate_constant' ), function( index, value )
+	{
+		reactionsBackwardRateConstants.push( value.value );
+	} );
+	var testSettings = new Array();
+	$.each( $( '.test' ), function( index, v )
+	{
+		testSettings.push( { name: $( this ).attr( 'name' ), value: $( this ).val() } );
+	} );
+	var data = { 'reaction_left_hand_side[]': reactionsLeftHandSide, 'reaction_right_hand_side[]': reactionsRightHandSide, 'reaction_direction[]': reactionsDirection, 'reaction_forward_rate_constant[]': reactionsForwardRateConstants, 'reaction_backward_rate_constant[]': reactionsBackwardRateConstants, 'test_settings': testSettings, csrf_token: csrf_token };
+	$.post( url, data, function( returndata )
+	{
+		if( returndata.length )
+		{
+			showTestOutput( '<p>' + returndata + '</p>' );
+			validNetwork = false;
+		}
+	} );
+	return validNetwork;
+}
+
+/**
+ * Adds output from a test to the progress popover
+ */
+function showTestOutput( output )
+{
+	$( '#calculation_output_holder' ).append( output );
+}
+
+/**
+ * Enables/disables detailed test output via AJAX
+ */
+function toggleDetailedOutput( newStatus )
+{
+	var url = 'handlers/toggle-detailed-output.php';
+	var data = { detailed_output: newStatus, csrf_token: csrf_token };
+	$.post( url, data );
+}
+
+/**
+ * Enables/disables the specified test via AJAX
+ */
+function toggleTest( testName, newStatus )
+{
+	var url = 'handlers/toggle-test.php';
+	var data = { testName: testName, active: newStatus, csrf_token: csrf_token };
+	$.post( url, data );
+}
+
+/**
+ * Validates an email address
+ */
+function validateEmailAddress( emailAddress )
+{
+	var atPos = emailAddress.indexOf( '@' );
+	if( atPos < 1 ) return false;
+	if( emailAddress.indexOf( '.', atPos ) > ( atPos + 1 ) && emailAddress.charAt( emailAddress.length - 1 ) != '.' ) return true;
+	return false;
+}
+
+/**
+ * Warns about invalid character input
+ */
+function validateKeyPress( inputElement )
+{
+	var invalidCharacters = new Array( '<', '>', '-', '=' );
+	for( i = 0; i < invalidCharacters.length; ++i )
+	{
+		if( inputElement.val().indexOf( invalidCharacters[i] ) > -1 )
+		{
+			inputElement.val( inputElement.val().replace( invalidCharacters[i], '' ) );
+			$( '#invalid_character_span' ).html( invalidCharacters[i] );
+			var position = inputElement.position();
+			$( '#hidden_character_warning' ).css( 'top', position.top + 48 );
+			$( '#hidden_character_warning' ).css( 'left', position.left );
+			$( '#hidden_character_warning' ).show();
+			setTimeout( function() { $( '#hidden_character_warning' ).hide(); }, 1500);
+		}
+	}
+	var validInput = true;
+	var totalChars = 0;
+	$( '#missing_reactant_warning' ).hide();
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	{
+		$( this ).css( 'border-color', '' );
+		totalChars += $( this ).val().length;
+		lhs = $.trim( $( this ).val() );
+		if( lhs.indexOf( '+' ) == 0 || lhs[lhs.length - 1] == '+' || lhs.indexOf( '++' ) > -1 || lhs.indexOf( '+ +' ) > -1 || lhs.indexOf( '+  +' ) > -1)
+		{
+			validInput = false;
+			$( this ).css( 'border-color', 'red' );
+			var position = inputElement.position();
+			$( '#missing_reactant_warning' ).css( 'top', position.top + 48 );
+			$( '#missing_reactant_warning' ).css( 'left', position.left );
+			$( '#missing_reactant_warning' ).show();
+		}
+	} );
+	if( validInput && totalChars )
+	{
+		saveNetwork();
+		enableButtons();
+		return true;
+	}
+	else
+	{
+		disableButtons();
+		return false;
+	}
+}
+
+var networkSubmitted = false;
+var popupWidth = 800;
+var popupHeight = 600;
+var popupMargin = 16;
+
+$( document ).ready( function()
+{
+	// Set some useful variables
+	if( $( window ).innerWidth() > 800 ) popupWidth = $( window ).innerWidth() - 256;
+	else popupWidth = $( window ).innerWidth() - 16;
+	if( $( window ).innerHeight() > 800 ) popupHeight = $( window ).innerHeight() - 256;
+	else popupHeight = $( window ).innerHeight() - 16;
+	var buttonSize = 0;
+
+	// Enable DSR Java app for browsers with Java installed
+	if( navigator.userAgent.indexOf( 'Android' ) == -1 && navigator.userAgent.indexOf( 'iOS' ) == -1 ) $( '#dsr_graph_button' ).removeClass( 'fancybox' );
+
+	// File inputs slide down out of the File Input header on clock
+	var toolsShown = false;
+	$( '#tools_show' ).click( function()
+	{
+		if( !toolsShown )
+		{
+			$( '#tools_buttons_slidedown' ).slideDown();
+			$( '#tools_show' ).html( 'Hide' );
+			toolsShown = true;
+		}
+		else
+		{
+			$( '#tools_buttons_slidedown' ).slideUp();
+			$( '#tools_show' ).html( 'Show' );
+			toolsShown = false;
+		}
+	} );
+
+	// Similarly, more analysis options slide down
+	var moreActionsShown = false;
+	$( '#more_actions_show' ).click( function()
+	{
+		if( !moreActionsShown )
+		{
+			$( '#more_actions_slidedown' ).slideDown();
+			$( '#more_actions_show' ).html( 'Less' );
+			moreActionsShown = true;
+		}
+		else
+		{
+			$(' #more_actions_slidedown' ).slideUp();
+			$(' #more_actions_show' ).html( 'More' );
+			moreActionsShown = false;
+		}
+	} );
+
+	$( '#add_reaction_button' ).click( function()
+	{
+		addReaction();
+		$( '#remove_reaction_button' ).removeClass( 'disabled' );
+		return false;
+	} );
+
+	$( '#remove_reaction_button' ).click( function()
+	{
+		if( !$( this ).hasClass( 'disabled' ) )
+		{
+			if( $( '#reaction_input_form > fieldset' ).length > 1 ) removeReaction( true );
+			if( $( '#reaction_input_form > fieldset' ).length == 1 ) $( this ).addClass( 'disabled' );
+			else $(this).removeClass('disabled');
+		}
+		if( $( '#reaction_input_form > fieldset' ).length == 1 && $( '#reaction_input_form > fieldset .reaction_left_hand_side' ).val() == '' && $( '#reaction_input_form > fieldset .reaction_right_hand_side' ).val() == '') $( '#reset_reaction_button' ).addClass( 'disabled' );
+		return false;
+	} );
+
+	$( '#reset_reaction_button' ).click( function()
+	{
+		if( !$( this ).hasClass( 'disabled' ) ) resetReactions();
+		return false;
+	} );
+
+	$( '.reaction_direction' ).each( function()
+	{
+		// Prevent double binding
+		$( this ).off();
+		// Bind change handler
+		$( this ).change( function()
+		{
+			saveNetwork();
+		} );
+	} );
+
+	$( '.reaction_direction' ).each( function()
+	{
+		$( this ).on( 'change', function( e )
+		{
+			if( this.options[e.target.selectedIndex].value == 'left' )
+			{
+				$( this ).siblings( '.reaction_forward_rate_constant' ).hide();
+				$( this ).siblings( '.reaction_backward_rate_constant' ).show();
+			}
+			else if( this.options[e.target.selectedIndex].value == 'right' )
+			{
+				$( this ).siblings( '.reaction_forward_rate_constant' ).show();
+				$( this ).siblings( '.reaction_backward_rate_constant' ).hide();
+			}
+			else
+			{
+				$( this ).siblings( '.reaction_forward_rate_constant' ).show();
+				$( this ).siblings( '.reaction_backward_rate_constant' ).show();
+			}
+		} );
+	} );
+
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	{
+		// Prevent double binding
+		$( this ).off( 'keydown keyup' );
+		// Capture Enter key
+		$( this ).on( 'keydown', function( e )
+		{
+			if( e.which == 13 ) e.preventDefault();
+		} );
+		// Validate input and check for network submission
+		$( this ).on( 'keyup', function( e )
+		{
+			if( validateKeyPress( $( this ) ) )
+			{
+				if( e.which == 13 )
+				{
+					$( '#process_network_button' ).click();
+				}
+			}
+		} );
+	} );
+
+	if( $( '#add_reaction_button' ).height() > buttonSize) buttonSize = $( '#add_reaction_button' ).height();
+	if( $( '#add_reaction_button' ).width() > buttonSize) buttonSize = $( '#add_reaction_button' ).width();
+	if( $( '#remove_reaction_button' ).height() > buttonSize ) buttonSize = $( '#remove_reaction_button' ).height();
+	if( $( '#remove_reaction_button' ).width() > buttonSize ) buttonSize = $( '#remove_reaction_button' ).width();
+	if( $( '#reset_reaction_button' ).height() > buttonSize ) buttonSize = $( '#reset_reaction_button' ).height();
+	if( $( '#reset_reaction_button' ).width() > buttonSize ) buttonSize = $( '#reset_reaction_button' ).width();
+	$( '#add_reaction_button' ).height( buttonSize );
+	$( '#add_reaction_button' ).width( buttonSize );
+	$( '#remove_reaction_button' ).height( buttonSize );
+	$( '#remove_reaction_button' ).width( buttonSize );
+	$( '#reset_reaction_button' ).height( buttonSize );
+	$( '#reset_reaction_button' ).width( buttonSize );
+
+	$( '.fancybox' ).fancybox( { autoDimensions: true, width: popupWidth, height: popupHeight } );
+	$( '.fancybox_dynamic' ).fancybox( { autoDimensions: false, width: popupWidth, height: popupHeight } );
+
+	$( '#crn_description' ).focus( function()
+	{
+		$( this ).select();
+	} );
+
+	$( '#detailed_output_checkbox' ).change( function()
+	{
+		var activated = 0;
+		if( $( this ).is( ':checked' ) ) activated = 1;
+		toggleDetailedOutput( activated );
+	} );
+
+	$( '#download_network_file_button' ).click( function( e )
+	{
+		if( $( this ).hasClass( 'disabled' ) ) e.preventDefault();
+	} );
+
+	$( '#dsr_graph_button' ).click( function( e )
+	{
+		if( $( this ).hasClass( 'disabled' ) ) e.preventDefault();
+		else if( navigator.userAgent.indexOf( 'Android' ) == -1 && navigator.userAgent.indexOf( 'iOS' ) == -1 )
+		{
+			e.preventDefault();
+			window.location.replace( 'jnlp.php' );
+		}
+	} );
+
+	$( '#email_results_form' ).submit( function( e )
+	{
+		e.preventDefault();
+		$( '#email_results_button' ).addClass( 'disabled' );
+		$( '#email_results_button' ).attr( 'disabled', 'disabled' );
+		var url = 'handlers/mail-results.php';
+		var email = $( '#results_email' ).val();
+		var label = $( '#results_label' ).val();
+		var data = {email: email, label: label, csrf_token: csrf_token};
+		$.post( url, data, function( returndata )
+		{
+			if( returndata.length ) $( '#email_results_error' ).html( returndata );
+			window.setTimeout( function()
+			{
+				$( '#email_results_error' ).html( '&nbsp;' );
+				$( '#email_results_button' ).removeClass( 'disabled' );
+				$( '#email_results_button' ).removeAttr( 'disabled' );
+			}, 1000 );
+		} );
+	} );
+
+	$( '#email_results_form_button' ).click( function( e )
+	{
+		$( '#results_email' ).select();
+		if( validateEmailAddress( $( '#results_email' ).val() ) )
+		{
+			$( '#email_results_error' ).html( '&nbsp;' );
+			$( '#email_results_button' ).removeClass( 'disabled' );
+			$( '#email_results_button' ).removeAttr( 'disabled' );
+		}
+		else
+		{
+			$( '#email_results_error' ).html( 'Invalid email address' );
+			$( '#email_results_button' ).addClass( 'disabled' );
+			$( '#email_results_button' ).addAttr( 'disabled' );
+		}
+	} );
+
+	$( '#latex_output_button' ).click( function( e )
+	{
+		if( !$( this ).hasClass( 'disabled' ) )
+		{
+			$.when( saveNetwork() ).then( generateLaTeX() );
+		}
+	} );
+
+	$( '#option_holder input[name*="test_checkbox"]' ).change( function()
+	{
+		var testName = $( this ).attr( 'name' ).slice( 14, -1 );
+		var activated = 0;
+		if( $( this ).is( ':checked' ) ) activated = 1;
+		toggleTest( testName, activated );
+	} );
+
+	$( '#process_network_button' ).click( function()
+	{
+		if( !networkSubmitted && !$( this ).hasClass( 'disabled' ) )
+		{
+			resetPopup();
+			$.when( saveNetwork() ).then( processTests( 1 ) );
+			networkSubmitted = true;
+		}
+		return false;
+	} );
+
+	$('#results_email').change(function()
+	{
+		if(validateEmailAddress($('#results_email').val()))
+		{
+			$('#email_results_error').html('&nbsp;');
+			$('#email_results_button').removeClass('disabled');
+			$('#email_results_button').removeAttr('disabled');
+		}
+		else
+		{
+			$('#email_results_error').html('Invalid email address');
+			$('#email_results_button').addClass('disabled');
+			$('#email_results_button').attr('disabled', 'disabled');
+		}
+	} );
+
+	$('#results_email').keyup(function()
+	{
+		if(validateEmailAddress($('#results_email').val()))
+		{
+			$('#email_results_error').html('&nbsp;');
+			$('#email_results_button').removeClass('disabled');
+			$('#email_results_button').removeAttr('disabled');
+		}
+		else
+		{
+			$('#email_results_error').html('Invalid email address');
+			$('#email_results_button').addClass('disabled');
+			$('#email_results_button').attr('disabled', 'disabled');
+		}
+	} );
+
+	$( 'th.test_checkboxes' ).click( function()
+	{
+		$( 'input[name*=test_checkbox]' ).each( function() { $( this ).prop( 'checked', true ).trigger( 'change' ) } );
+	} );
+
+	$('#upload_batch_file_email').change(function()
+	{
+		if(validateEmailAddress($('#upload_batch_file_email').val()))
+		{
+			$('#upload_batch_file_email_error').html('&nbsp;');
+			if($('#upload_batch_file_input').val() != '')
+			{
+				$('#upload_batch_file_button').removeClass('disabled');
+				$('#upload_batch_file_button').removeAttr('disabled');
+			}
+		}
+		else $('#upload_batch_file_email_error').html('Invalid email address');
+	} );
+
+	$('#upload_batch_file_email').keyup(function()
+	{
+		if(validateEmailAddress($('#upload_batch_file_email').val()))
+		{
+			$('#upload_batch_file_email_error').html('&nbsp;');
+			if($('#upload_batch_file_input').val() != '')
+			{
+				$('#upload_batch_file_button').removeClass('disabled');
+				$('#upload_batch_file_button').removeAttr('disabled');
+			}
+		}
+		else
+		{
+			$('#upload_batch_file_email_error').html('Invalid email address');
+			$('#upload_batch_file_button').addClass('disabled');
+			$('#upload_batch_file_button').attr('disabled', 'disabled');
+		}
+	} );
+
+	$('#upload_batch_file_input').change(function()
+	{
+		if(validateEmailAddress($('#upload_batch_file_email').val()))
+		{
+			$('#upload_batch_file_button').removeClass('disabled');
+			$('#upload_batch_file_button').removeAttr('disabled');
+		}
+	} );
+
+	$('#upload_network_file_input').change(function()
+	{
+		$('#upload_network_file_button').removeClass('disabled');
+		$('#upload_network_file_button').removeAttr('disabled');
+	} );
+
+	$( window ).resize( function() { detectWindowSize(); } );
+
+	if( navigator.userAgent.indexOf( 'Android' ) == -1 && navigator.userAgent.indexOf( 'iOS' ) == -1 )
+	{
+		$( '.reaction_left_hand_side' ).first().select();
+	}
+} );
+
+///:~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   // Add textbox and remove textbox
+        $(document).ready(function() {  
+            $("#Add").on("click", function() {  
+                $("#textboxDiv").append("<div><br><input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/> "+ 
+				                        "<select class='reaction_direction' >"+ 
+										"<option value='left'>&#8592</option>"+
+										"<option value='both' selected='selected'>⇌</option>"+ 
+										"<option value='right'>&#8594</option>"+
+										"</select> "+	
+										"<input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/><br></div> ");
+            });  
+            $("#Remove").on("click", function() {  
+                $("#textboxDiv").children().last().remove();  
+            });  
+        });  
+		
+		
+// Save text in txt.file		
+var userInput = document.getElementById("textboxDiv").value;
+
+var fileURL = 'data:application/notepad;charset=utf-8,' + encodeURIComponent(userInput);
+var fileName = "test.txt";
+
+
+if (!window.ActiveXObject) {
+  var save = document.createElement('a');
+  save.href = fileURL;
+
+  save.target = '_blank';
+  save.download = fileName || 'unknown';
+
+  var event = document.createEvent('Event');
+  event.initEvent('click', true, true);
+  save.dispatchEvent(event);
+  (window.URL || window.webkitURL).revokeObjectURL(save.href);
+}
+
+// for IE
+else if (!!window.ActiveXObject && document.execCommand) {
+  var _window = window.open(fileURL, '_blank');
+  _window.document.close();
+  _window.document.execCommand('SaveAs', true, fileName || fileURL)
+  _window.close();
+}
+	
+	
+	
+// Toggle grid padding
+function myFunction() {
+  var x = document.getElementById("myGrid");
+  if (x.className === "w3-row") {
+    x.className = "w3-row-padding";
+  } else {
+    x.className = x.className.replace("w3-row-padding", "w3-row");
+  }
+}
+
+// Open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.width = "100%";
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+</html>
