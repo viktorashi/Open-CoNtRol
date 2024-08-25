@@ -3,7 +3,7 @@ from flask import *
 import subprocess
 import os
 import glob
-import pygraphviz as pgv                                  # Am adaugat aici !!!  import pygraphviz  ----------------------------------------
+import pygraphviz as pgv                                  # Am adaugat aici !!!  
 import pandas as pd
 import json
 import plotly
@@ -24,7 +24,9 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import io
+
 app = Flask(__name__, template_folder='templates')
+
 class DataStore():
     specs = None
 
@@ -64,7 +66,7 @@ def saveReactiiFile(theRequest):
      
         index += 1
         
-    theFile.close();
+    theFile.close()
     
 @app.route("/save_reactii", methods=['POST'])
 def saveReactii():
@@ -516,7 +518,12 @@ ip = subprocess.check_output(["ifconfig ens33 | grep 'inet'| awk '{print$2}'"],s
 
 if __name__ == '__main__':
     app.secret_key="ceva"
-app.run(host=ip, port ='5000', debug=True)
+    '''
+    indented because of 
+    * Ignoring a call to 'app.run()' that would block the current 'flask' CLI command.
+   Only call 'app.run()' in an 'if __name__ == "__main__"' guard.
+    '''
+    app.run(host=ip, port ='5000', debug=True)
 
 # ---------------------------------------
 
