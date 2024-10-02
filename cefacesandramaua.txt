@@ -1,0 +1,2 @@
+deci pe front e un formular cu toate reactiile care da post la /save_reactii cu cate reactii sunt si formulelel lor na
+

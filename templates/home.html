@@ -69,9 +69,9 @@
     	<i class="fa fa-remove"></i>
   	</a>
  	<div class="w3-bar-block w3-center">
-    	<a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
-        <a href="http://192.168.1.50:5000/input_user" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Show The Graph</a>
-	<a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Details</a>
+    	<a href="http://127.0.0.1:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
+        <a href="http://127.0.0.1:5000/input_user" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Show The Graph</a>
+        <a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Details</a>
 	</div>
 </nav>
 
@@ -105,32 +105,32 @@ set of reactions. For example, the pair of combustion reactions:</div>
 </div>
 </div>
 
-
-<!-- Am adaugat aici!!!   --------------------------------------- -->
-
 <br>
-<center>
-							<button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button> 
+<div style="text-align: center;">
+							<button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
 							<button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button> 
 							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
 <form action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
-							<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount"/> 
+
+							<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount"/>
+
 							<div id="textboxDiv">
 								
 							</div>
 							
 							<div style="position: relative; left: 21%">
 							  <!--<p><b>Creare grafic personalizat.</b></p>-->
-							  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" type="submit">Generate Graph</button></p>
+							  <p class="w3-padding-16">
+                                  <button id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
+                              </p>
 							</div>
 </form>
+
 <div class="form-status-holder"></div>
 
+{#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
 
-<!-- Pana aici!!! ----------------------------------------------------- -->
-
-<!--<img src="/static/grafic.jpg" alt="my plot" width="150" height="150">-->
-</center>
+</div>
 
 </header>
 </div>
@@ -138,7 +138,9 @@ set of reactions. For example, the pair of combustion reactions:</div>
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge" style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
-  <p class="w3-medium">2023@  <target="_blank" class="w3-hover-text-green"></a></p>
+
+  <p class="w3-medium">2023@  <a target="_blank" class="w3-hover-text-green"></a> </p>
+
 </footer>
 <script>
 
@@ -148,6 +150,7 @@ function updateFormReactCount(ecuatiiCount)
 {
 	$("#ecuatiiCount").val(ecuatiiCount);
 }
+
 function genTextBox(textBoxID)
 {
 	$("#textboxDiv").append("<div id='textbox'><br><input name='ec_"+textBoxID+"_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/> "+ 
@@ -182,6 +185,7 @@ function genTextBox(textBoxID)
 
 	
 	var timeoutId;
+
 $('form input, form select').on('input propertychange change', function() {
     console.log('Textarea Change');
     
