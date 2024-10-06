@@ -87,7 +87,11 @@
                       <p style="padding-top:4%">In each txt file, we have represented a CRN with 1, 2 or 3 species and below the time of representation of graph</p>
                       <!-- <p style="display:inline">File</p>-->
                       <br>
-                      <select id="comp_select" name="comp_select" style="display:inline; width:70%; text-align:center; margin-top:-4%" class="selectpicker form-control" onchange="reactionFilenameChanged()"> {% for o in data %} <option value="{{ o.name }}">{{ o.name }}</option> {% endfor %} </select>
+                      <select id="comp_select" name="comp_select" style="display:inline; width:70%; text-align:center; margin-top:-4%" class="selectpicker form-control" onchange="reactionFilenameChanged()">
+                          {% for o in data %}
+                              <option value="{{ o.name }}"> {{ o.name }} </option>
+                          {% endfor %}
+                      </select>
                       <br>
                       <br>
                       <!--Aici avem specs: {{ specs1 }}-->
@@ -156,7 +160,7 @@
                     <div class="column" style="background-color:white; color:gray; border-left-width:1px; border-left-style:solid; border-right-width:1px; border-right-style:solid">
                       <p style="padding-top:4%">A, B, C represent the species of the chemical reaction network together with the initial values of each species</p>
                       <div id="undeVinSpeciile">
-                        <!--<div class="form-group">
+                        <div class="form-group">
                           <div class="input-group">
                             <p style="display:inline;padding-right:10%">A</p>
                             <input class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center" type="text" name="valinit">
@@ -176,7 +180,7 @@
                             <input class="w3-input w3-hover-blue" style="width:60%;display: inline;text-align:center" type="text" name="valinit3">
                             <br>
                           </div>
-                        </div>-->
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -184,7 +188,7 @@
                     <div class="column" style="background-color:white; color:gray">
                       <p style="padding-top:4%">k1, k2, k3 represent the constants of the each reaction in CRN and their values</p>
                       <div id="undeVinConstantele">
-                       <!-- <div class="form-group">
+                       <div class="form-group">
                           <div class="input-group">
                             <p style="display:inline; padding-right:10%">k1</p>
                             <input class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="text" name="valk">
@@ -203,7 +207,7 @@
                             <input class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="text" name="valk3">
                             <br>
                           </div>
-                        </div>-->
+                        </div>
                       </div>
                     </div>
                   <button id="register" type="submit" value="submmit" class="w3-button w3-black" onclick="window.location='grafic';" style="margin-top:1.8%; float:right" disabled="true" >Generate Graph</button>
@@ -213,13 +217,13 @@
           </div>
         </header>
       </div>
-      <!--<img src="static/grafic.jpg" height="200" alt="">-->
-      <!-- Footer -->
-      <!--<footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge" style="/*!margin-top:128px; margin-left:-2px;*/ position:absolute; bottom:0.7%; width:100%; padding-top:2%; padding-bottom:2%">
-        <p class="w3-medium">2022@ <target="_blank" class="w3-hover-text-green">
-            </a>
-        </p>
-      </footer>-->
+{#      <img src="static/grafic.svg" height="200" alt="">#}
+{#       footer#}
+{#      <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge" style="/*!margin-top:128px; margin-left:-2px;*/ position:absolute; bottom:0.7%; width:100%; padding-top:2%; padding-bottom:2%">#}
+{#        <p class="w3-medium">2022@ <target="_blank" class="w3-hover-text-green">#}
+{#            </a>#}
+{#        </p>#}
+{#      </footer>#}
       <script>
 	  
         // Toggle grid padding
@@ -252,7 +256,7 @@
             {
                 textToAppend = "<div class=\"form-group\">"+
                               "<div class=\"input-group\">"+
-                              "<p style=\"display:inline;padding-right:10%\">"+specsList[spec]+"</p>"+
+                              "<p style=\"display:inline;padding-right:10%\">"+specsList[specIndex]+"</p>"+
                               "<input id=\"NumberButton\" class=\"w3-input w3-hover-blue\" style=\"width:60%; display:inline; text-align:center;margin-top:8%\" type=\"number\" step=\"any\" name=\"valinit"+specIndex+"\" >"+
                               "</div>"+
                               "</div>";
@@ -260,13 +264,14 @@
                 undeVinSpeciile.innerHTML = undeVinSpeciile.innerHTML + textToAppend;
             }
         }
+
         // Generate Reaction Constants List 
         function generateConstante(constCount)
         {
             undeVinConstantele = document.getElementById("undeVinConstantele");
             undeVinConstantele.innerHTML = "";
 
-            for ( constIndex = 0; constIndex < constCount; constIndex++ )
+            for ( let constIndex = 0; constIndex < constCount; constIndex++ )
             {
                 textToAppend = "<div class=\"form-group\">"+
                         "<div class=\"input-group\">"+
@@ -281,20 +286,26 @@
 
         function updateInputs(filename)
         {
-            var xhttp = new XMLHttpRequest();
+            const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200)
-                {
+                //when it's done/all data has been transmitted and status OK
+                if (this.readyState === 4 && this.status === 200) {
+                    let jsonOBJ;
                     jsonOBJ = JSON.parse(this.responseText);
 
-                    specsList = jsonOBJ.specsList;
+                    specsList = jsonOBJ.speciiList;
                     reactsCount = jsonOBJ.reactsCount;
+                    specCount = jsonOBJ.specCount
+
+                    console.log(reactsCount)
+                    console.log(specsList)
+                    console.log(specCount)
 
                     generateSpecs(specsList);
                     generateConstante(reactsCount);
                 }
             };
-            xhttp.open("GET", "/reactmeta?filename="+currentFilename, true);
+            xhttp.open("GET", "/reactmeta?filename="+filename);
             xhttp.send();
         }
 
@@ -302,14 +313,11 @@
         function reactionFilenameChanged()
         {
             selectorItem = document.getElementById('comp_select');
-            currentFilename = selectorItem.value;
 
-            updateInputs(currentFilename);
+            updateInputs(selectorItem.value);
         }
         
         
-        //generateSpecs([ 'A','B','C','D','E','F','G','H' ]);
-        //generateConstante(4);
         reactionFilenameChanged();
 		
 		

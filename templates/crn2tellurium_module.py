@@ -13,7 +13,7 @@ def crn2tellurium( filename ):
 
 
     # ---- inlocuirea sagetilor -----
-    r = [];
+    r = []
     for x in b:
         loc = x.find('<-->')
         if  loc > -1:    # reactie bidirectionala
@@ -34,7 +34,7 @@ def crn2tellurium( filename ):
     kcont = 0   # cate reactii sunt
     krates = []   # lista cu vitezele de reactie
     for x in s:   # gaseste vitezele de reactie
-        kcont = kcont + 1;  # de la 1 la cate reactii sunt
+        kcont = kcont + 1  # de la 1 la cate reactii sunt
         krate = ''   # rata de reactie
         krate = krate + 'k' + str(kcont)
 
@@ -124,9 +124,9 @@ def crn2tellurium( filename ):
     ## --- creaza stringul de Tellurium
 
     tel = ''
-    ii = -1;
+    ii = -1
     for x in reacts:
-        ii = ii + 1;
+        ii = ii + 1
         tel = tel + x + '; ' + krates[ii] + '\n'
 
 

@@ -1,38 +1,30 @@
 #import Flask
 from random import randint
 
-from flask import *
-import subprocess
-import os
-import glob
-import pygraphviz as pgv  # Am adaugat aici !!!
-import pandas as pd
-import json
-import plotly
-import plotly.express as px
-import re
-import tellurium as te
-import matplotlib.pyplot as plt
+
 #import subprocess
 #import StringIO
-import base64
-from io import StringIO
 #from crn2tellurium_module import *
-import numpy as np
-import base64
-from io import BytesIO
-from matplotlib.figure import Figure
 #create an instance of Flask
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
+# import subprocess
+# import StringIO
+# from crn2tellurium_module import *
+# create an instance of Flask
 import io
+import json
+import os
+import re
+import subprocess
+from random import randint
+import tellurium as te
+from flask import *
 
 app = Flask(__name__, template_folder='templates')
 
 
 #nu-s folosite astea dar ok
 class DataStore():
-    specs = None
+    specii = None
 
 
 data = DataStore()
@@ -43,7 +35,7 @@ def random():
     return None
 
 
-@app.route('/')
+@app.get('/')
 def home():
     return render_template("home.html")
 
@@ -91,45 +83,41 @@ def input_user():
     temp = []
     for file in files:
         temp.append({'name': file})
-    specs1 = session.get("specs")
+    specii1 = session.get("specii")
+    #specii inseamna gen speciile presupun??? idk simcer
     print('specurile din session de la get input user sunt')
-    print(specs1)
+    print(specii1)
 
-    return render_template("input_user.html", data=temp, specs1=specs1)
+    return render_template("input_user.html", data=temp, specii1=specii1)
 
 
 @app.post('/input_user')
 def input_user_post():
-    print('AM INTRAT PE AL DOILEA 2')
-    global select, text, text1, text2, text3, text4, specs, valInitArray, constArray
-    text = request.form['durata']
-    session['text'] = text
-    processed_text = text.upper()
+    global select, durata, amplitudine, titlu, x_titlu, y_titlu, specii, valInitArray, constArray
+    durata = request.form['durata']
+    session['durata'] = durata
+    processed_text = durata.upper()
 
-    text1 = request.form['amplitudine']
-    session['text1'] = text1
-    processed_text1 = text1.upper()
+    amplitudine = request.form['amplitudine']
+    session['amplitudine'] = amplitudine
+    processed_text1 = amplitudine.upper()
 
-    # Am modificat aici !!! -----------------------------------------------------
-    text2 = request.form['titlu']
-    session['text2'] = text2
-    processed_text2 = text2.upper()
+    titlu = request.form['titlu']
+    session['titlu'] = titlu
+    processed_text2 = titlu.upper()
 
-    text3 = request.form['x_titlu']
-    session['text3'] = text3
-    processed_text3 = text3.upper()
+    x_titlu = request.form['x_titlu']
+    session['x_titlu'] = x_titlu
+    processed_text3 = x_titlu.upper()
 
-    text4 = request.form['y_titlu']
-    session['text4'] = text4
-    processed_text4 = text4.upper()
+    y_titlu = request.form['y_titlu']
+    session['y_titlu'] = y_titlu
+    processed_text4 = y_titlu.upper()
 
-    print(text2)
-    print(text3)
-    print(text4)
-    # Pana aici !!! -------------------------------------------------------------
-
+    #lista cu coeficientii pt fiecare specie
     valInitArray = []
     valInitIndex = 0
+
     while True:
         try:
             requestValInit = request.form['valinit' + str(valInitIndex)]
@@ -140,6 +128,7 @@ def input_user_post():
 
     constArray = []
     constIndex = 0
+
     while True:
         try:
             requestConstInit = request.form['valk' + str(constIndex)]
@@ -148,38 +137,21 @@ def input_user_post():
         except:
             break
 
-    #text3 = request.form['valinit0']
-    #session['text3'] = text3
-    #processed_text3 = text3.upper()
-
-    #text5 = request.form['valinit1']
-    #session['text5'] = text5
-    #processed_text5 = text5.upper()
-
-    ##text6 = request.form['valinit2']
-    ##session['text6'] = text6
-    ##processed_text6 = text6.upper()
-
-    #text4 = request.form['valk0']
-    #session['text4'] = text4
-    #processed_text4 = text4.upper()
-
-    #text8 = request.form['valk1']
-    #session['text8'] = text8
-    #processed_text8 = text8.upper()
-
-    ##text9 = request.form['valk2']
-    ##session['text9'] = text9
-    ##processed_text9 = text9.upper()
-
     select = request.form.get('comp_select')
     session['select'] = select
-    specs1 = session.get("specs")
-    #print(specs1)
-    #print(select)
-    #print(text)
-    #print (text3)
-    #    return(str(select), text) # just to see what select is
+    specii = session.get("specii")
+
+    print(session['durata'])
+    print(session['amplitudine'])
+    print(session['titlu'])
+    print(session['x_titlu'])
+    print(session['y_titlu'])
+    print(session['constArray'])
+    print(session['valInitArray'])
+    print(session['select'])
+    print(session['specii'])
+
+    # return(str(select), text) # just to see what select is
     return redirect(f"/graph2")
 
 
@@ -194,67 +166,73 @@ def plot_svg():
                            pageName="Chemical Reaction Network (CRN) - 2D")
 
 
-@app.route('/reactmeta', methods=['GET'])
+@app.get('/reactmeta')
 def getReactionMetaHandler():
     reactionFileName = request.args.get('filename')
     f = open("templates/metode_lucru/" + reactionFileName, 'rt')
-    a = f.readlines()
-    s = getReactii4Tellurium(a)
-    specs, reacts = getReactionMeta(session, s)
+    fileLines = f.readlines()
 
-    specsJson = json.dumps(specs)
-    return "{ \"specCount\":\"" + str(len(specs)) + "\",\"specsList\":" + specsJson + ",\"reactsCount\":\"" + str(
-        len(reacts)) + "\"}"  #Json facut de mana :)
+    reactii_individuale : [str] = getReactii4Tellurium(fileLines)
+
+    specii, reacts = getReactionMeta(session, reactii_individuale)
+    data = { 'specCount' : str(len(specii)),
+             'speciiList' : specii,
+             'reactsCount' : str(len(reacts)),
+             }
+    return json.dumps(data)
+    # return '{ "specCount":"' + str(len(specii)) + '","speciiList":' + speciiJson + ',"reactsCount":"' + str(
+    #     len(reacts)) + '"}'  #Json facut de mana :)
 
 
-def getReactionMeta(session, s):
-    global specs  #Aici o sa fie colectia de specii
-    specs = []
-    for x in s:  # gaseste speciile
-        ats = x.replace('->', '+').split('+')
+def getReactionMeta(session, reactii_individuale : [str] ):
+    global specii  #Aici o sa fie colectia de specii
+    specii = []
 
+    for reactie in reactii_individuale:  # gaseste speciile
+        ats = reactie.replace('->', '+').split('+') #transforma si 4A + 5B -> C in 4A + 5B + C si le da split la +
+
+        print('ats:')
+        print(ats)
+
+        #scoate coeficientul din fata de la fiecare specie
         for ato in ats:
-            if ato == '0':  # zero barat in stanga
-                pass
-            else:
+            if ato != '0':  # sa nu fie zero barat
                 spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
-                specs.append(spec)  # in place
+                specii.append(spec)  # in place
+
     ## end -- for x in s
-    specs = list(set(specs))
-    specs.sort()  # alfabetic, in place
-    session["specs"] = specs
+
+    #TODO: problema aici ca daca am in reactii diferite aceeasi specie nu pot sa le pun coeficientii diferite
+    specii = list(set(specii)) #scoate duplicatele
+    specii.sort()  # alfabetic
+    session['specii'] = specii
     #print( krates )
     print("Cate specii sunt:")
-    print(specs)
-    print(specs[0])
-    print(specs[1])
+    print(specii)
 
+    #transforma din reactiile individuale de forma 2A + 3B -> 10C in 2  A  3  B -> 10  C
     reacts = []  # lista cu reactiile
-    for x in s:
+    for reactie in reactii_individuale:
 
-        le = x.split('->')[0]  # reactantii
-        ri = x.split('->')[1]  # produsii
-        atsle = le.split('+')  # 2A3
-        atsri = ri.split('+')
+        le , ri = reactie.split('->') #reactantii si produsii
+        # le = reactie.split('->')[0]  # reactantii
+        # ri = reactie.split('->')[1]  # produsii
 
-        react = ''
+        atsle = le.split('+')  #reactantii cu tot cu coeficientii
+        atsri = ri.split('+') #produsii cu tot cu coeficientii
+
 
         lle = []
-        if atsle == ['0']:  # zero barat in stanga
-            pass
-        else:
+        if atsle != ['0']:  #sa nu fie zero barat in stanga
             for ato in atsle:
                 coef = re.findall(r'^[0-9]*', ato)[0]  # este sir vid '' daca nu gaseste
                 spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
                 lle.append(coef + ' ' + spec)
 
-        react = react + ' + '.join(lle)
-        react = react + ' -> '
+        react = '' + ' + '.join(lle) + ' -> '
 
         lri = []
-        if atsri == ['0']:  # zero barat in stanga
-            pass
-        else:
+        if atsri != ['0']:  # zero barat in stanga
             for ato in atsri:
                 coef = re.findall(r'^[0-9]*', ato)[0]  # este sir vid '' daca nu gaseste
                 spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
@@ -263,37 +241,47 @@ def getReactionMeta(session, s):
         react = react + ' + '.join(lri)
 
         reacts.append(react)
-    ## end --- for x in x
+    ## end --- for reactie in reactie
 
     reacts = list(map(lambda x: x.replace("  ", " "), reacts))  # elimina spatiile duble
     reacts = list(map(lambda x: x.strip(), reacts))  # elimina spatiile de la inceput si sfarsit
 
-    print("Cate reactii sunt")
+    print("Cate reactie sunt")
     print(reacts)
 
-    return specs, reacts
+    return specii, reacts
 
 
-def getReactii4Tellurium(listaLiniiFisier):
-    b = list(map(lambda x: x.strip(), listaLiniiFisier))  # scapa de un <enter> la sfarsit
+def getReactii4Tellurium(listaLiniiFisier : [str] ) -> [str]:
+    '''
+    :param listaLiniiFisier:
+        obtinuta prin readlines()
+    :return reactii_individuale: [str]
+       conversteste reactii <--> bidirectioanale in 2 catre dreapta ->
+       inverseaza <-- in ->
+       si --> devine ->
+    '''
+    lista_ecuatii : [] = list(map(lambda x: x.strip(), listaLiniiFisier))  # scapa de un <enter> la sfarsit
     #print(b)
 
     # ---- inlocuirea sagetilor -----
-    r = [];
-    for x in b:
-        loc = x.find('<-->')
-        if loc > -1:  # reactie bidirectionala
-            r.append(x.replace('<-->', '->'))  # reactia directa
-            r.append(x[loc + 4:len(x)].strip() + ' -> ' + x[0:loc].strip())  # reactia inversa
+    reactii_individuale : [str] = []
+    for ecuatie in lista_ecuatii:
+        positionFound = ecuatie.find('<-->')
+        if positionFound > -1:  # reactie bidirectionala
+            reactii_individuale.append(ecuatie.replace('<-->', '->'))  # reactia directa
+            #o inverseaza si o face directa
+            reactii_individuale.append(ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
         else:
-            loco = x.find('<--')
-            if loco > -1:
-                r.append(x[loco + 4:len(x)].strip() + ' -> ' + x[0:loco].strip())  # reactia inversa
+            positionFound = ecuatie.find('<--')
+            if positionFound > -1:
+                # o inverseaza ca sa aiba acelasi format
+                reactii_individuale.append(ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
             else:
-                r.append(x.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
-    #print( r )
+                reactii_individuale.append(ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
+    #print( reactii_individuale )
 
-    return list(map(lambda x: x.replace(" ", ""), r))
+    return list(map(lambda x: x.replace(" ", ""), reactii_individuale))
 
 
 def create_figure():
@@ -302,7 +290,7 @@ def create_figure():
     filename = 'templates/metode_lucru/' + select
     tel = crn2tellurium(filename)  #   tellurium output !!!
     #print(select)
-    print(text)
+    print(durata)
     print("ceva")
     #session['text'] = text
     #session['text1'] = text1
@@ -312,7 +300,7 @@ def create_figure():
     #session['text6'] = text6
     #session['text8'] = text8
     #session['text9'] = text9
-    print(text)
+    print(durata)
     print(select)
     #print(text3)
 
@@ -352,8 +340,8 @@ def create_figure():
     #    import matplotlib.pyplot as dsr
     #    dsr.savefig('static/DSRgraph.png')
 
-    simu.simulate(float(text1), float(text), 1000)  # era 100
-    simu.plot(title=str(text2), xtitle=str(text3), ytitle=str(text4))
+    simu.simulate(float(amplitudine), float(durata), 1000)  # era 100
+    simu.plot(title=str(titlu), xtitle=str(x_titlu), ytitle=str(y_titlu))
     # Pana aici !!! --------------------------------------------------------
     simu.show()
     from matplotlib import pyplot as simu
@@ -379,8 +367,8 @@ def create_figure():
 
     simull = te.loada(tel)
 
-    simull.simulate(float(text1), float(text), 1000, ['A', 'B'])  # era 100
-    simull.plot(title=str(text2), xtitle=str(text3), ytitle=str(text4))
+    simull.simulate(float(amplitudine), float(durata), 1000, ['A', 'B'])  # era 100
+    simull.plot(title=str(titlu), xtitle=str(x_titlu), ytitle=str(y_titlu))
 
     simull.show()
     from matplotlib import pyplot as simull
@@ -443,7 +431,7 @@ def crn2tellurium(filename):
         krates.append(krate)
     ## end -- for x in s
 
-    specs, reacts = getReactionMeta(session, s)
+    specii, reacts = getReactionMeta(session, s)
 
     ## --- creaza stringul de Tellurium
 
@@ -483,23 +471,21 @@ def crn2tellurium(filename):
     #valinit = str(text3)  # valoarea pentru conditiile initiale
     ######valinit=[str(text3), str(text5), str(text6)]
     valinit = valInitArray  #Asta e globala setata in input_user
-    for i in range(0, len(specs)):
-        tel = tel + specs[i] + ' = ' + str(valinit[i]) + ';\n'
+    for i in range(0, len(specii)):
+        tel = tel + specii[i] + ' = ' + str(valinit[i]) + ';\n'
 
     tel = tel + '\n'
     ###
 
     #print(tel)
-    #specs1=session.get("specs")
-    #print(specs1)
+    #specii1=session.get("specii")
+    #print(specii1)
     return tel
 
 
 ## --- end crn2tellurium() ----------------------------------------------------
 
 
-if __name__ == "__main__":
-    print("This module is not to be run form the __main__ scope")
 
 
 @app.route('/dateuser')
@@ -516,8 +502,8 @@ def data():
         return render_template('data.html', form_data=form_data)
 
 
-ip = subprocess.check_output(["ifconfig ens33 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[
-    0].strip()
+ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[
+    1].strip()
 
 ### ----- old way to set the IP ----- ###
 
@@ -528,7 +514,9 @@ if __name__ == '__main__':
     * Ignoring a call to 'app.run()' that would block the current 'flask' CLI command.
    Only call 'app.run()' in an 'if __name__ == "__main__"' guard.
     '''
-    app.run(host=ip, port='5000', debug=True)
+    port = 5000
+    print('intra pe http://' + ip + ':' + str(port))
+    app.run(host=ip, port=port, debug=True)
 
 # ---------------------------------------
 
