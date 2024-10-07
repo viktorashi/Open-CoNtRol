@@ -3,3 +3,12 @@
 	am obs problema ca gen daca sunt mai multe cu aceleasi nume in reatie n-o sa poti sa pui coeficienti diferiti dar nu situ daca ai putea sa ai asta intr-o reactie reala o sa trebuiasca sa fac niste research pana sa-l intreb pe domnu
 	
 aaaa valk de la VALOARE kAPPA
+sa nu mai apara paigini de erori sa zica ce carafctere sunt gresite si pe frontend si backend
+cum sa faci TSR graphuri da sa apara pe ecran gen in web 
+si faci mai multe tipuri de graifcuri 
+sa faci macar alea in 2d prima data like gne
+dropdown cu toate tiprui de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
+
+phase portaitu poti sa-l faci o substanta in functie de celelata, daca ai mai mult de 2 specii sa iti apara 
+DSR GRAPH
+

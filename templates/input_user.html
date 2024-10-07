@@ -225,10 +225,10 @@
 {#        </p>#}
 {#      </footer>#}
       <script>
-	  
+
         // Toggle grid padding
         function myFunction() {
-          var x = document.getElementById("myGrid");
+          let x = document.getElementById("myGrid");
           if (x.className === "w3-row") {
             x.className = "w3-row-padding";
           } else {
@@ -244,8 +244,8 @@
         function w3_close() {
           document.getElementById("mySidebar").style.display = "none";
         }
-		
-		// Generate Species List 
+
+		// Generate Species List
         function generateSpecs(specsList)
         {
             undeVinSpeciile = document.getElementById("undeVinSpeciile");
@@ -265,7 +265,7 @@
             }
         }
 
-        // Generate Reaction Constants List 
+        // Generate Reaction Constants List
         function generateConstante(constCount)
         {
             undeVinConstantele = document.getElementById("undeVinConstantele");
@@ -282,7 +282,7 @@
 
                 undeVinConstantele.innerHTML = undeVinConstantele.innerHTML + textToAppend;
             }
-        }		
+        }
 
         function updateInputs(filename)
         {
@@ -295,7 +295,8 @@
 
                     specsList = jsonOBJ.speciiList;
                     reactsCount = jsonOBJ.reactsCount;
-                    specCount = jsonOBJ.specCount
+                    reactsCount = jsonOBJ.reactsCount;
+                    specCount = specsList.length
 
                     console.log(reactsCount)
                     console.log(specsList)
@@ -316,33 +317,33 @@
 
             updateInputs(selectorItem.value);
         }
-        
-        
+
+
         reactionFilenameChanged();
-		
-		
+
+
 /*
-	Enable / Disable Button 
-*/		
-		
+	Enable / Disable Button
+*/
+
 		function doCheck(){
-			var allFilled = true;
-    
-			var inputs = document.getElementsByTagName('input');
-			for(var i=0; i<inputs.length; i++){
+			let allFilled = true;
+
+			let inputs = document.getElementsByTagName('input');
+			for(let i=0; i<inputs.length; i++){
 				if(inputs[i].type == "number" && inputs[i].value == ''){
 					allFilled = false;
 					break;
 				}
 			}
-    
+
 			document.getElementById("register").disabled = !allFilled;
 		}
 
 		window.onload = function(){
-			var inputs = document.getElementsByTagName('input');
-			for(var i=0; i<inputs.length; i++){
-				if(inputs[i].type == "number"){
+			let inputs = document.getElementsByTagName('input');
+			for(let i=0; i<inputs.length; i++){
+				if(inputs[i].type === "number"){
 					inputs[i].onkeyup = doCheck;
 					inputs[i].onblur = doCheck;
 				}
