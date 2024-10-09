@@ -1,118 +1,102 @@
-#import Flask
-from random import randint
-
-
-#import subprocess
-#import StringIO
-#from crn2tellurium_module import *
-#create an instance of Flask
-# import subprocess
-# import StringIO
-# from crn2tellurium_module import *
-# create an instance of Flask
 import io
 import json
 import os
 import re
 import subprocess
-from random import randint
 import tellurium as te
-from flask import *
+from flask import Flask, render_template, request, redirect, session
 
 app = Flask(__name__, template_folder='templates')
-
-
-#nu-s folosite astea dar ok
-class DataStore():
-    specii = None
-
-
-data = DataStore()
-
-
-def random():
-    session['number'] = randint(0, 2)
-    return None
-
 
 @app.get('/')
 def home():
     return render_template("home.html")
 
-
-def saveReactiiFile(theRequest):
-    ecuatiiCount = int(theRequest.form.get('ecuatiiCount'))
+def save_reactions_file(req):
+    """
+    :param req:
+         The Flask request object containing form data.
+                    Expects form data with 'ecuatiiCount' (number of reactions) and for each reaction:
+                    - 'ec_<index>_left': Left side of the reaction.
+                    - 'ec_<index>_dir': Direction of the reaction.
+                    - 'ec_<index>_right': Right side of the reaction.
+    :return: None
+    """
+    ecuatii_count = int(req.form.get('ecuatiiCount'))
     index = 1
 
-    theFile = open("templates/metode_lucru/crn.txt", "w")
+    the_file = open("templates/metode_lucru/crn.txt", "w")
 
-    while index <= ecuatiiCount:
-        ecLeft = theRequest.form.get('ec_' + str(index) + '_left')
-        ecDir = theRequest.form.get('ec_' + str(index) + '_dir')
-        ecRight = theRequest.form.get('ec_' + str(index) + '_right')
+    while index <= ecuatii_count:
+        ec_left = req.form.get('ec_' + str(index) + '_left')
+        ec_dir = req.form.get('ec_' + str(index) + '_dir')
+        ec_right = req.form.get('ec_' + str(index) + '_right')
 
-        ecDirString = ""
-        if ecDir == 'left':
-            ecDirString = '<--'
-        elif ecDir == 'both':
-            ecDirString = '<-->'
-        elif ecDir == 'right':
-            ecDirString = '-->'
+        ec_dir_string = ""
+        if ec_dir == 'left':
+            ec_dir_string = '<--'
+        elif ec_dir == 'both':
+            ec_dir_string = '<-->'
+        elif ec_dir == 'right':
+            ec_dir_string = '-->'
 
-        ecuatieFinala = ecLeft + " " + ecDirString + " " + ecRight
+        ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
 
 #asa ii da overwrite la templates/metode_lucru/crn.txt
-        theFile.write(ecuatieFinala)
-        theFile.write("\n")
+        the_file.write(ecuatie_finala)
+        the_file.write("\n")
 
         index += 1
 
-    theFile.close()
+    the_file.close()
 
 
 @app.post("/save_reactii")
-def saveReactii():
-    saveReactiiFile(request)
+def save_reactii():
+    save_reactions_file(request)
     return redirect(f"/input_user")
 
 
 @app.get('/input_user')
 def input_user():
-    files = sorted(os.listdir('templates/metode_lucru/'))  # Am modificat aici !!! am adaugat: sorted(os.listdir('')) !!! -----------------------------------------
+    files = sorted(os.listdir('templates/metode_lucru/'))
     temp = []
     for file in files:
         temp.append({'name': file})
 
-    specii1 = session.get("specii")
-    #specii inseamna gen speciile presupun??? idk simcer
-    print('specurile din session de la get input user sunt')
-    print(specii1)
+    specii = session.get("specii")
+    print(specii)
 
-    return render_template("input_user.html", data=temp, specii1=specii1)
+    return render_template("input_user.html", data=temp)
+
+
+@app.get('/crn_data')
+def get_crn_data():
+
+    reactii_individuale : [str] = reactions_to_tellurium_format(request.args.get('filename'))
+
+    specii, reacts = get_reaction_meta(reactii_individuale)
+    data = {
+             'speciiList' : specii,
+             'reactsCount' : str(len(reacts)),
+             }
+    return json.dumps(data)
 
 
 @app.post('/input_user')
 def input_user_post():
-    global select, durata, amplitudine, titlu, x_titlu, y_titlu, specii, valInitArray, constArray
-    durata = request.form['durata']
-    session['durata'] = durata
-    # processed_text = durata.upper()
+    session['select'] = request.form.get('comp_select')
 
-    amplitudine = request.form['amplitudine']
-    session['amplitudine'] = amplitudine
-    # processed_text1 = amplitudine.upper()
+    session['start_time'] = request.form['start_time']
 
-    titlu = request.form['titlu']
-    session['titlu'] = titlu
-    # processed_text2 = titlu.upper()
+    session['end_time'] = request.form['end_time']
 
-    x_titlu = request.form['x_titlu']
-    session['x_titlu'] = x_titlu
-    # processed_text3 = x_titlu.upper()
+    session['titlu'] = request.form['titlu']
 
-    y_titlu = request.form['y_titlu']
-    session['y_titlu'] = y_titlu
-    # processed_text4 = y_titlu.upper()
+    session['x_titlu'] = request.form['x_titlu']
+
+    session['y_titlu'] = request.form['y_titlu']
+
 
     #lista cu coeficientii pt fiecare specie
     valInitArray = []
@@ -120,42 +104,40 @@ def input_user_post():
 
     while True:
         try:
-            requestValInit = request.form['valinit' + str(valInitIndex)]
-            valInitArray.append(str(requestValInit))
+            request_val_init = request.form['valinit' + str(valInitIndex)]
+            valInitArray.append(str(request_val_init))
             valInitIndex += 1
         except:
             break
 
-    constArray = []
-    constIndex = 0
+    const_array = []
+    const_index = 0
 
     while True:
         try:
-            requestConstInit = request.form['valk' + str(constIndex)]
-            constArray.append(str(requestConstInit))
-            constIndex += 1
+            request_const_init = request.form['valk' + str(const_index)]
+            const_array.append(str(request_const_init))
+            const_index += 1
         except:
             break
 
-    select = request.form.get('comp_select')
-    session['select'] = select
-    specii = session.get("specii")
+    session['init_vals'] = valInitArray
+    session['react_constants'] = const_array
 
-    print(session.get('durata'))
-    print(session.get('amplitudine'))
+    print(session.get('end_time'))
+    print(session.get('start_time'))
     print(session.get('titlu'))
     print(session.get('x_titlu'))
     print(session.get('y_titlu'))
-    print(constArray)
-    print(valInitArray)
+    print(session.get('init_vals'))
+    print(session.get('react_constants'))
     print(session.get('select'))
     print(session.get('specii'))
 
-    # return(str(select), text) # just to see what select is
-    return redirect(f"/graph2")
+    return redirect(f"/graph")
 
 
-@app.route('/graph2')
+@app.get('/graph')
 def plot_svg():
     [fig, listaToShow, listaToShowMatrice] = create_figure()
     output = io.BytesIO()
@@ -166,31 +148,12 @@ def plot_svg():
                            pageName="Chemical Reaction Network (CRN) - 2D")
 
 
-@app.get('/reactmeta')
-def getReactionMetaHandler():
-    reactionFileName = request.args.get('filename')
-    f = open("templates/metode_lucru/" + reactionFileName, 'rt')
-    fileLines = f.readlines()
-
-    reactii_individuale : [str] = getReactii4Tellurium(fileLines)
-
-    specii, reacts = getReactionMeta(session, reactii_individuale)
-    data = {
-             'speciiList' : specii,
-             'reactsCount' : str(len(reacts)),
-             }
-    return json.dumps(data)
-
-
-def getReactionMeta(session, reactii_individuale : [str] ):
-    global specii  #Aici o sa fie colectia de specii
+#TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
+def get_reaction_meta(reactii_individuale : [str]):
     specii = []
 
     for reactie in reactii_individuale:  # gaseste speciile
         ats = reactie.replace('->', '+').split('+') #transforma si 4A + 5B -> C in 4A + 5B + C si le da split la +
-
-        print('ats:')
-        print(ats)
 
         #scoate coeficientul din fata de la fiecare specie
         for ato in ats:
@@ -200,11 +163,9 @@ def getReactionMeta(session, reactii_individuale : [str] ):
 
     ## end -- for x in s
 
-    #TODO: problema aici ca daca am in reactii diferite aceeasi specie nu pot sa le pun coeficientii diferite
     specii = list(set(specii)) #scoate duplicatele
     specii.sort()  # alfabetic
     session['specii'] = specii
-    #print( krates )
     print("Cate specii sunt:")
     print(specii)
 
@@ -250,19 +211,26 @@ def getReactionMeta(session, reactii_individuale : [str] ):
     return specii, reacts
 
 
-def getReactii4Tellurium(listaLiniiFisier : [str] ) -> [str]:
-    '''
-    :param listaLiniiFisier:
-        obtinuta prin readlines()
-    :return reactii_individuale: [str]
-       conversteste reactii <--> bidirectioanale in 2 catre dreapta ->
+def reactions_to_tellurium_format(filename : str) -> [str]:
+    """
+    :param filename: numele fisierului din care reactii sa le faci in format antimony
+    :return reactii_individuale:
+       converteste reactii <--> bidirectioanale in 2 catre dreapta ->
        inverseaza <-- in ->
        si --> devine ->
-    '''
-    lista_ecuatii : [] = list(map(lambda x: x.strip(), listaLiniiFisier))  # scapa de un <enter> la sfarsit
-    #print(b)
+       practic scrie toate reactiile ca reactie cu sageata catre dreapta, si inlocuieste --> cu ->
+       pt formatul antimony
+       deci sa fie clar face asta DOAR cu reactiile iar functia "crn2tellurium"
+       face un string complet de Antimony
+    """
 
-    # ---- inlocuirea sagetilor -----
+    filename = 'templates/metode_lucru/' + filename
+    f = open( filename, 'rt')
+    file_lines = f.readlines()
+    # scapa de un <enter> la sfarsit
+    lista_ecuatii : [] = list(map(lambda x: x.strip(), file_lines))
+
+    # ---- inlocuirea sagetilor si rasucirea de ecuatii -----
     reactii_individuale : [str] = []
     for ecuatie in lista_ecuatii:
         positionFound = ecuatie.find('<-->')
@@ -277,172 +245,124 @@ def getReactii4Tellurium(listaLiniiFisier : [str] ) -> [str]:
                 reactii_individuale.append(ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
             else:
                 reactii_individuale.append(ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
-    #print( reactii_individuale )
 
     return list(map(lambda x: x.replace(" ", ""), reactii_individuale))
 
 
 def create_figure():
-    global select, durata
+    select = session.get('select')
+    end_time = session.get('end_time')
+    start_time = session.get('start_time')
+    titlu = session.get('titlu')
+    x_titlu = session.get('x_titlu')
+    y_titlu = session.get('y_titlu')
 
-    filename = 'templates/metode_lucru/' + select
-    tel = crn2tellurium(filename)  #   tellurium output !!!
+    antimony_code = crn2antimony(select)  #   tellurium output !!!
 
     print(select)
-    print(durata)
+    print(end_time)
 
     #teltest =' -> A; k1\n2 A + 3 B -> 4 C; k2*A*A*B*B*B\n4 C -> 2 A + 3 B; k3*C*C*C*C\n2 B -> C + 3 A; k4*B*B\n2 B -> C; k5*B*B\nC -> 2 B; k6*C\nC -> ; k7*C\n\nk1 = 7;\nk2 = 7;\nk3 = 7;\nk4 = 7;\nk5 = 7;\nk6 = 7;\nk7 = 7;\n\n\nA = 1;\nB = 1;\nC = 1;\n'
     #simu = te.loada(teltest)
 
     # Am modificat aici !!! ------------------------------------------------
-    te.setDefaultPlottingEngine('matplotlib')
-    simu = te.loada(tel)
-    print(tel)
+    import matplotlib
+    matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct
+    te.setDefaultPlottingEngine('matplotlib') #o sa foloseasca backendu acela bun din matplot
+
+    print('coadele de antiomony')
+    print(antimony_code)
+    print('------pana aici-------------')
+    road_runner = te.loada(antimony_code)
+
+    # sa poata plotui fara sa printeze pe ecran ceva, doar in fisier
+    print(antimony_code)
 
     # matricea stoichiometrica
-    stoicm = simu.getFullStoichiometryMatrix()
+    stoicm = road_runner.getFullStoichiometryMatrix()
     print('asta stoichiometrica')
     print(stoicm)
     print(type(stoicm))
 
-    listaToShowMatrice = []
-    for stoicmLine in str(stoicm).split("\n"):
-        if stoicmLine and not stoicmLine.isspace():
-            listaToShowMatrice.append(stoicmLine)
+    lista_to_show_matrice = []
+    for stoicm_line in str(stoicm).split("\n"):
+        if stoicm_line and not stoicm_line.isspace():
+            lista_to_show_matrice.append(stoicm_line)
 
     # numele ratelor de reactie
-    ka = simu.getGlobalParameterIds()
-    print(ka)
+    k_s = road_runner.getGlobalParameterIds()
+    print(k_s)
 
     # valorile retelor de reactie
-    ra = simu.getReactionRates()
-    print(ra)
+    reation_rates = road_runner.getReactionRates()
+    print(reation_rates)
 
-    #gen de ce s-a numit amplitudine si durata cand amandoua arata practic durata?=)) de unde pana unde
     number_of_points = 1000
-    simulation_results = simu.simulate(start = float(amplitudine), end = float(durata), points=number_of_points, output_file='') #da return la rezultate
+    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points) #da return la rezultate
 
-    # simu.plot(title=str(titlu), xtitle=str(x_titlu), ytitle=str(y_titlu))
+    print(select)
+    print(start_time)
+    print(end_time)
+    print(titlu)
+    print(x_titlu)
+    print(y_titlu)
 
-    import matplotlib
-    from matplotlib import pyplot as plt
-    # sa poata plotui fara sa printeze pe ecran ceva, doar in fisier
-    matplotlib.use('agg')
-    import numpy as np
+    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = 'static/graphic.svg')
 
-    x_axis = []
-    for i in range(number_of_points):
-        x_axis.append(simulation_results[i][0])
+    listaToShowEcuatii = antimony_code.split("\n")
 
-    np_simulation_results = np.array(simulation_results)
-    # like gen the first column (representing time) would become the first line so we scrap that and we're only left with this
-    #TODO: poti sa tai coloana unu fara sa faci transpusa lol faci pythnon way st sa ma intorc del kauflad si fac
-    np_simulation_results_species = np_simulation_results.transpose()[1:].transpose() #dmn ce clunky sincer incredibile calculatoarele ca pot sa faca asta in the blink of an eye
+    return [render_template("home.html"), listaToShowEcuatii, lista_to_show_matrice]
 
-    # print('xaxis')
-    # print(x_axis)
-    print('doar speciile')
-    print(len(np_simulation_results_species))
-    print(np_simulation_results_species)
-
-    plt.plot(x_axis, np_simulation_results_species)
-    plt.savefig('static/graficvik.svg')
-
-    #   simul = te.loada(tel)
-
-    #   m = simul.simulate(float(text1), float(text), 1000)   # era 100
-
-    #   from matplotlib import pyplot as simul
-    #   figg = simul.figure(figsize=(9,6))
-    #   ax = figg.gca(projection='3d')
-    #   ax.view_init(20,40)
-    #   ax.plot(m[:,0], m[:,1], m[:,2], 'r', label='parametric curve')
-    #   ax.legend()
-    #   ax.set_title('wireframe');
-    #   ax.set_xlabel('time')
-    #   ax.set_ylabel('S1')
-    #   ax.set_zlabel('S2');
-    #   simul.show()
-    #   from matplotlib import pyplot as simul
-    #   simul.savefig('static/1grafic3d.svg')
-
-    simull = te.loada(tel)
-
-    simull.simulate(float(amplitudine), float(durata), 1000, session.get('specii'))  # era 100
-    print('inainte de al doilea plot')
-    simull.plot(title=str(titlu), xtitle=str(x_titlu), ytitle=str(y_titlu))
-    print('dupa de al doilea plot')
-
-    # simull.show()
-    from matplotlib import pyplot as simull
-    simull.savefig('static/grafic1.svg')
-
-    #   simulll = te.loada(tel)
-
-    #   m = simulll.simulate(float(text1), float(text), 1000)   # era 100
-
-    #   from matplotlib import pyplot as simulll
-    #   figg = simulll.figure(figsize=(9,6))
-    #   ax = figg.gca(projection='3d')
-    #   ax.view_init(20,40)
-    #   ax.plot(m[:,1], m[:,2], m[:,3], 'r')
-    #   ax.legend()
-    #   ax.set_title('wireframe');
-    #   ax.set_xlabel('S1')
-    #   ax.set_ylabel('S2')
-    #   ax.set_zlabel('S3');
-    #   simul.show()
-    #   from matplotlib import pyplot as simulll
-    #   simulll.savefig('static/2grafic3d.svg')
-
-    # Pana aici !!! --------------------------------------------------------
-
-    listaToShowEcuatii = tel.split("\n")
-
-    return [render_template("home.html"), listaToShowEcuatii, listaToShowMatrice]
-
-
-def crn2tellurium(filename):
+#TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
+def crn2antimony(filename):
+    """
+    :param filename:
+        Name of the file whose contents will be transformed in a full Antimony syntax
+         network with species, constants and everything, as opposed to
+         "reactions_to_tellurium_format" which only does that for the reactions
+    :return:
+    """
     ## filename = 'crn_a_b_c.txt'
     #  filename = 'crn.txt'
 
-    file_lines = open(filename, 'rt').readlines()
-
-    reactii_individuale = getReactii4Tellurium(file_lines)
+    reactii_individuale = reactions_to_tellurium_format(filename)
 
     kcont = 0  # cate reactii sunt
     krates = []  # lista cu vitezele de reactie
 
     for reactie in reactii_individuale:  # gaseste vitezele de reactie
         kcont = kcont + 1  # de la 1 la cate reactii sunt
-        krate = ''  # rata de reactie
-        krate = krate + 'k' + str(kcont) #incepe cu 1:  k1 k2 k3
+        krate = 'k' + str(kcont) #incepe cu 1:  k1 k2 k3
 
-        le = reactie.split('->')[0]
-        ats = le.split('+')
-        if ats != ['0']:  # zero barat in stanga
-            for ato in ats:
-                coef = re.findall(r'^[0-9]*', ato)[0]  # este sir vid '' daca nu gaseste
-                spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
+        reactii_stanga = reactie.split('->')[0].split('+')
+        #scoate coeficientul din fata de la fiecare specie
+
+        #scoate coeficientul din fata de la fiecare specie
+
+        for specie in reactii_stanga:
+            if specie != '0':
+                coeficient = re.findall(r'^[0-9]*', specie)[0]  # este sir vid '' daca nu gaseste
+                subtanta = re.findall(r'[a-zA-Z]+.*', specie)[0]
 
                 cnt = 0
-                if coef == '':
+                if coeficient == '':
                     cnt = 1
                 else:
-                    cnt = int(coef)
+                    cnt = int(coeficient)
 
+                print('countu de coefieicent e')
+                print(cnt)
                 for i in range(cnt):
-                    krate = krate + '*' + spec  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
+                    krate = krate + '*' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
                     #daca e 3ABC devine k1*ABC*ABC*ABC
                     #daca e ABC3 devine k1*ABC3
                     #daca e 3ABC + 3C -> 2C
                     #       3C -> 2A devine [ k1*ABC*ABC*ABC*3C , k2*C*C*C ]
-
         krates.append(krate)
 
     print('krates: ')
     print(krates)
-    specii, reacts = getReactionMeta(session, reactii_individuale)
+    specii, reacts = get_reaction_meta(reactii_individuale)
 
     ## --- creeaza stringul de Tellurium
 
@@ -455,60 +375,41 @@ def crn2tellurium(filename):
     tel = tel + '\n'
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
-    ######valk = [str(text4), str(text8)]   # valoarea pentru constantele de reactie
-    global constArray
-    valk = constArray  #Asta e globala setata in input_user_post
+    reaction_constants = session.get('react_constants')
+    val_k = reaction_constants
     print('constArrayu cu cate kuri adica reactii sunt')
-    print(constArray, kcont)
+    print(reaction_constants, kcont)
     #pt fiecare reactie face k1 = valoarea;
-            #                k2 = valoarea;
+    #                k2 = valoarea;
     for k in range(kcont):
-        tel = tel + 'k' + str(k + 1) + ' = ' + str(valk[k]) + ';\n'  # era: str(valk[k-1])
+        tel = tel + 'k' + str(k + 1) + ' = ' + str(val_k[k]) + ';\n'  # era: str(valk[k-1])
 
     tel = tel + '\n'
 
     # THE VALUE FOR THE INITIAL CONDITIONS!!!
-    valinit = valInitArray  #Asta e globala setata in input_user
+    init_vals = session.get('init_vals')
     for i in range(len(specii)):
-        tel = tel + specii[i] + ' = ' + str(valinit[i]) + ';\n'
-            #aici pune A = ce valoare a dat useru in UI
+        tel = tel + specii[i] + ' = ' + str(init_vals[i]) + ';\n'
+        #aici pune A = ce valoare a dat useru in UI
 
     tel = tel + '\n'
 
-    print('acm da return crn2telluriumm')
+    print('aici stringu final')
     return tel
 
-
-@app.route('/dateuser')
-def form():
-    return render_template('form.html')
-
-
-@app.route('/data/', methods=['POST', 'GET'])
-def data():
-    if request.method == 'GET':
-        return f"The URL /data is accessed directly. Try going to '/form' to submit form"
-    if request.method == 'POST':
-        form_data = request.form
-        return render_template('data.html', form_data=form_data)
-
-
-ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[
-    1].strip()
-
-### ----- old way to set the IP ----- ###
-
+ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[1].strip()
 
 if __name__ == '__main__':
-    app.secret_key = "ceva"
+    app.secret_key = os.urandom(24)
     '''
     indented because of 
     * Ignoring a call to 'app.run()' that would block the current 'flask' CLI command.
    Only call 'app.run()' in an 'if __name__ == "__main__"' guard.
     '''
+    localhost = '127.0.0.1'
     port = 5000
     print('intra pe http://' + ip + ':' + str(port))
-    app.run(host=ip, port=port, debug=True)
+    app.run(host=localhost, port=port, debug=True)
 
 # ---------------------------------------
 

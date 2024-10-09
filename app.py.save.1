@@ -36,7 +36,7 @@ def random():
 def home():
     return render_template("home.html")
 
-def saveReactiiFile(theRequest):
+def save_reactii_file(theRequest):
     ecuatiiCount = int(theRequest.form.get('ecuatiiCount'))
     index = 1
     
@@ -65,8 +65,8 @@ def saveReactiiFile(theRequest):
     theFile.close();
     
 @app.route("/save_reactii", methods=['POST'])
-def saveReactii():
-    saveReactiiFile(request)
+def save_reactii():
+    save_reactii_file(request)
     
     return redirect(f"/input_user")
     
@@ -181,13 +181,13 @@ def getReactionMetaHandler():
     reactionFileName = request.args.get('filename')
     f = open("templates/metode_lucru/"+reactionFileName, 'rt')
     a = f.readlines()
-    s = getReactii4Tellurium(a)
-    specs,reacts = getReactionMeta(session,s)
+    s = reactions_to_tellurium_format(a)
+    specs,reacts = get_reaction_meta(session,s)
 
     specsJson = json.dumps(specs)
     return "{ \"specCount\":\""+str(len(specs))+"\",\"specsList\":"+specsJson+",\"reactsCount\":\""+str(len(reacts))+"\"}"   #Json facut de mana :)
 
-def getReactionMeta(session,s):
+def get_reaction_meta(session,s):
 
     global specs #Aici o sa fie colectia de specii
     specs = []
@@ -254,7 +254,7 @@ def getReactionMeta(session,s):
 
     return specs,reacts
 
-def getReactii4Tellurium(listaLiniiFisier):
+def reactions_to_tellurium_format(listaLiniiFisier):
     b = list( map(lambda x:x.strip(), listaLiniiFisier) )  # scapa de un <enter> la sfarsit
     #print(b)
 
@@ -281,7 +281,7 @@ def create_figure():
     global select
     session['select']=select
     filename = 'templates/metode_lucru/'+select
-    tel = crn2tellurium(filename)    #   tellurium output !!!
+    tel = crn2antimony(filename)    #   tellurium output !!!
     #print(select)
     print(text)
     print("ceva")
@@ -395,7 +395,7 @@ def create_figure():
 # Pana aici !!! --------------------------------------------------------   
     return [render_template("home.html"),listaToShowEcuatii,listaToShowMatrice]
 
-def crn2tellurium(filename):
+def crn2antimony(filename):
 
     ## filename = 'crn_a_b_c.txt'
 #    filename = 'crn.txt'
@@ -403,7 +403,7 @@ def crn2tellurium(filename):
     a = f.readlines()
     #print(a)
 
-    s = getReactii4Tellurium(a)
+    s = reactions_to_tellurium_format(a)
 
     kcont = 0   # cate reactii sunt
     krates = []   # lista cu vitezele de reactie
@@ -431,7 +431,7 @@ def crn2tellurium(filename):
         krates.append( krate )
     ## end -- for x in s
 
-    specs,reacts = getReactionMeta(session,s)
+    specs,reacts = get_reaction_meta(session,s)
 
 
     ## --- creaza stringul de Tellurium
@@ -485,7 +485,7 @@ def crn2tellurium(filename):
     return tel
 
 
-## --- end crn2tellurium() ----------------------------------------------------
+## --- end crn2antimony() ----------------------------------------------------
 
 
 if __name__ == "__main__":

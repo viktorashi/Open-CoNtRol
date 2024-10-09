@@ -103,7 +103,7 @@ def create_figure():
     global select
     session['select']=select
     filename = 'templates/metode_lucru/'+select
-    tel = crn2tellurium(filename)
+    tel = crn2antimony(filename)
     #print(select)
     print(text)
     print("ceva")
@@ -137,7 +137,7 @@ def create_figure():
 #    return fig
     return render_template("home.html")
 
-def crn2tellurium(filename):
+def crn2antimony(filename):
 
     ## filename = 'crn_a_b_c.txt'
 #    filename = 'crn.txt'
@@ -303,7 +303,7 @@ def crn2tellurium(filename):
     return tel
 
 
-## --- end crn2tellurium() ----------------------------------------------------
+## --- end crn2antimony() ----------------------------------------------------
 
 
 if __name__ == "__main__":

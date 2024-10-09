@@ -96,13 +96,13 @@
                       <br>
                       <!--Aici avem specs: {{ specs1 }}-->
                       <p style="display:inline; padding-right:10%">Start Time</p>
-                      <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="amplitudine" />
+                      <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="start_time" />
                       <br>
                       <div class="input-group">
                         <div class="form-group">
                           <br>
                           <p style="display:inline; padding-right:10%">End Time</p>
-                          <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="durata" />
+                          <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="end_time" />
                           <div class="form-group">
                             <div class="input-group">
                               <br>
@@ -306,7 +306,7 @@
                     generateConstante(reactsCount);
                 }
             };
-            xhttp.open("GET", "/reactmeta?filename="+filename);
+            xhttp.open("GET", "/crn_data?filename="+filename);
             xhttp.send();
         }
 
