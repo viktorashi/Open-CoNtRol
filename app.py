@@ -397,19 +397,24 @@ def crn2antimony(filename):
     print('aici stringu final')
     return tel
 
-ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[1].strip()
 
 if __name__ == '__main__':
+    ip = 0
+    try:
+        ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[1].strip()
+        #ca nu exista index 1 daca nu ai interfete pornite
+    except IndexError:
+        ip = '127.0.0.1'
+        print('nu cred ca ai netu pornit da-i ca ok dam pe localhost')
     app.secret_key = os.urandom(24)
     '''
     indented because of 
     * Ignoring a call to 'app.run()' that would block the current 'flask' CLI command.
    Only call 'app.run()' in an 'if __name__ == "__main__"' guard.
     '''
-    localhost = '127.0.0.1'
     port = 5000
     print('intra pe http://' + ip + ':' + str(port))
-    app.run(host=localhost, port=port, debug=True)
+    app.run(host=ip, port=port, debug=True)
 
 # ---------------------------------------
 
