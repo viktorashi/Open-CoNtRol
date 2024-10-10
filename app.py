@@ -62,6 +62,10 @@ def save_reactii():
 
 @app.get('/input_user')
 def input_user():
+    """
+    :return: The template with the inputs required to generate the graph, with all the file names
+    that contain CNR's
+    """
     files = sorted(os.listdir('templates/metode_lucru/'))
     temp = []
     for file in files:
@@ -75,6 +79,12 @@ def input_user():
 
 @app.get('/crn_data')
 def get_crn_data():
+    """
+    gets called by the input_user.html template with the filename, parses its data
+    to find its species and how many reactions are in the CRN's, returning them back
+    to the same template
+    :return:
+    """
 
     reactii_individuale : [str] = reactions_to_tellurium_format(request.args.get('filename'))
 
@@ -89,9 +99,15 @@ def get_crn_data():
 @app.post('/input_user')
 def input_user_post():
     """
-    Saves the form data from the request to the flask session
-    :return:
+    Saves the form data from the request to the current flask session
+    including the "select"-ed file name
+    start_time, end_time, titlu, x_titlu, y_titlu,
+    the initial values of concentration for each species
+    and the values for the reaction rates (the k's)
+
+    :return: Redirects the user to '/graph' for displaying the graph generated
     """
+
     session['select'] = request.form.get('comp_select')
 
     session['start_time'] = request.form['start_time']
@@ -146,18 +162,24 @@ def input_user_post():
 
 @app.get('/graph')
 def plot_svg():
+    """
+    :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
+    """
     [fig, listaToShow, listaToShowMatrice] = create_figure()
     output = io.BytesIO()
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
-    #listaToShow = ['A','B','C']
     return render_template("graph.html", listaEcuatii=listaToShow, listaMatrice=listaToShowMatrice,
                            pageName="Chemical Reaction Network (CRN) - 2D")
 
 
 #TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
-def get_reaction_meta(reactii_individuale : [str]):
-    specii = []
+def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
+    """
+    :param reactii_individuale: The reactions in Antimony format
+    :return: The list of unique species and the reactions in Antimony format
+    """
+    specii :[str] = []
 
     for reactie in reactii_individuale:  # gaseste speciile
         ats = reactie.replace('->', '+').split('+') #transforma si 4A + 5B -> C in 4A + 5B + C si le da split la +
@@ -257,6 +279,11 @@ def reactions_to_tellurium_format(filename : str) -> [str]:
 
 
 def create_figure():
+    """
+    takes the data from the session and simulates then plots the simulation results to a file,
+    which will then be used in the template to be displayed do the frontend
+    :return: the antimony code and stoichiometry matrix
+    """
     select = session.get('select')
     end_time = session.get('end_time')
     start_time = session.get('start_time')
@@ -316,6 +343,7 @@ def create_figure():
 
     road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = 'static/graphic.svg')
 
+    #zici ca-i naming convention TJ Miles
     listaToShowEcuatii = antimony_code.split("\n")
 
     return [render_template("home.html"), listaToShowEcuatii, lista_to_show_matrice]
