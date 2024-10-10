@@ -4,11 +4,16 @@
 	
 aaaa valk de la VALOARE kAPPA
 sa nu mai apara paigini de erori sa zica ce carafctere sunt gresite si pe frontend si backend
-cum sa faci TSR graphuri da sa apara pe ecran gen in web 
-si faci mai multe tipuri de graifcuri 
-sa faci macar alea in 2d prima data like gne
-dropdown cu toate tiprui de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
+cum sa faci TSR/ (DSR creca mai corect) graphuri da sa apara pe ecran gen in web 
+si faci mai multe tipuri de grafice 
+sa faci macar alea in 2d prima data like gen
+dropdown cu toate tiprule de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
+
 
 phase portaitu poti sa-l faci o substanta in functie de celelata, daca ai mai mult de 2 specii sa iti apara 
+checkbox select cu care din speciile alea vrei sa iei
+
+si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
 DSR GRAPH
 
+#TODO gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui

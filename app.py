@@ -18,8 +18,11 @@ def save_reactions_file(req):
          The Flask request object containing form data.
                     Expects form data with 'ecuatiiCount' (number of reactions) and for each reaction:
                     - 'ec_<index>_left': Left side of the reaction.
-                    - 'ec_<index>_dir': Direction of the reaction.
+                    - 'ec_<index>_dir': Direction of the reaction. left := <-- ; right := --> ; both := <-->
                     - 'ec_<index>_right': Right side of the reaction.
+
+    Saves to templates/metode_lucru/crn.txt file in the format specified above
+
     :return: None
     """
     ecuatii_count = int(req.form.get('ecuatiiCount'))
@@ -85,6 +88,10 @@ def get_crn_data():
 
 @app.post('/input_user')
 def input_user_post():
+    """
+    Saves the form data from the request to the flask session
+    :return:
+    """
     session['select'] = request.form.get('comp_select')
 
     session['start_time'] = request.form['start_time']
