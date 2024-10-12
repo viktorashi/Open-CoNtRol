@@ -1,10 +1,15 @@
+#eu explicand mie codu:
+
 	deci pe front e un formular cu toate reactiile care da post la /save_reactii cu cate reactii sunt si formulelel lor na si dupa scrie in fisieru de crn.txt reactia aia apoi de dupa pe pagina 2 de unde iti citeste din primu fisier care il gaseste alfabetic in templates/metode_lucru care se intampla sa fie ala care incepe cu c lmao ce coinkiding.
 	dupa ia taote elementele si reactiile din fisieru ala ca sa le arate pe ecran sa poti sa pui coeficient pentru fiecare specie si cate o constanta pentru fiecare sageata din fiecare reactie, gen daca pui reactie dupa se transofrmai n 2 reactii si chestii din astea
-	am obs problema ca gen daca sunt mai multe cu aceleasi nume in reatie n-o sa poti sa pui coeficienti diferiti dar nu situ daca ai putea sa ai asta intr-o reactie reala o sa trebuiasca sa fac niste research pana sa-l intreb pe domnu
-	
+
 aaaa valk de la VALOARE kAPPA
-sa nu mai apara paigini de erori sa zica ce carafctere sunt gresite si pe frontend si backend
-cum sa faci TSR/ (DSR creca mai corect) graphuri da sa apara pe ecran gen in web 
+
+#potentiale buguri cu idei de feateruri
+
+sa nu mai apara paigini de erori sa zica ce dastea sunt gresite si pe frontend si backend
+
+cum sa faci TSR/ (DSR creca mai corect) graphuri 
 si faci mai multe tipuri de grafice 
 sa faci macar alea in 2d prima data like gen
 dropdown cu toate tiprule de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
@@ -16,4 +21,6 @@ checkbox select cu care din speciile alea vrei sa iei
 si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
 DSR GRAPH
 
-#TODO gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
+Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
+
+validari pe formulare (probabil cu WTForms)
