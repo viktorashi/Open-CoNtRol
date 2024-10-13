@@ -1,12 +1,10 @@
+from open_control import app
+from flask import render_template, request, redirect, session
+import tellurium as te
+import re
 import io
 import json
 import os
-import re
-import subprocess
-import tellurium as te
-from flask import Flask, render_template, request, redirect, session
-
-app = Flask(__name__, template_folder='templates')
 
 @app.get('/')
 def home():
@@ -21,14 +19,14 @@ def save_reactions_file(req):
                     - 'ec_<index>_dir': Direction of the reaction. left := <-- ; right := --> ; both := <-->
                     - 'ec_<index>_right': Right side of the reaction.
 
-    Saves to templates/metode_lucru/crn.txt file in the format specified above
+    Saves to open_control/templates/metode_lucru/crn.txt file in the format specified above
 
     :return: None
     """
     ecuatii_count = int(req.form.get('ecuatiiCount'))
     index = 1
 
-    the_file = open("templates/metode_lucru/crn.txt", "w")
+    the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
 
     while index <= ecuatii_count:
         ec_left = req.form.get('ec_' + str(index) + '_left')
@@ -45,7 +43,7 @@ def save_reactions_file(req):
 
         ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
 
-#asa ii da overwrite la templates/metode_lucru/crn.txt
+#asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
         the_file.write(ecuatie_finala)
         the_file.write("\n")
 
@@ -66,12 +64,13 @@ def input_user():
     :return: The template with the inputs required to generate the graph, with all the file names
     that contain CNR's
     """
-    files = sorted(os.listdir('templates/metode_lucru/'))
+    files = sorted(os.listdir('open_control/templates/metode_lucru/'))
     temp = []
     for file in files:
         temp.append({'name': file})
 
     specii = session.get("specii")
+    print('speciiles:')
     print(specii)
 
     return render_template("input_user.html", data=temp)
@@ -159,7 +158,6 @@ def input_user_post():
 
     return redirect(f"/graph")
 
-
 @app.get('/graph')
 def plot_svg():
     """
@@ -171,7 +169,6 @@ def plot_svg():
     #    return Response(output.getvalue(), mimetype='image/png')
     return render_template("graph.html", listaEcuatii=listaToShow, listaMatrice=listaToShowMatrice,
                            pageName="Chemical Reaction Network (CRN) - 2D")
-
 
 #TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
 def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
@@ -239,7 +236,6 @@ def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
 
     return specii, reacts
 
-
 def reactions_to_tellurium_format(filename : str) -> [str]:
     """
     :param filename: numele fisierului din care reactii sa le faci in format antimony
@@ -253,7 +249,7 @@ def reactions_to_tellurium_format(filename : str) -> [str]:
        face un string complet de Antimony
     """
 
-    filename = 'templates/metode_lucru/' + filename
+    filename = 'open_control/templates/metode_lucru/' + filename
     f = open( filename, 'rt')
     file_lines = f.readlines()
     # scapa de un <enter> la sfarsit
@@ -276,7 +272,6 @@ def reactions_to_tellurium_format(filename : str) -> [str]:
                 reactii_individuale.append(ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
 
     return list(map(lambda x: x.replace(" ", ""), reactii_individuale))
-
 
 def create_figure():
     """
@@ -341,7 +336,7 @@ def create_figure():
     print(x_titlu)
     print(y_titlu)
 
-    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = 'static/graphic.svg')
+    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = 'open_control/static/graphic.svg')
 
     #zici ca-i naming convention TJ Miles
     listaToShowEcuatii = antimony_code.split("\n")
@@ -433,26 +428,4 @@ def crn2antimony(filename):
     return tel
 
 
-if __name__ == '__main__':
-    ip = 0
-    try:
-        ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[1].strip()
-        #ca nu exista index 1 daca nu ai interfete pornite
-    except IndexError:
-        ip = '127.0.0.1'
-        print('nu cred ca ai netu pornit da-i ca ok dam pe localhost')
-    app.secret_key = os.urandom(24)
-    '''
-    indented because of 
-    * Ignoring a call to 'app.run()' that would block the current 'flask' CLI command.
-   Only call 'app.run()' in an 'if __name__ == "__main__"' guard.
-    '''
-    port = 5000
-    print('intra pe http://' + ip + ':' + str(port))
-    app.run(host=ip, port=port, debug=True)
 
-# ---------------------------------------
-
-# US ip     10.0.0.50, port:5000
-# campus ip 172.30.5.50, port:5000
-# Ro ip     192.168.1.50, port:5000
