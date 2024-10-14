@@ -24,3 +24,36 @@ DSR GRAPH
 Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
 
 validari pe formulare (probabil cu WTForms)
+
+sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
+
+trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium ceva sa-ti faca mai usor) 
+
+sa se curete stringu ala de stoichiometrica sa nu mai arate asa cu paranteze
+
+ala de il avem deja e stoichiometric matrix normal
+left stoic se refere la termenu stang
+right la termenu drept
+right - left = gamma normal
+
+si rankul lui gamm
+
+si matricea coloana vkx si pot isa folosesti multiplicart simbolica ca sa generezi sistmul cand faci gamma *ori coloana aia
+
+moduri de copiat, vrei sa fie in format maple sau octave sau cv
+poate si un file upload si in formatu ala si sau sa schimbi formatul sau  
+
+ceva dropdown unde sa selectezi daca vrei sa apara doar analiza teoretica sau si poza sau fara poza
+
+de generat asta https://tellurium.readthedocs.io/en/latest/notebooks.html#activator-system sa se vada
+
+gen draw sa faca nebunia asta https://sys-bio.github.io/SBMLDiagrams/Introduction.html#figure-examples
+
+de DSR graph asta e ala 
+
+de explicat aia cu mass action
+
+sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
+
+x/p sau xpp iti face oscilatii 
+
