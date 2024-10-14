@@ -62,18 +62,41 @@ set of reactions. For example, the pair of combustion reactions:</div>
 							<button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
 							<button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button> 
 							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
+
+{#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
 <form action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
 
-							<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount"/>
+                            {{ form.hidden_tag() }}
 
 							<div id="textboxDiv">
+                                {% for reaction in form.reactions %}
+                                    <div>
+                                    {{ reaction.ec_left }}
+                                    {% if reaction.ec_left.errors %}
+                                        <ul class="errors">
+                                            {% for error in reaction.ec_left.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {{ reaction.ec_dir }}
+                                    {{ reaction.ec_right }}
+                                    {% if reaction.ec_right.errors %}
+                                        <ul class="errors">
+                                            {% for error in reaction.ec_right.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    </div>
+                                {% endfor %}
 								
 							</div>
-							
+
 							<div style="position: relative; left: 21%">
 							  <!--<p><b>Creare grafic personalizat.</b></p>-->
 							  <p class="w3-padding-16">
-                                  <button id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
+                                  {{ form.submit }}
                               </p>
 							</div>
 </form>
@@ -96,7 +119,7 @@ set of reactions. For example, the pair of combustion reactions:</div>
 </footer>
 <script>
 
-var countEcuatii = 1;
+var countEcuatii = 0;
 
 function updateFormReactCount(ecuatiiCount)
 {
@@ -105,26 +128,29 @@ function updateFormReactCount(ecuatiiCount)
 
 function genTextBox(textBoxID)
 {
-	$("#textboxDiv").append("<div id='textbox'><br><input name='ec_"+textBoxID+"_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/> "+ 
-							"<select name='ec_"+textBoxID+"_dir' class='reaction_direction' >"+ 
-							"<option value='left'>&#8592</option>"+
-							"<option value='both' selected='selected'>⇌</option>"+ 
-							"<option value='right'>&#8594</option>"+
-							"</select> "+	
-							"<input name='ec_"+textBoxID+"_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/><br></div> ");
+	$("#textboxDiv").append(`<div>
+	                            <br>
+                                <input name='ec_${textBoxID}_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+    							<select name='ec_${textBoxID}_dir' class='reaction_direction' >
+         							<option value='left'>&#8592</option>
+        							<option value='both' selected='selected'>⇌</option>
+        							<option value='right'>&#8594</option>
+    							</select>
+    							<input name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+                            <br></div> `);
 }
    // Add textbox and remove textbox
-        $(document).ready(function() { 
+        $(document).ready(() => {
 			genTextBox(countEcuatii);
 			updateFormReactCount(countEcuatii);
-			
-            $("#Add").on("click",function() {
+
+            $("#Add").on("click",() => {
 				countEcuatii++;
 				genTextBox(countEcuatii);
 				updateFormReactCount(countEcuatii);
-			} );  
-            $("#Remove").on("click", function() { 
-				if (countEcuatii > 1)
+			} );
+            $("#Remove").on("click", () => {
+				if (countEcuatii > 0)
 				{
 					countEcuatii--;
 					updateFormReactCount(countEcuatii);
@@ -138,11 +164,11 @@ function genTextBox(textBoxID)
 	
 	var timeoutId;
 
-$('form input, form select').on('input propertychange change', function() {
+$('form input, form select').on('input propertychange change', () => {
     console.log('Textarea Change');
     
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(function() {
+    timeoutId = setTimeout(() => {
         // Runs 1 second (1000 ms) after the last change    
         saveToDB();
     }, 1000);
@@ -154,18 +180,18 @@ function saveToDB()
 	//form = genauto(),
    // form = $('.textboxDiv');
    form = $('.textbox');
-  //  form = $('.textbox').each(function () {
+  //  form = $('.textbox').each(() => {
   //          form += $(this).val() + "\n";
   //      });   
 	$.ajax({
 		url: "/echo/html/",
 		type: "POST",
 		data: form.serialize(), // serializes the form's elements.
-		beforeSend: function(xhr) {
+		beforeSend: (xhr) => {
             // Let them know we are saving
 			$('.form-status-holder').html('Saving...');
 		},
-		success: function(data) {
+		success: (data) => {
 			var jqObj = jQuery(data); // You can get data returned from your ajax call here. ex. jqObj.find('.returned-data').html()
             // Now show them we saved and when we did
             var d = new Date();
@@ -176,7 +202,7 @@ function saveToDB()
 
 // This is just so we don't go anywhere  
 // and still save if you submit the form
-// $('.contact-form').submit(function(e) {
+// $('.contact-form').submit((e) => {
 //	saveToDB();
 //	e.preventDefault();
 // });

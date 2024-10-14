@@ -143,8 +143,8 @@ set of reactions. For example, the pair of combustion reactions:</div>
 </footer>
 <script>
    // Add textbox and remove textbox
-        $(document).ready(function() {  
-            $("#Add").on("click", function() {  
+        $(document).ready(() => {
+            $("#Add").on("click", () => {
                 $("#textboxDiv").append("<div><br><input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/> "+ 
 				                        "<select class='reaction_direction' >"+ 
 										"<option value='left'>&#8592</option>"+
@@ -153,7 +153,7 @@ set of reactions. For example, the pair of combustion reactions:</div>
 										"</select> "+	
 										"<input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/><br></div> ");
             });  
-            $("#Remove").on("click", function() {  
+            $("#Remove").on("click", () => {
                 $("#textboxDiv").children().last().remove();  
             });  
         });  

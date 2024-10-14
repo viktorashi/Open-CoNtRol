@@ -1,14 +1,16 @@
 from open_control import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, url_for
 import tellurium as te
 import re
 import io
 import json
 import os
+from open_control.forms import DynamicReactionForm
 
 @app.get('/')
 def home():
-    return render_template("home.html")
+    form = DynamicReactionForm(request.form)
+    return render_template("home.html", form=form)
 
 def save_reactions_file(req):
     """
@@ -54,8 +56,15 @@ def save_reactions_file(req):
 
 @app.post("/save_reactii")
 def save_reactii():
-    save_reactions_file(request)
-    return redirect(f"/input_user")
+    form  = DynamicReactionForm(request.form)
+    if form.validate():
+        print('s-a validat form cu datele astea:')
+        print(form)
+        print('sau daca nu apare bine aia:')
+        print(form.data)
+        save_reactions_file(request)
+        return redirect(url_for('input_user'))
+    return render_template("home.html", form=form)
 
 
 @app.get('/input_user')
@@ -156,7 +165,7 @@ def input_user_post():
     print(session.get('select'))
     print(session.get('specii'))
 
-    return redirect(f"/graph")
+    return redirect(url_for('plot_svg'))
 
 @app.get('/graph')
 def plot_svg():

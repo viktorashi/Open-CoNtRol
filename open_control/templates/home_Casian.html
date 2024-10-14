@@ -464,17 +464,17 @@ function addReaction()
 
 	$( '#tools_holder' ).before( '<fieldset class="reaction_input_row"><!--input type="number" size="3" maxlength="10" class="reaction_forward_rate_constant" name="reaction_forward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /><br /-->' + number_of_reactions + '. <input type="text" size="10" maxlength="64" class="reaction_left_hand_side" name="reaction_left_hand_side[]" spellcheck="false" placeholder="&empty;" /> <select class="reaction_direction" name="reaction_direction[]"><option value="left">&larr;</option><option value="both" selected="selected">&#x21cc;</option><option value="right">&rarr;</option></select> <input type="text" size="10" maxlength="64" class="reaction_right_hand_side" name="reaction_right_hand_side[]" spellcheck="false" placeholder="&empty;" /><!--br /><input type="number" size="3" maxlength="10" class="reaction_backward_rate_constant" name="reaction_backward_rate_constant[]" value="" spellcheck="false" placeholder="1.0" step="0.0000000001" /--></fieldset>' );
 
-	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( () =>
 	{
 		// Prevent double binding
 		$( this ).off( 'keydown keyup' );
 		// Capture Enter key
-		$( this ).on( 'keydown', function( e )
+		$( this ).on( 'keydown', ( e ) =>
 		{
 			if( e.which == 13 ) e.preventDefault();
 		} );
 		// Validate input and check for network submission
-		$( this ).on( 'keyup', function( e )
+		$( this ).on( 'keyup', ( e ) =>
 		{
 			if( validateKeyPress( $( this ) ) )
 			{
@@ -532,7 +532,7 @@ function generateLaTeX()
 	var numberOfRows = $( '.reaction_input_row' ).length;
 	var numberOfColumns = 0;
 	var textOutput = '\\begin{array}{rcl}\n';
-	$( '.reaction_input_row' ).each( function( index, element )
+	$( '.reaction_input_row' ).each( ( index, element ) =>
 	{
 		if( $( '.reaction_left_hand_side', $( this ) ).val() == '' || $( '.reaction_left_hand_side', $( this ) ).val() == ' ' || $( '.reaction_left_hand_side', $( this ) ).val() == '  ' ) textOutput += '\\emptyset';
 		else textOutput += $( '.reaction_left_hand_side', $( this ) ).val().replace( '&', '\\&amp;' );
@@ -569,11 +569,11 @@ function generateLaTeX()
 	textOutput = '<p>Reactions:</p><textarea rows="' + numberOfRows + '" cols="' + numberOfColumns + '">\n' + textOutput + '\\end{array}</textarea><p>Stoichiometry matrix:</p><textarea rows="' + numberOfRows*2 + '" cols="' + numberOfColumns + '">\\Gamma = ';
 	var url = 'handlers/get-net-stoichiometry.php';
 	var data = { csrf_token: csrf_token };
-	$.post( url, data, function( returndata )
+	$.post( url, data, ( returndata ) =>
 	{
 		textOutput += returndata.replace( '&', '&amp;' ) + '\n</textarea>\n<p>Reaction rate Jacobian:</p><textarea rows="' + numberOfRows*2 + '" cols="' + numberOfColumns + '">V^T = ';
 		url = 'handlers/get-v-matrix.php';
-		$.post( url, data, function( returndata )
+		$.post( url, data, ( returndata ) =>
 		{
 			textOutput += returndata.replace( '&', '&amp;' ) + '\n</textarea>\n';
 			$( '#latex_output_holder' ).html( textOutput );
@@ -586,14 +586,14 @@ function generateLaTeX()
  */
 function processTests( test_number )
 {
-	setTimeout( function()
+	setTimeout( () =>
 	{
 		var url = 'handlers/process-tests.php';
 		data = { csrf_token: csrf_token };
 		var timeout_countdown = test_timeout_limit;
 		$( '#calculation_output_holder' ).append( '<p id="timeout_countdown_holder">Processing test ' + test_number + '... <span id="timeout_countdown">' + test_timeout_limit + '</span> seconds until timeout.</p>' );
 		clearInterval( timer_id );
-		timer_id = setInterval( function()
+		timer_id = setInterval( () =>
 		{
 			if ( timeout_countdown )
 			{
@@ -606,7 +606,7 @@ function processTests( test_number )
 				clearInterval( timer_id );
 			}
 		}, 1000 );
-		$.post( url, data, function( returndata )
+		$.post( url, data, ( returndata ) =>
 		{
 			showTestOutput( returndata );
 			$( '#timeout_countdown_holder' ).remove();
@@ -637,7 +637,7 @@ function removeReaction( notify_user )
 		$( '#removed_reaction_warning' ).css( 'top', position.top + 24 );
 		$( '#removed_reaction_warning' ).css( 'left', position.left - 56 );
 		$( '#removed_reaction_warning' ).show();
-		setTimeout( function()
+		setTimeout( () =>
 		{
 			$( '#removed_reaction_warning' ).hide();
 		}, 1500 );
@@ -685,37 +685,37 @@ function saveNetwork()
 	validNetwork = true;
 	var url = 'handlers/process-network.php';
 	var reactionsLeftHandSide = new Array();
-	$.each( $( '.reaction_left_hand_side' ), function( index, value )
+	$.each( $( '.reaction_left_hand_side' ), ( index, value ) =>
 	{
 		reactionsLeftHandSide.push( value.value );
 	} );
 	var reactionsRightHandSide = new Array();
-	$.each( $( '.reaction_right_hand_side' ), function( index, value )
+	$.each( $( '.reaction_right_hand_side' ), ( index, value ) =>
 	{
 		reactionsRightHandSide.push( value.value );
 	} );
 	var reactionsDirection = new Array();
-	$.each( $( '.reaction_direction :selected' ), function( index, value )
+	$.each( $( '.reaction_direction :selected' ), ( index, value ) =>
 	{
 		reactionsDirection.push( value.value );
 	} );
 	var reactionsForwardRateConstants = new Array();
-	$.each( $( '.reaction_forward_rate_constant' ), function( index, value )
+	$.each( $( '.reaction_forward_rate_constant' ), ( index, value ) =>
 	{
 		reactionsForwardRateConstants.push( value.value );
 	} );
 	var reactionsBackwardRateConstants = new Array();
-	$.each( $( '.reaction_backward_rate_constant' ), function( index, value )
+	$.each( $( '.reaction_backward_rate_constant' ), ( index, value ) =>
 	{
 		reactionsBackwardRateConstants.push( value.value );
 	} );
 	var testSettings = new Array();
-	$.each( $( '.test' ), function( index, v )
+	$.each( $( '.test' ), ( index, v ) =>
 	{
 		testSettings.push( { name: $( this ).attr( 'name' ), value: $( this ).val() } );
 	} );
 	var data = { 'reaction_left_hand_side[]': reactionsLeftHandSide, 'reaction_right_hand_side[]': reactionsRightHandSide, 'reaction_direction[]': reactionsDirection, 'reaction_forward_rate_constant[]': reactionsForwardRateConstants, 'reaction_backward_rate_constant[]': reactionsBackwardRateConstants, 'test_settings': testSettings, csrf_token: csrf_token };
-	$.post( url, data, function( returndata )
+	$.post( url, data, ( returndata ) =>
 	{
 		if( returndata.length )
 		{
@@ -781,13 +781,13 @@ function validateKeyPress( inputElement )
 			$( '#hidden_character_warning' ).css( 'top', position.top + 48 );
 			$( '#hidden_character_warning' ).css( 'left', position.left );
 			$( '#hidden_character_warning' ).show();
-			setTimeout( function() { $( '#hidden_character_warning' ).hide(); }, 1500);
+			setTimeout( () => { $( '#hidden_character_warning' ).hide(); }, 1500);
 		}
 	}
 	var validInput = true;
 	var totalChars = 0;
 	$( '#missing_reactant_warning' ).hide();
-	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( () =>
 	{
 		$( this ).css( 'border-color', '' );
 		totalChars += $( this ).val().length;
@@ -820,7 +820,7 @@ var popupWidth = 800;
 var popupHeight = 600;
 var popupMargin = 16;
 
-$( document ).ready( function()
+$( document ).ready( () =>
 {
 	// Set some useful variables
 	if( $( window ).innerWidth() > 800 ) popupWidth = $( window ).innerWidth() - 256;
@@ -834,7 +834,7 @@ $( document ).ready( function()
 
 	// File inputs slide down out of the File Input header on clock
 	var toolsShown = false;
-	$( '#tools_show' ).click( function()
+	$( '#tools_show' ).click( () =>
 	{
 		if( !toolsShown )
 		{
@@ -852,7 +852,7 @@ $( document ).ready( function()
 
 	// Similarly, more analysis options slide down
 	var moreActionsShown = false;
-	$( '#more_actions_show' ).click( function()
+	$( '#more_actions_show' ).click( () =>
 	{
 		if( !moreActionsShown )
 		{
@@ -868,14 +868,14 @@ $( document ).ready( function()
 		}
 	} );
 
-	$( '#add_reaction_button' ).click( function()
+	$( '#add_reaction_button' ).click( () =>
 	{
 		addReaction();
 		$( '#remove_reaction_button' ).removeClass( 'disabled' );
 		return false;
 	} );
 
-	$( '#remove_reaction_button' ).click( function()
+	$( '#remove_reaction_button' ).click( () =>
 	{
 		if( !$( this ).hasClass( 'disabled' ) )
 		{
@@ -887,26 +887,26 @@ $( document ).ready( function()
 		return false;
 	} );
 
-	$( '#reset_reaction_button' ).click( function()
+	$( '#reset_reaction_button' ).click( () =>
 	{
 		if( !$( this ).hasClass( 'disabled' ) ) resetReactions();
 		return false;
 	} );
 
-	$( '.reaction_direction' ).each( function()
+	$( '.reaction_direction' ).each( () =>
 	{
 		// Prevent double binding
 		$( this ).off();
 		// Bind change handler
-		$( this ).change( function()
+		$( this ).change( () =>
 		{
 			saveNetwork();
 		} );
 	} );
 
-	$( '.reaction_direction' ).each( function()
+	$( '.reaction_direction' ).each( () =>
 	{
-		$( this ).on( 'change', function( e )
+		$( this ).on( 'change', ( e ) =>
 		{
 			if( this.options[e.target.selectedIndex].value == 'left' )
 			{
@@ -926,17 +926,17 @@ $( document ).ready( function()
 		} );
 	} );
 
-	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( function()
+	$( '.reaction_left_hand_side, .reaction_right_hand_side' ).each( () =>
 	{
 		// Prevent double binding
 		$( this ).off( 'keydown keyup' );
 		// Capture Enter key
-		$( this ).on( 'keydown', function( e )
+		$( this ).on( 'keydown', ( e ) =>
 		{
 			if( e.which == 13 ) e.preventDefault();
 		} );
 		// Validate input and check for network submission
-		$( this ).on( 'keyup', function( e )
+		$( this ).on( 'keyup', ( e ) =>
 		{
 			if( validateKeyPress( $( this ) ) )
 			{
@@ -964,24 +964,24 @@ $( document ).ready( function()
 	$( '.fancybox' ).fancybox( { autoDimensions: true, width: popupWidth, height: popupHeight } );
 	$( '.fancybox_dynamic' ).fancybox( { autoDimensions: false, width: popupWidth, height: popupHeight } );
 
-	$( '#crn_description' ).focus( function()
+	$( '#crn_description' ).focus( () =>
 	{
 		$( this ).select();
 	} );
 
-	$( '#detailed_output_checkbox' ).change( function()
+	$( '#detailed_output_checkbox' ).change( () =>
 	{
 		var activated = 0;
 		if( $( this ).is( ':checked' ) ) activated = 1;
 		toggleDetailedOutput( activated );
 	} );
 
-	$( '#download_network_file_button' ).click( function( e )
+	$( '#download_network_file_button' ).click( ( e ) =>
 	{
 		if( $( this ).hasClass( 'disabled' ) ) e.preventDefault();
 	} );
 
-	$( '#dsr_graph_button' ).click( function( e )
+	$( '#dsr_graph_button' ).click( ( e ) =>
 	{
 		if( $( this ).hasClass( 'disabled' ) ) e.preventDefault();
 		else if( navigator.userAgent.indexOf( 'Android' ) == -1 && navigator.userAgent.indexOf( 'iOS' ) == -1 )
@@ -991,7 +991,7 @@ $( document ).ready( function()
 		}
 	} );
 
-	$( '#email_results_form' ).submit( function( e )
+	$( '#email_results_form' ).submit( ( e ) =>
 	{
 		e.preventDefault();
 		$( '#email_results_button' ).addClass( 'disabled' );
@@ -1000,10 +1000,10 @@ $( document ).ready( function()
 		var email = $( '#results_email' ).val();
 		var label = $( '#results_label' ).val();
 		var data = {email: email, label: label, csrf_token: csrf_token};
-		$.post( url, data, function( returndata )
+		$.post( url, data, ( returndata ) =>
 		{
 			if( returndata.length ) $( '#email_results_error' ).html( returndata );
-			window.setTimeout( function()
+			window.setTimeout( () =>
 			{
 				$( '#email_results_error' ).html( '&nbsp;' );
 				$( '#email_results_button' ).removeClass( 'disabled' );
@@ -1012,7 +1012,7 @@ $( document ).ready( function()
 		} );
 	} );
 
-	$( '#email_results_form_button' ).click( function( e )
+	$( '#email_results_form_button' ).click( ( e ) =>
 	{
 		$( '#results_email' ).select();
 		if( validateEmailAddress( $( '#results_email' ).val() ) )
@@ -1029,7 +1029,7 @@ $( document ).ready( function()
 		}
 	} );
 
-	$( '#latex_output_button' ).click( function( e )
+	$( '#latex_output_button' ).click( ( e ) =>
 	{
 		if( !$( this ).hasClass( 'disabled' ) )
 		{
@@ -1037,7 +1037,7 @@ $( document ).ready( function()
 		}
 	} );
 
-	$( '#option_holder input[name*="test_checkbox"]' ).change( function()
+	$( '#option_holder input[name*="test_checkbox"]' ).change( () =>
 	{
 		var testName = $( this ).attr( 'name' ).slice( 14, -1 );
 		var activated = 0;
@@ -1045,7 +1045,7 @@ $( document ).ready( function()
 		toggleTest( testName, activated );
 	} );
 
-	$( '#process_network_button' ).click( function()
+	$( '#process_network_button' ).click( () =>
 	{
 		if( !networkSubmitted && !$( this ).hasClass( 'disabled' ) )
 		{
@@ -1056,7 +1056,7 @@ $( document ).ready( function()
 		return false;
 	} );
 
-	$('#results_email').change(function()
+	$('#results_email').change(() =>
 	{
 		if(validateEmailAddress($('#results_email').val()))
 		{
@@ -1072,7 +1072,7 @@ $( document ).ready( function()
 		}
 	} );
 
-	$('#results_email').keyup(function()
+	$('#results_email').keyup(() =>
 	{
 		if(validateEmailAddress($('#results_email').val()))
 		{
@@ -1088,12 +1088,12 @@ $( document ).ready( function()
 		}
 	} );
 
-	$( 'th.test_checkboxes' ).click( function()
+	$( 'th.test_checkboxes' ).click( () =>
 	{
-		$( 'input[name*=test_checkbox]' ).each( function() { $( this ).prop( 'checked', true ).trigger( 'change' ) } );
+		$( 'input[name*=test_checkbox]' ).each( () => { $( this ).prop( 'checked', true ).trigger( 'change' ) } );
 	} );
 
-	$('#upload_batch_file_email').change(function()
+	$('#upload_batch_file_email').change(() =>
 	{
 		if(validateEmailAddress($('#upload_batch_file_email').val()))
 		{
@@ -1107,7 +1107,7 @@ $( document ).ready( function()
 		else $('#upload_batch_file_email_error').html('Invalid email address');
 	} );
 
-	$('#upload_batch_file_email').keyup(function()
+	$('#upload_batch_file_email').keyup(() =>
 	{
 		if(validateEmailAddress($('#upload_batch_file_email').val()))
 		{
@@ -1126,7 +1126,7 @@ $( document ).ready( function()
 		}
 	} );
 
-	$('#upload_batch_file_input').change(function()
+	$('#upload_batch_file_input').change(() =>
 	{
 		if(validateEmailAddress($('#upload_batch_file_email').val()))
 		{
@@ -1135,13 +1135,13 @@ $( document ).ready( function()
 		}
 	} );
 
-	$('#upload_network_file_input').change(function()
+	$('#upload_network_file_input').change(() =>
 	{
 		$('#upload_network_file_button').removeClass('disabled');
 		$('#upload_network_file_button').removeAttr('disabled');
 	} );
 
-	$( window ).resize( function() { detectWindowSize(); } );
+	$( window ).resize( () => { detectWindowSize(); } );
 
 	if( navigator.userAgent.indexOf( 'Android' ) == -1 && navigator.userAgent.indexOf( 'iOS' ) == -1 )
 	{
@@ -1168,8 +1168,8 @@ $( document ).ready( function()
 
 
    // Add textbox and remove textbox
-        $(document).ready(function() {  
-            $("#Add").on("click", function() {  
+        $(document).ready(() => {
+            $("#Add").on("click", () => {
                 $("#textboxDiv").append("<div><br><input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/> "+ 
 				                        "<select class='reaction_direction' >"+ 
 										"<option value='left'>&#8592</option>"+
@@ -1178,7 +1178,7 @@ $( document ).ready( function()
 										"</select> "+	
 										"<input type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/><br></div> ");
             });  
-            $("#Remove").on("click", function() {  
+            $("#Remove").on("click", () => {
                 $("#textboxDiv").children().last().remove();  
             });  
         });  

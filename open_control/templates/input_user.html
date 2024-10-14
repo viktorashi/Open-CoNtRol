@@ -288,7 +288,7 @@
         function updateInputs(filename)
         {
             const xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = () => {
                 //when it's done/all data has been transmitted and status OK
                 if (this.readyState === 4 && this.status === 200) {
                     let jsonOBJ;
@@ -341,7 +341,7 @@
 			document.getElementById("register").disabled = !allFilled;
 		}
 
-		window.onload = function(){
+		window.onload = () =>{
 			let inputs = document.getElementsByTagName('input');
 			for(let i=0; i<inputs.length; i++){
 				if(inputs[i].type === "number"){

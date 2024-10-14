@@ -1,9 +1,8 @@
+body,h1 {font-family: "Montserrat", sans-serif}
+img {margin-bottom: -7px}
+.w3-row-padding img {margin-bottom: 12px}
 
-    body,h1 {font-family: "Montserrat", sans-serif}
-    img {margin-bottom: -7px}
-    .w3-row-padding img {margin-bottom: 12px}
-
-    input[type=text]:focus {
+input[type=text]:focus {
   border: 3px solid #555;
 }
 
@@ -44,4 +43,9 @@ select {
   content: "";
   display: table;
   clear: both;
+}
+
+.errors {
+    color: red;
+    font-size: 0.9em;
 }
