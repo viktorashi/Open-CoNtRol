@@ -67,39 +67,17 @@ set of reactions. For example, the pair of combustion reactions:</div>
 {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
 <form action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
 
-                            {{ form.hidden_tag() }}
+	<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount"/>
 
-							<div id="textboxDiv">
-                                {% for reaction in form.reactions %}
-                                    <div>
-                                    {{ reaction.ec_left }}
-                                    {% if reaction.ec_left.errors %}
-                                        <ul class="errors">
-                                            {% for error in reaction.ec_left.errors %}
-                                                <li>{{ error }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                    {{ reaction.ec_dir }}
-                                    {{ reaction.ec_right }}
-                                    {% if reaction.ec_right.errors %}
-                                        <ul class="errors">
-                                            {% for error in reaction.ec_right.errors %}
-                                                <li>{{ error }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                    </div>
-                                {% endfor %}
-								
-							</div>
-
-							<div style="position: relative; left: 21%">
+	<div id="textboxDiv"></div>
+							
+	<div style="position: relative; left: 21%">
 							  <!--<p><b>Creare grafic personalizat.</b></p>-->
-							  <p class="w3-padding-16">
-                                  {{ form.submit }}
+	<p class="w3-padding-16">
+        <button id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
                               </p>
 							</div>
+
 </form>
 
 <div class="form-status-holder"></div>
@@ -120,7 +98,7 @@ set of reactions. For example, the pair of combustion reactions:</div>
 </footer>
 <script>
 
-var countEcuatii = 0;
+var countEcuatii = 1;
 
 function updateFormReactCount(ecuatiiCount)
 {
