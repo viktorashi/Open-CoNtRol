@@ -1,5 +1,3 @@
-
-
 // Toggle grid padding
 function myFunction() {
       let x = document.getElementById("myGrid");
