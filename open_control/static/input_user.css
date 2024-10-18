@@ -19,7 +19,6 @@ select {
   /*Removes default chrome and safari style*/
   -moz-appearance: none;
   /* Removes Default Firefox style*/
-  background: #0088cc url(img/select-arrow.png) no-repeat 90% center;
   width: 190px;
   /*Width of select dropdown to give space for arrow image*/
   text-indent: 0.01px;
