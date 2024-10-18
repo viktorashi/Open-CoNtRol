@@ -5,12 +5,10 @@ import re
 import io
 import json
 import os
-from open_control.forms import DynamicReactionForm
 
 @app.get('/')
 def home():
-    form = DynamicReactionForm(request.form)
-    return render_template("home.html", form=form)
+    return render_template("home.html")
 
 def save_reactions_file(req):
     """
@@ -56,15 +54,8 @@ def save_reactions_file(req):
 
 @app.post("/save_reactii")
 def save_reactii():
-    form  = DynamicReactionForm(request.form)
-    if form.validate():
-        print('s-a validat form cu datele astea:')
-        print(form)
-        print('sau daca nu apare bine aia:')
-        print(form.data)
-        save_reactions_file(request)
-        return redirect(url_for('input_user'))
-    return render_template("home.html", form=form)
+    save_reactions_file(request)
+    return redirect(url_for('input_user'))
 
 
 @app.get('/input_user')
