@@ -8,6 +8,7 @@ import open_control.views
 
 print('aplicatia in care mergem acm:')
 print(__name__)
+
 if __name__ == 'open_control':
     ip = 0
     try:

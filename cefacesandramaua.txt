@@ -9,7 +9,7 @@ aaaa valk de la VALOARE kAPPA
 
 sa nu mai apara paigini de erori sa zica ce dastea sunt gresite si pe frontend si backend
 
-cum sa faci TSR/ (DSR creca mai corect) graphuri 
+cum sa faci (DSR creca mai corect) graphuri 
 si faci mai multe tipuri de grafice 
 sa faci macar alea in 2d prima data like gen
 dropdown cu toate tiprule de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
@@ -28,6 +28,7 @@ validari pe formulare (probabil cu WTForms)
 sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
 
 trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium ceva sa-ti faca mai usor) 
+	pt asta generezi mai intai 
 
 sa se curete stringu ala de stoichiometrica sa nu mai arate asa cu paranteze
 
