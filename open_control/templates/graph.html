@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../static/graph.css">
+  <link rel="icon" href="../static/favicon.ico" />
   <body>
     <!--Sidebar-->
     <nav class="w3-sidebar w3-black w3-animate-top w3-xxlarge" style="display:none;padding-top:150px" id="mySidebar">
@@ -84,25 +85,6 @@
           </a>
       </p>
     </footer>
-    <script>
-      // Toggle grid padding
-      function myFunction() {
-        var x = document.getElementById("myGrid");
-        if (x.className === "w3-row") {
-          x.className = "w3-row-padding";
-        } else {
-          x.className = x.className.replace("w3-row-padding", "w3-row");
-        }
-      }
-      // Open and close sidebar
-      function w3_open() {
-        document.getElementById("mySidebar").style.width = "100%";
-        document.getElementById("mySidebar").style.display = "block";
-      }
-
-      function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";
-      }
-    </script>
+    <script src="../static/graph.js"></script>
     </body>
 </html>

@@ -70,7 +70,7 @@ def input_user():
         temp.append({'name': file})
 
     specii = session.get("specii")
-    print('speciiles:')
+    print('speciiles deja in sesiune:')
     print(specii)
 
     return render_template("input_user.html", data=temp)
