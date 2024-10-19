@@ -12,6 +12,8 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+    <script src="../static/load-mathjax.js" async></script>
+
 </head>
 	<body>
 
@@ -42,14 +44,14 @@
   <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
 -->
 
-<div class="content">
     $$
     \matrix{ & \bar{f_1} & \bar{f_2} & \bar{f_3} \cr
-      k_1 & 0 & 0 & 1 \cr
-      k_2 & 1 & 0 & 0 \cr
-      k_3 & 0 & 0 & 1 \cr
-      k_4 & 0 & 1 & 0 } \qquad
+    k_1 & 0 & 0 & 1 \cr
+    k_2 & 1 & 0 & 0 \cr
+    k_3 & 0 & 0 & 1 \cr
+    k_4 & 0 & 1 & 0 } \qquad
     $$
+<div class="content">
 
     Chemical reaction network theory is an area of applied mathematics
  that attempts to model the behavior of real-world chemical systems.
@@ -105,20 +107,6 @@ set of reactions. For example, the pair of combustion reactions:</div>
   <p class="w3-medium">2023@  <a target="_blank" class="w3-hover-text-green"></a> </p>
 
 </footer>
-    <script defer type="application/javascript" src="../static/home.js"></script>
-    <script>
-        MathJax = {
-          tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-          },
-          svg: {
-            fontCache: 'global'
-          },
-            processEnvironments: true,
-        };
-
-        MathJax.typeset();
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script type="application/javascript" src="../static/home.js"></script>
 </body>
 </html>

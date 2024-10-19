@@ -79,3 +79,9 @@ $$
 vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
 https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
 potential geniale exemplele astea cum sa poti sa-l folosesti: https://mathjax.github.io/MathJax-demos-web/
+easily cel mai bun repo de mathjax ca iti da exmple si chestii https://github.com/mathjax/MathJax-demos-web?tab=readme-ov-file
+vezi ca are si screen reader automat pt accediblity asta e extra extra nice to have cam la W din MoSCoW
+
+ok deci asta e o comanda cu mai multe arguemnte:  \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+si asta tot aceasi chestie:  \frac{numerator}{denominator}
+DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
