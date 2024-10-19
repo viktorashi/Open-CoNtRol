@@ -37,7 +37,8 @@ left stoic se refere la termenu stang
 right la termenu drept
 right - left = gamma normal
 
-si rankul lui gamm
+
+si rankul lui gamma
 
 si matricea coloana vkx si pot isa folosesti multiplicart simbolica ca sa generezi sistmul cand faci gamma *ori coloana aia
 
@@ -58,3 +59,23 @@ sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
 
 x/p sau xpp iti face oscilatii 
 
+
+#resurse tEx
+folosesti https://www.mathjax.org/ pt generat sa arate frumix
+sa apara cv de genu ala cu labeluri: https://www.overleaf.com/project/618957d82a1ed75a5fb0fd2c
+STIU CA NU PARE CA AM FCT CV DAR INVAT LATEX ONG https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes
+https://www.math-linux.com/latex/faq/latex-faq/article/latex-how-to-write-bar
+
+as folosti pt stoichiometric matrix
+
+$$
+ \matrix{ & \bar{f_1}  & \bar{f_2}  & \bar{f_3} \cr
+      k_1 & 0 & 0 & 1 \cr
+      k_2 & 1 & 0 & 0 \cr
+      k_3 & 0 & 0 & 1 \cr
+      k_4 & 0 & 1 & 0 } 
+$$
+
+vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
+https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
+potential geniale exemplele astea cum sa poti sa-l folosesti: https://mathjax.github.io/MathJax-demos-web/
