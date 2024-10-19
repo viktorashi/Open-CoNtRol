@@ -20,9 +20,7 @@ function w3_close() {
 // Generate Species List
 function generateSpecs(specsList)
 {
-    undeVinSpeciile = document.getElementById("undeVinSpeciile");
-    undeVinSpeciile.innerHTML = "";
-
+    undeVinSpeciile = document.getElementById("undeVinSpeciile"); undeVinSpeciile.innerHTML = "";
     specIndex = 0;
     for ( spec in specsList )
     {
@@ -59,14 +57,24 @@ function generateConstante(constCount)
 function updateInputs(filename)
 {
     const xhttp = new XMLHttpRequest();
+
+
     xhttp.onreadystatechange = () => {
         //when it's done/all data has been transmitted and status OK
-        if (this.readyState === 4 && this.status === 200) {
+
+        if (xhttp.status === 200) {
+            console.log("e 200 codu ba")
+        }
+
+        if (xhttp.readyState === 4) {
+            console.log("e gata requestuuuu")
+        }
+
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
             let jsonOBJ;
-            jsonOBJ = JSON.parse(this.responseText);
+            jsonOBJ = JSON.parse(xhttp.responseText);
 
             specsList = jsonOBJ.speciiList;
-            reactsCount = jsonOBJ.reactsCount;
             reactsCount = jsonOBJ.reactsCount;
             specCount = specsList.length
 
@@ -78,6 +86,7 @@ function updateInputs(filename)
             generateConstante(reactsCount);
         }
     };
+
     xhttp.open("GET", "/crn_data?filename="+filename);
     xhttp.send();
 }
@@ -89,7 +98,6 @@ function reactionFilenameChanged()
 
     updateInputs(selectorItem.value);
 }
-
 
 reactionFilenameChanged();
 
@@ -121,5 +129,3 @@ window.onload = () =>{
         }
     }
 };
-
-

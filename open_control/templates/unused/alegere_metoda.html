@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>Alegere metoda de lucru</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  body,h1 {font-family: "Montserrat", sans-serif}
+  img {margin-bottom: -7px}
+  .w3-row-padding img {margin-bottom: 12px}
+  </style>
+</head>
+<body>
+    <center>
+        <h1>Alegere metoda de lucru</h1>
+        <hr>
+        <h2>Selectrare fisier:</h2>
+        <form class="form-inline" method="POST" action="">
+          <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Please select</span>
+                    <select name="comp_select" class="selectpicker form-control">
+                      {% for o in data %}
+                      <option value="{{ o.name }}">{{ o.name }}</option>
+                      {% endfor %}
+                    </select>
+            </div>
+            <button type="submit" class="btn btn-default">Go</button>
+          </div>
+        </form>
+        <hr>
+        <div class="footer">
+        </div>
+    </center>
+</body>
+</html>
