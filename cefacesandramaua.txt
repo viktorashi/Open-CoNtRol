@@ -63,6 +63,7 @@ x/p sau xpp iti face oscilatii
 #resurse tEx
 folosesti https://www.mathjax.org/ pt generat sa arate frumix
 sa apara cv de genu ala cu labeluri: https://www.overleaf.com/project/618957d82a1ed75a5fb0fd2c
+il explica asta aici: https://shantoroy.com/latex/matrix-labeling-in-latex
 STIU CA NU PARE CA AM FCT CV DAR INVAT LATEX ONG https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes
 https://www.math-linux.com/latex/faq/latex-faq/article/latex-how-to-write-bar
 
