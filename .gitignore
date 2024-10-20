@@ -166,3 +166,4 @@ cython_debug/
 qodana.yaml
 *.swp
 *.svg
+open_control/templates/metode_lucru/
