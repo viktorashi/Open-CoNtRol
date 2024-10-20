@@ -6,6 +6,7 @@
 aaaa valk de la VALOARE kAPPA
 
 #potentiale buguri cu idei de feateruri
+vezi sa se uite mai intai daca are requestu datele pe el necesare, daca nu sa ia din session si daca nici asa sa dea return la un page cu "go to /<previous_page> and complete the data there"
 
 sa nu mai apara paigini de erori sa zica ce dastea sunt gresite si pe frontend si backend
 

@@ -131,10 +131,10 @@ def plot_svg():
     """
     :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
     """
-    [fig, listaToShow, listaToShowMatrice] = create_figure(session)
+    [fig, listaToShow, stoichiometric_matrix] = create_figure(session)
     output = io.BytesIO()
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
-    return render_template("graph.html", listaEcuatii=listaToShow, listaMatrice=listaToShowMatrice,
+    return render_template("graph.html", listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName="Chemical Reaction Network (CRN) - 2D")
 

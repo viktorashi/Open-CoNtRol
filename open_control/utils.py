@@ -177,15 +177,6 @@ def create_figure(session ):
     print(antimony_code)
 
     # matricea stoichiometrica
-    stoicm = road_runner.getFullStoichiometryMatrix()
-    print('asta stoichiometrica')
-    print(stoicm)
-    print(type(stoicm))
-
-    lista_to_show_matrice = []
-    for stoicm_line in str(stoicm).split("\n"):
-        if stoicm_line and not stoicm_line.isspace():
-            lista_to_show_matrice.append(stoicm_line)
 
     # numele ratelor de reactie
     k_s = road_runner.getGlobalParameterIds()
@@ -210,7 +201,12 @@ def create_figure(session ):
     #zici ca-i naming convention TJ Miles
     listaToShowEcuatii = antimony_code.split("\n")
 
-    return [render_template("home.html"), listaToShowEcuatii, lista_to_show_matrice]
+    stoicm = road_runner.getFullStoichiometryMatrix()
+    print('asta stoichiometrica')
+    print(stoicm)
+    print(type(stoicm))
+
+    return [render_template("home.html"), listaToShowEcuatii, stoichiometric_in_tex(stoicm)]
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
 def crn2antimony(session , filename):
@@ -296,3 +292,59 @@ def crn2antimony(session , filename):
 
     print('aici stringu final')
     return tel
+
+def stoichiometric_in_tex(stoichiometric_matrix):
+    """
+
+    :param stoichiometric_matrix: type: roadrunner._roadrunner.NamedArray
+        the value returned by road_runner.getFullStoichiometryMatrix()
+    :return:
+        the stoichiometric matrix in LaTeX form to be displayed in the webpage
+    Example:
+        For the equation 2 H2 + O2 -> 2 H2O
+        would result the parameter stoichiometric_matrix.array =
+                    _J1
+                   H2 [[-2],
+                   O2 [-1],
+                   H2O [2]]
+
+        which would need to become
+        $$
+         \matrix{ & J_1  \cr
+              H2 & -2 \cr
+              O2 & -1 \cr
+              H2O & 2 \cr}
+        $$
+    """
+    pass
+
+    no_species , no_equations = stoichiometric_matrix.shape
+
+    #begin
+    tex = ("$$\n"
+            "\matrix{ ")
+
+    #append the equation names on the first (header) line
+    for i in range(no_equations):
+        tex = tex + '& J_' + str(i+1)
+
+    #new matrix row
+    tex = tex + '\cr '
+
+    #now completing each line, with the name of the species as the headers for the lines
+    species_names = stoichiometric_matrix.rownames
+    for species in species_names:
+        #the header of the line
+        tex = tex + species
+        values_in_each_eq = stoichiometric_matrix[species]
+        #the value that species has in each equation
+        for value in values_in_each_eq:
+            tex = tex + '& ' + str(value)
+        #new row in matrix
+        tex = tex + '\cr '
+
+    #aaand end it
+    tex = tex + '} \n $$'
+
+    return tex
+

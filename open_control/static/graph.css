@@ -17,3 +17,9 @@ table {
   border: 2.5px solid;
 }
 
+img {
+  text-align: center;
+}
+.gen_graph {
+  text-align: center;
+}

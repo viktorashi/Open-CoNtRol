@@ -37,17 +37,14 @@
           <center style="transform:scale(0.8);margin-top:-3.5%">
             <div id='chart' class='chart' ”></div>
   </body>
-  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-  <center>
     <img src="/static/graphic.svg" alt="my plot" width="50%" height="50%">
-  </center>
-  <center style="margin-top:0%">  
+  <div class="gen_graph" style="margin-top:0%">
     <p class="w3-padding-16">
       <button id="buton" class="w3-button w3-black" onclick="window.location='input_user';">Generate new Graph</button>
     </p>
 	<br>
 	<br>
-    <center>
+    <div>
 	<table>
          <tr>
             <th>Chemical Reaction Network</th>
@@ -62,11 +59,7 @@
 				{% endfor %}
 			</td>
 			<td style="vertical-align: top;">
-				{% for e in listaMatrice %}
-					{% autoescape false %}
-						{{e | replace(" ","&nbsp;&nbsp;")}} <br>
-					{% endautoescape %}
-				{% endfor %}
+                {{ stoichMatrix }}
 			</td>
 		</tr>
          <!-- <tr> -->
@@ -78,7 +71,7 @@
             <!-- <td>Test</td> -->
          <!-- </tr> -->
     </table>
-	</center>
+	</div>
     </div>
     </header>
     </div>
