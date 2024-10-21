@@ -52,13 +52,13 @@
                       <br>
                       <!--Aici avem specs: {{ specs1 }}-->
                       <p style="display:inline; padding-right:10%">Start Time</p>
-                      <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="start_time" />
+                      <input value = "0" placeholder="0" min = 0 required id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="start_time" />
                       <br>
                       <div class="input-group">
                         <div class="form-group">
                           <br>
                           <p style="display:inline; padding-right:10%">End Time</p>
-                          <input id="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="end_time" />
+                          <input value="1000" min = 1 required id ="NumberButton" type="number" step="any" class="w3-input w3-hover-blue" style="width:40%; display:inline; text-align:center" name="end_time" />
                           <div class="form-group">
                             <div class="input-group">
                               <br>
@@ -73,7 +73,7 @@
                         <div class="form-group">
                           <br>
                           <p style="display:inline; padding-right:10%">Title of the Graph</p>
-                          <input type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="titlu">
+                          <input value="Time dependency Graph" placeholder="Time dependency graph" type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="titlu">
                           <div class="form-group">
                             <div class="input-group">
                               <br>
@@ -86,7 +86,7 @@
 			   <div class="input-group">
                         <div class="form-group">
                           <p style="display:inline; padding-right:10%">x_title</p>
-                          <input type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="x_titlu">
+                          <input value="time" placeholder="time" type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="x_titlu">
                           <div class="form-group">
                             <div class="input-group">
                               <br>
@@ -99,7 +99,7 @@
 			   <div class="input-group">
                         <div class="form-group">
                           <p style="display:inline; padding-right:10%">y_title</p>
-                          <input type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="y_titlu">
+                          <input value="concentration" placeholder="concentration" type="text" class="w3-input w3-hover-blue" style="width:80%; display:inline; text-align:center" name="y_titlu">
                           <div class="form-group">
                             <div class="input-group">
                               <br>

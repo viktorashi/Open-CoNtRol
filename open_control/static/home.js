@@ -9,17 +9,35 @@ function genTextBox(textBoxID)
 {
 	$("#textboxDiv").append(`<div>
 	                            <br>
-                                <input name='ec_${textBoxID}_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+                                <input class="eq_box" name='ec_${textBoxID}_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
     							<select name='ec_${textBoxID}_dir' class='reaction_direction' >
          							<option value='left'>&#8592</option>
         							<option value='both' selected='selected'>⇌</option>
         							<option value='right'>&#8594</option>
     							</select>
-    							<input name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅'/>
+    							<input class="eq_box" name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
                             <br></div> `);
 }
-   // Add textbox and remove textbox
-        $(document).ready(() => {
+
+function validateForm(){
+	  for(let i = 1; i <= countEcuatii; i++ ){
+		  const box_left = document.forms['form'][`ec_${i}_left`].value
+		  const box_right = document.forms['form'][`ec_${i}_right`].value
+		  if (!(validEquation(box_left) || validEquation(box_right))){
+			  document.getElementsByClassName('errors')[0].innerText = 'Not a valid chemical equationn!!'
+			  console.log('NA DAT MATCHH')
+			  return false;
+		  }
+	  }
+	  return true;
+}
+function validEquation(str) {
+	const regex = /^[0-9]*([a-zA-Z]{1,2}[0-9]*)+( \+ [0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm;
+    return regex.test(str);
+}
+
+// Add textbox and remove textbox
+$(document).ready(() => {
 			genTextBox(countEcuatii);
 			updateFormReactCount(countEcuatii);
 
@@ -41,7 +59,7 @@ function genTextBox(textBoxID)
 
 
 	
-	let timeoutId;
+let timeoutId;
 
 $('form input, form select').on('input propertychange change', () => {
     console.log('Textarea Change');
@@ -79,6 +97,8 @@ function saveToDB()
 	});
 }
 
+
+
 // This is just so we don't go anywhere  
 // and still save if you submit the form
 // $('.contact-form').submit((e) => {
@@ -87,12 +107,6 @@ function saveToDB()
 // });
 
 
-
-
-		
-		
-	
-	
 // Toggle grid padding
 function myFunction() {
   let x = document.getElementById("myGrid");

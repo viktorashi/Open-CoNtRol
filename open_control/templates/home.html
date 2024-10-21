@@ -67,19 +67,21 @@ set of reactions. For example, the pair of combustion reactions:</div>
 							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
 
 {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-    <form action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
+    <form name="form" onsubmit="return validateForm()" action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
 
-	<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount"/>
+	<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
 	<div id="textboxDiv"></div>
 							
 	<div style="position: relative; left: 21%">
         <!--<p><b>Creare grafic personalizat.</b></p>-->
 	<p class="w3-padding-16">
-        <button id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
-        </p>
+        <button onclick="validateForm()" id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
+    </p>
 
     </div>
+
+        <p class="errors"></p>
 
 </form>
 

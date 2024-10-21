@@ -24,20 +24,18 @@ si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii 
 
 Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
 
-validari pe formulare (probabil cu WTForms)
+validari pe formulare (probabil cu WTForms) #kinda done igig idk
+https://regex101.com/r/lMMDKS/1 pt forma ecuatiei
 
 sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
 
 trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium ceva sa-ti faca mai usor) 
 	pt asta generezi mai intai 
 
-sa se curete stringu ala de stoichiometrica sa nu mai arate asa cu paranteze
-
-ala de il avem deja e stoichiometric matrix normal
-left stoic se refere la termenu stang
+gamma = ala de il avem deja e stoichiometric matrix normal
+left stoic se refere la termenu stang din ecuatii
 right la termenu drept
 right - left = gamma normal
-
 
 si rankul lui gamma
 

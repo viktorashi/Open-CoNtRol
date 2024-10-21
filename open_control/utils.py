@@ -316,7 +316,6 @@ def stoichiometric_in_tex(stoichiometric_matrix):
               H2O & 2 \cr}
         $$
     """
-    pass
 
     no_species , no_equations = stoichiometric_matrix.shape
 
