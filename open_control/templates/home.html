@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
 <head>
 	<title>Flask Graph</title>
 	<meta charset="UTF-8">
@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../static/home.css">
     <link rel="icon" href="../static/favicon.ico" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
     <script src="../static/load-mathjax.js" async></script>
@@ -80,8 +80,14 @@
                 <p>The last completed one (textbox or dropdown options) will be taken into consideration when generating the results.</p>
 
                 <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span> <hr>
+            </div>
+        </header>
 
-                <textarea placeholder="2H2 + O2 -> 2H2O;
+                {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
+                <form name="form" onsubmit="validateForm()" action="/save_reactii" id="DynamicTextBox"
+                      class="contact-form" method="post">
+
+                    <div style="width: 60%; left: 30%; padding-top:2%; position: relative"><textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;
 C + O2 -> CO2
 H2 = 10
 O2 = 50
@@ -90,10 +96,9 @@ C = 25
 O2 = 20
 k1 = 0.1
 k2 = 0.5"
-                          cols="35" rows="15"></textarea>
-            </div>
+                                   cols="35" rows="15"></textarea></div>
 
-            <br>
+                    <br>
             <div style="text-align: center;">
                 <button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
                 <button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
@@ -101,9 +106,6 @@ k2 = 0.5"
                         style="height: 44px; width: 44px;">--
                 </button>
 
-                {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-                <form name="form" onsubmit="validateForm()" action="/save_reactii" id="DynamicTextBox"
-                      class="contact-form" method="post">
 
                     <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
@@ -121,15 +123,12 @@ k2 = 0.5"
 
                     <p class="error"></p>
 
+                    </div>
                 </form>
 
                 <div class="form-status-holder"></div>
 
                 {#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
-
-            </div>
-
-        </header>
     </div>
 
 
