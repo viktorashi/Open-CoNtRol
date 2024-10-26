@@ -311,7 +311,7 @@ def stoichiometric_in_tex(stoichiometric_matrix):
 
         which would need to become
         $$
-         \matrix{ & J_1  \cr
+         \matrix{
               H2 & -2 \cr
               O2 & -1 \cr
               H2O & 2 \cr}
@@ -322,7 +322,7 @@ def stoichiometric_in_tex(stoichiometric_matrix):
 
     #begin
     tex = ("$$\n"
-            "\matrix{ ")
+            "\matrix{ \n")
 
     #append the equation names on the first (header) line
     # for i in range(no_equations):
@@ -340,7 +340,7 @@ def stoichiometric_in_tex(stoichiometric_matrix):
         #the value that species has in each equation
         for value in values_in_each_eq:
             if value >= 0:
-                tex = tex + '\\ ' + str(value)
+                tex = tex + '&\ ' + str(value)
             else :
                 tex = tex + '& ' + str(value)
         #new row in matrix
