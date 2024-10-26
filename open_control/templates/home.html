@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-	<title>Flask Graph</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/home.css">
-    <link rel="icon" href="../static/favicon.ico" />
-	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
+    <title>Flask Graph</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new" />
+
     <script src="../static/load-mathjax.js" async></script>
+    <link rel="stylesheet" href="../static/home.css">
+    <link rel="icon" href="../static/favicon.ico"/>
 
 </head>
 <body>
@@ -68,67 +70,82 @@
                 {#    used to process Antimony code and append it to the existing select/options  #}
 
                 <p class="content">You can either use the following textbox to write <a
-                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics">Antimony</a>
+                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics" target=”_blank”>Antimony</a> <sup><span class="material-symbols-outlined">open_in_new</span></sup>
+
                     code, or the +/- dropdowns below to fill out the CRN. </p>
 
                 <p>It's optional to also write the initial values for each species / reaction constant, if not filled
                     out the equations and stoichiometric matrix will be shown.</p>
 
-                <p> If filled out inside the textbox, you'll be prompted to choose what type of graph do you want represented.
+                <p> If filled out inside the textbox, you'll be prompted to choose what type of graph do you want
+                    represented.
                 </p>
 
-                <p>The last completed one (textbox or dropdown options) will be taken into consideration when generating the results.</p>
-
-                <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span> <hr>
+                <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span>
+                <hr>
             </div>
         </header>
 
-                {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-                <form name="form" onsubmit="validateForm()" action="/save_reactii" id="DynamicTextBox"
-                      class="contact-form" method="post">
 
-                    <div style="width: 60%; left: 30%; padding-top:2%; position: relative"><textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;
+        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="">
+            <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
+                        <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;
 C + O2 -> CO2
+
 H2 = 10
 O2 = 50
 H2O = 30
 C = 25
 O2 = 20
-k1 = 0.1
-k2 = 0.5"
-                                   cols="35" rows="15"></textarea></div>
 
-                    <br>
+k1 = 0.1
+k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
+            </div>
+                <div style="position: relative; left: 50%">
+                    <!--<p><b>Creare grafic personalizat.</b></p>-->
+                    <p class="w3-padding-16">
+                        <button id="buton" class="w3-button w3-black" type="submit">
+                            Process Antimony
+                        </button>
+                    </p>
+                </div>
+            <br>
+        </form>
+        {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
+        <form name="form" onsubmit="validateAntimonyForm()" action="/save_reactii_dropdowns" id="dropdownForm"
+              class="contact-form" method="post">
+
+
             <div style="text-align: center;">
-                <button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-                <button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
-                <button id="reset_reaction_button" href="#" title="Reset all reactions"
+                <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
+                <button id="Remove" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
+                <button id="reset_reaction_button" title="Reset all reactions"
                         style="height: 44px; width: 44px;">--
                 </button>
 
 
-                    <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+                <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
-                    <div id="textboxDiv"></div>
+                <div id="textboxDiv"></div>
 
-                    <div style="position: relative; left: 21%">
-                        <!--<p><b>Creare grafic personalizat.</b></p>-->
-                        <p class="w3-padding-16">
-                            <button onclick="validateForm()" id="buton" class="w3-button w3-black" type="submit">
-                                Generate Graph
-                            </button>
-                        </p>
+                <div style="position: relative; left: 21%">
+                    <!--<p><b>Creare grafic personalizat.</b></p>-->
+                    <p class="w3-padding-16">
+                        <button id="buton" class="w3-button w3-black" type="submit">
+                            Generate Graph
+                        </button>
+                    </p>
 
-                    </div>
+                </div>
 
-                    <p class="error"></p>
+                <p class="error"></p>
 
-                    </div>
-                </form>
+            </div>
+        </form>
 
-                <div class="form-status-holder"></div>
+        <div class="form-status-holder"></div>
 
-                {#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
+        {#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
     </div>
 
 

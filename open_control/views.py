@@ -11,11 +11,22 @@ def home():
 
 
 
-@app.post("/save_reactii")
-def save_reactii():
+@app.post("/save_reactii_dropdowns")
+def save_reactii_dropdowns():
+    """
+    Only used when submitting the form via the manual writing dropdowns
+    :return:
+    """
     save_reactions_file(request)
     return redirect(url_for('input_user'))
 
+@app.post("/save_reactii_antimony")
+def save_reactii_antimony():
+    """
+    Only used when submitting the form via the Antimony code textarea
+    :return:
+    """
+    pass
 
 @app.get('/input_user')
 def input_user():

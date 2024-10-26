@@ -19,7 +19,7 @@ function genTextBox(textBoxID)
                             <br></div> `);
 }
 
-function validateForm(){
+function validateAntimonyForm(){
 	  for(let i = 1; i <= countEcuatii; i++ ){
 		  const box_left = document.forms['form'][`ec_${i}_left`].value.trim()
 		  const box_right = document.forms['form'][`ec_${i}_right`].value.trim()
@@ -27,11 +27,11 @@ function validateForm(){
 		  if (!(validEquation(box_left) || validEquation(box_right))){
 			  document.getElementsByClassName('error')[0].innerText = 'A chemical reaction not valid'
 			  console.log('NA DAT MATCHH')
-			  //meaning it's not safe to submit the form
+			  //it's not safe to submit the form
 			  return false;
 		  }
 	  }
-	  //meaning it's safe to submit the form
+	  //it's safe to submit the form
 	  return true;
 }
 function validEquation(str) {
@@ -63,8 +63,6 @@ $(document).ready(() => {
 			
         });  
 
-
-	
 let timeoutId;
 
 $('form input, form select').on('input propertychange change', () => {

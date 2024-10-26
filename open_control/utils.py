@@ -53,11 +53,10 @@ def save_reactions_file(req):
     :return: None
     """
     ecuatii_count = int(req.form.get('ecuatiiCount'))
-    index = 1
 
     the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
 
-    while index <= ecuatii_count:
+    for index in range(1,ecuatii_count):
         ec_left = req.form.get('ec_' + str(index) + '_left')
         ec_dir = req.form.get('ec_' + str(index) + '_dir')
         ec_right = req.form.get('ec_' + str(index) + '_right')
@@ -75,8 +74,6 @@ def save_reactions_file(req):
 #asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
         the_file.write(ecuatie_finala)
         the_file.write("\n")
-
-        index += 1
 
     the_file.close()
 #TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
