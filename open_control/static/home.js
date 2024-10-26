@@ -9,30 +9,36 @@ function genTextBox(textBoxID)
 {
 	$("#textboxDiv").append(`<div>
 	                            <br>
-                                <input class="eq_box" name='ec_${textBoxID}_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
+                                <input oninput="this.value = this.value.toUpperCase()" class="eq_box" name='ec_${textBoxID}_left' type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
     							<select name='ec_${textBoxID}_dir' class='reaction_direction' >
          							<option value='left'>&#8592</option>
         							<option value='both' selected='selected'>⇌</option>
         							<option value='right'>&#8594</option>
     							</select>
-    							<input class="eq_box" name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
+    							<input oninput="this.value = this.value.toUpperCase()" class="eq_box" name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
                             <br></div> `);
 }
 
 function validateForm(){
 	  for(let i = 1; i <= countEcuatii; i++ ){
-		  const box_left = document.forms['form'][`ec_${i}_left`].value
-		  const box_right = document.forms['form'][`ec_${i}_right`].value
+		  const box_left = document.forms['form'][`ec_${i}_left`].value.trim()
+		  const box_right = document.forms['form'][`ec_${i}_right`].value.trim()
+
 		  if (!(validEquation(box_left) || validEquation(box_right))){
-			  document.getElementsByClassName('errors')[0].innerText = 'Not a valid chemical equationn!!'
+			  document.getElementsByClassName('errors')[0].innerText = 'A chemical reaction not valid'
 			  console.log('NA DAT MATCHH')
+			  //meaning it's not safe to submit the form
 			  return false;
 		  }
 	  }
+	  //meaning it's safe to submit the form
 	  return true;
 }
 function validEquation(str) {
-	const regex = /^[0-9]*([a-zA-Z]{1,2}[0-9]*)+( \+ [0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm;
+	/*
+	*	when in doubt da-i debug in :https://regex101.com sau https://www.debuggex.com (ca sa vezi vizual)
+	*  */
+	const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm;
     return regex.test(str);
 }
 

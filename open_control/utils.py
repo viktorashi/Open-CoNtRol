@@ -206,10 +206,11 @@ def create_figure(session ):
     print(stoicm)
     print(type(stoicm))
 
+    # "template not found" error keeps popping up for some reason (it works lol)
     return [render_template("home.html"), listaToShowEcuatii, stoichiometric_in_tex(stoicm)]
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
-def crn2antimony(session , filename):
+def crn2antimony(session , filename:str):
     """
     :param session: the global object session for the current user
     :param filename:
@@ -324,8 +325,8 @@ def stoichiometric_in_tex(stoichiometric_matrix):
             "\matrix{ ")
 
     #append the equation names on the first (header) line
-    for i in range(no_equations):
-        tex = tex + '& J_' + str(i+1)
+    # for i in range(no_equations):
+    #     tex = tex + '& J_' + str(i+1)
 
     #new matrix row
     tex = tex + '\cr '
@@ -338,7 +339,10 @@ def stoichiometric_in_tex(stoichiometric_matrix):
         values_in_each_eq = stoichiometric_matrix[species]
         #the value that species has in each equation
         for value in values_in_each_eq:
-            tex = tex + '& ' + str(value)
+            if value >= 0:
+                tex = tex + '\\ ' + str(value)
+            else :
+                tex = tex + '& ' + str(value)
         #new row in matrix
         tex = tex + '\cr '
 

@@ -85,3 +85,38 @@ vezi ca are si screen reader automat pt accediblity asta e extra extra nice to h
 ok deci asta e o comanda cu mai multe arguemnte:  \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
 si asta tot aceasi chestie:  \frac{numerator}{denominator}
 DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
+
+
+S0 --> KS1 
+KS1 --> S2
+S2 + F --> FS2
+FS2 --> F
+F --> S0 + F
+
+F = 0.874108
+FS2 = 7.620157734
+KS1 = 7.620157734
+S0 = 7.270157734
+S2 = 0.6000000000
+
+k1 = 0.1329759342
+k2 = 0.1329759342
+k3 = 2
+k4 = 0.1329759342
+k5 = 1
+
+checkbox ca sa selecteze la cate din specii sa dea plot
+
+Detailed feature (destul de bonus):
+      Calea pt bonus daca inca ai timp
+      OMG CE IAD A FOST SA TREBUIASCA SA RESCRIU COPY PASTE DE FIECARE DATA ASTA FA UN TEXTBOX SA ITI IA DIRET TEXT DE ANTIMONY din ala simplu tho it DOESN'T SUPPORT ANYMOONT FUNCTIONS WHAT WHTEVRETH EELL
+      1. pui antimony si daca contine initial values specifice inseamna ca omu vrea un graph, caz in care 
+      2. ceri ca si cele facute cu dropdown si ++ / -- sa li se puna valori initiale
+
+      MVP: daca exista orice cod valid in textareau ala, ia doar tot ce e acolo si nimic din dropdown (verifici pe frontend daca e valid inainte sa triniti si dai warning ca o sa se foloseasca ala de jos, (doar daca e ceva valid scris si acolo) si te pune sa dai confirm ca trimiti alea de jos, daca nu e nici ala valid dai alt warning ca nu-i ok)
+      Daca contine initial values faci cu graph ca stii ca vrea, daca nu faci doar analiza din aia cum iiz ce
+      SA VERIFICI NUMA CA TOATE AU INITIAL VALUES PUSE
+      sa nu mai pui lumea sa puna neaparat patyea de la final de "k1*S1" de la "S1 -> S2; k1*S1" ca se intelege ce si de unde si cum
+
+
+poate o baza de date de doamne ajuta

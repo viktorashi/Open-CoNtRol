@@ -27,7 +27,7 @@ function generateSpecs(specsList)
         textToAppend = "<div class=\"form-group\">"+
                       "<div class=\"input-group\">"+
                       "<p style=\"display:inline;padding-right:10%\">"+specsList[specIndex]+"</p>"+
-                      `<input placeholder="${specsList[specIndex]} concentration" min = 1 required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >`+
+                      `<input placeholder="${specsList[specIndex]} concentration" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >`+
                       "</div>"+
                       "</div>";
         specIndex++;
@@ -38,7 +38,7 @@ function generateSpecs(specsList)
 // Generate Reaction Constants List
 function generateConstante(constCount)
 {
-    undeVinConstantele = document.getElementById("undeVinConstantele");
+    let undeVinConstantele = document.getElementById("undeVinConstantele");
     undeVinConstantele.innerHTML = "";
 
     for ( let constIndex = 0; constIndex < constCount; constIndex++ )
@@ -46,7 +46,7 @@ function generateConstante(constCount)
         textToAppend = "<div class=\"form-group\">"+
                 "<div class=\"input-group\">"+
                 "<p style=\"display:inline; padding-right:10%\">k"+(constIndex+1)+"</p>"+
-                `<input placeholder="const ${constIndex+1} value" min = 1 required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >`+
+                `<input placeholder="const ${constIndex+1} value" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >`+
                 "</div>"+
                 "</div>";
 
@@ -111,7 +111,7 @@ function doCheck(){
 
     let inputs = document.getElementsByTagName('input');
     for(let i=0; i < inputs.length; i++){
-        if(inputs[i].type == "number" && inputs[i].value == ''){
+        if(inputs[i].value === '' && inputs[i].type === "number"){
             allFilled = false;
             break;
         }

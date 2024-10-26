@@ -58,6 +58,17 @@ set of reactions. For example, the pair of combustion reactions:</div>
 </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
 &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p style="font-size:9px; display:inline">2</p>
 </div>
+
+{#    used to process Antimony code and append it to the existing select/options  #}
+    <textarea placeholder="2H2 + O2 -> 2H2O;
+    C + O2 -> CO2
+   H2 = 10
+   O2 = 50
+   H2O = 30
+   C = 25
+   O2 = 20
+   k1 = 0.1
+   k2 = 0.5"></textarea>
 </div>
 
 <br>
@@ -67,7 +78,7 @@ set of reactions. For example, the pair of combustion reactions:</div>
 							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
 
 {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-    <form name="form" onsubmit="return validateForm()" action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
+    <form name="form" onsubmit="validateForm()" action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
 
 	<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
