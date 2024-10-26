@@ -117,6 +117,7 @@ Detailed feature (destul de bonus):
       Daca contine initial values faci cu graph ca stii ca vrea, daca nu faci doar analiza din aia cum iiz ce
       SA VERIFICI NUMA CA TOATE AU INITIAL VALUES PUSE
       sa nu mai pui lumea sa puna neaparat patyea de la final de "k1*S1" de la "S1 -> S2; k1*S1" ca se intelege ce si de unde si cum
+      daca sunt filled out initial values iti apare pagina cu ce fel de graph vrei sa-ti faca
 
 
 poate o baza de date de doamne ajuta

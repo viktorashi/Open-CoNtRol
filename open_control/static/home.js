@@ -25,7 +25,7 @@ function validateForm(){
 		  const box_right = document.forms['form'][`ec_${i}_right`].value.trim()
 
 		  if (!(validEquation(box_left) || validEquation(box_right))){
-			  document.getElementsByClassName('errors')[0].innerText = 'A chemical reaction not valid'
+			  document.getElementsByClassName('error')[0].innerText = 'A chemical reaction not valid'
 			  console.log('NA DAT MATCHH')
 			  //meaning it's not safe to submit the form
 			  return false;

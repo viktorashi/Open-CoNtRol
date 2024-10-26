@@ -15,103 +15,132 @@
     <script src="../static/load-mathjax.js" async></script>
 
 </head>
-	<body>
+<body>
 
-		<!-- Sidebar -->
+<!-- Sidebar -->
 <nav class="w3-sidebar w3-black w3-animate-top w3-xxlarge" style="display:none;padding-top:150px" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-black w3-xxlarge w3-padding w3-display-topright" style="padding:6px 24px">
-    	<i class="fa fa-remove"></i>
-  	</a>
- 	<div class="w3-bar-block w3-center">
-    	<a href="http://127.0.0.1:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
-        <a href="http://127.0.0.1:5000/input_user" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Show The Graph</a>
+    <a href="javascript:void(0)" onclick="w3_close()"
+       class="w3-button w3-black w3-xxlarge w3-padding w3-display-topright" style="padding:6px 24px">
+        <i class="fa fa-remove"></i>
+    </a>
+    <div class="w3-bar-block w3-center">
+        <a href="http://127.0.0.1:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
+        <a href="http://127.0.0.1:5000/input_user" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Show The
+            Graph</a>
         <a href="http://192.168.1.50:5000/#" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Details</a>
-	</div>
+    </div>
 </nav>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-content" style="max-width:1500px">
-	<!-- Header -->
-<div class="w3-opacity">
-<span class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-<div class="w3-clear"></div>
-<header class="w31-center w3-margin-bottom">
-   
-<h1 style="text-align:center;"><b>Chemical Reaction Network simulation tool</b></h1>
-<h1 style="text-align:center;"><b>(CoNtRol-Sim)</b></h1>
-<div style="width: 60%; left: 21%; padding-top:2%; position: relative">
-<!--  <p><b>Apasa pentru a afisa graficul.</b></p>
-  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
--->
-<div class="content">
+    <!-- Header -->
+    <div class="w3-opacity">
+        <span class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+        <div class="w3-clear"></div>
+        <header class="w31-center w3-margin-bottom">
 
-    Chemical reaction network theory is an area of applied mathematics
- that attempts to model the behavior of real-world chemical systems.
-Since its foundation in the 1960s, it has attracted a growing research community,
- mainly due to its applications in biochemistry and theoretical chemistry</div>
+            <h1 style="text-align:center;"><b>Chemical Reaction Network simulation tool</b></h1>
+            <h1 style="text-align:center;"><b>(CoNtRol-Sim)</b></h1>
+            <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
+                <!--  <p><b>Apasa pentru a afisa graficul.</b></p>
+                  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
+                -->
+                <div class="content">
 
-<div class="content" style="padding-top:1%">
-A chemical reaction network (CRN) comprises a set of reactants, a set of products and a
-set of reactions. For example, the pair of combustion reactions:</div>
-<div class="content" style="padding-top:1%">
-2H<p style="font-size:9px; display:inline">2</p> + O<p style="font-size:9px; display:inline">2
-</p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
-&nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p style="font-size:9px; display:inline">2</p>
-</div>
+                    Chemical reaction network theory is an area of applied mathematics
+                    that attempts to model the behavior of real-world chemical systems.
+                    Since its foundation in the 1960s, it has attracted a growing research community,
+                    mainly due to its applications in biochemistry and theoretical chemistry
+                </div>
 
-{#    used to process Antimony code and append it to the existing select/options  #}
-    <textarea placeholder="2H2 + O2 -> 2H2O;
-    C + O2 -> CO2
-   H2 = 10
-   O2 = 50
-   H2O = 30
-   C = 25
-   O2 = 20
-   k1 = 0.1
-   k2 = 0.5"></textarea>
-</div>
+                <div class="content" style="padding-top:1%">
+                    A chemical reaction network (CRN) comprises a set of reactants, a set of products and a
+                    set of reactions. For example, the pair of combustion reactions:
+                </div>
+                <div class="content" style="padding-top:1%">
 
-<br>
-<div style="text-align: center;">
-							<button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-							<button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button> 
-							<button id="reset_reaction_button" href="#" title="Reset all reactions" style="height: 44px; width: 44px;">--</button>
+                    2H<p style="font-size:9px; display:inline">2</p> + O<p style="font-size:9px; display:inline">2
+                </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
+                    &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
+                        style="font-size:9px; display:inline">2</p>
+                </div>
 
-{#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-    <form name="form" onsubmit="validateForm()" action="/save_reactii" id = "DynamicTextBox" class="contact-form" method="post">
+                {#    used to process Antimony code and append it to the existing select/options  #}
 
-	<input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+                <p class="content">You can either use the following textbox to write <a
+                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics">Antimony</a>
+                    code, or the +/- dropdowns below to fill out the CRN. </p>
 
-	<div id="textboxDiv"></div>
-							
-	<div style="position: relative; left: 21%">
-        <!--<p><b>Creare grafic personalizat.</b></p>-->
-	<p class="w3-padding-16">
-        <button onclick="validateForm()" id="buton" class="w3-button w3-black" type="submit">Generate Graph</button>
-    </p>
+                <p>It's optional to also write the initial values for each species / reaction constant, if not filled
+                    out the equations and stoichiometric matrix will be shown.</p>
 
+                <p> If filled out inside the textbox, you'll be prompted to choose what type of graph do you want represented.
+                </p>
+
+                <p>The last completed one (textbox or dropdown options) will be taken into consideration when generating the results.</p>
+
+                <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span> <hr>
+
+                <textarea placeholder="2H2 + O2 -> 2H2O;
+C + O2 -> CO2
+H2 = 10
+O2 = 50
+H2O = 30
+C = 25
+O2 = 20
+k1 = 0.1
+k2 = 0.5"
+                          cols="35" rows="15"></textarea>
+            </div>
+
+            <br>
+            <div style="text-align: center;">
+                <button id="Add" href="#" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
+                <button id="Remove" href="#" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
+                <button id="reset_reaction_button" href="#" title="Reset all reactions"
+                        style="height: 44px; width: 44px;">--
+                </button>
+
+                {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
+                <form name="form" onsubmit="validateForm()" action="/save_reactii" id="DynamicTextBox"
+                      class="contact-form" method="post">
+
+                    <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+
+                    <div id="textboxDiv"></div>
+
+                    <div style="position: relative; left: 21%">
+                        <!--<p><b>Creare grafic personalizat.</b></p>-->
+                        <p class="w3-padding-16">
+                            <button onclick="validateForm()" id="buton" class="w3-button w3-black" type="submit">
+                                Generate Graph
+                            </button>
+                        </p>
+
+                    </div>
+
+                    <p class="error"></p>
+
+                </form>
+
+                <div class="form-status-holder"></div>
+
+                {#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
+
+            </div>
+
+        </header>
     </div>
 
-        <p class="errors"></p>
 
-</form>
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
+            style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
 
-<div class="form-status-holder"></div>
+        <p class="w3-medium">2023@ <a target="_blank" class="w3-hover-text-green"></a></p>
 
-{#    <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
-
-</div>
-
-</header>
-</div>
-
-
-<!-- Footer -->
-<footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge" style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
-
-  <p class="w3-medium">2023@  <a target="_blank" class="w3-hover-text-green"></a> </p>
-
-</footer>
+    </footer>
     <script type="application/javascript" src="../static/home.js"></script>
+</div>
 </body>
 </html>

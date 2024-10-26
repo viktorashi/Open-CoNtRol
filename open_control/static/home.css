@@ -45,7 +45,15 @@ select {
   clear: both;
 }
 
-.errors {
+.error {
     color: red;
     font-size: 0.9em;
+}
+
+textarea {
+  max-width: 70%  ;
+}
+
+a {
+  color: cornflowerblue;
 }
