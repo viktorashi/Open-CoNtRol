@@ -36,10 +36,18 @@ function validateAntimonyForm(){
 }
 function validEquation(str) {
 	/*
-	*	when in doubt da-i debug in :https://regex101.com sau https://www.debuggex.com (ca sa vezi vizual)
+	*	when in doubt, debug it in : https://regex101.com/library/pzO5MF sau https://www.debuggex.com (ca sa vezi vizual)
 	*  */
 	const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm;
     return regex.test(str);
+}
+
+function validAntimonyCRNDefinition(str){
+	/*
+	*	when in doubt, debug it in : https://regex101.com/library/hjRLci sau https://www.debuggex.com (ca sa vezi vizual)
+	*  */
+	const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *-> *[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *; *[a-z][0-9]+( *\* *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm
+	return regex.test(str)
 }
 
 // Add textbox and remove textbox
