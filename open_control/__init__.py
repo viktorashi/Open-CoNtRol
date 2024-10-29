@@ -9,29 +9,6 @@ import open_control.views
 print('aplicatia in care mergem acm:')
 print(__name__)
 
-if __name__ == '__main__':
-    ip = 0
-    try:
-        ip = subprocess.check_output(["ifconfig en0 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[
-            1].strip()
-        # ca nu exista index 1 daca nu ai interfete pornite
-    except IndexError:
-        try:
-            ip = \
-            subprocess.check_output(["ifconfig ens33 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split("\n")[
-                1].strip()
-        except IndexError:
-            try:
-                ip = \
-                subprocess.check_output(["ifconfig ens37 | grep 'inet'| awk '{print$2}'"], shell=True, text=True).split(
-                    "\n")[1].strip()
-            except IndexError:
-                ip = '127.0.0.1'
-                print('nu cred ca ai netu pornit da-i ca ok dam pe localhost')
-    port = 5000
-    app.secret_key = os.urandom(24)
-    app.run(host=ip, port=port, debug=True)
-
 if __name__ == 'open_control':
     app.secret_key = os.urandom(24)
 
