@@ -21,4 +21,4 @@ if [ -z "$ip" ]; then
 fi
 
 # Run the Flask application
-FLASK_APP=open_control FLASK_ENV=development flask run --host="$ip"
+FLASK_APP=open_control FLASK_ENV=development flask --debug run --host="$ip"

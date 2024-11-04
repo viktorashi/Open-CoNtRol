@@ -124,3 +124,5 @@ Detailed feature (destul de bonus):
 poate o baza de date de doamne ajuta
 
 sa fac sa apara cumva pe prima pagina direct direct toate fisierele pe care le am eu ca asa nu are niciun rost sa pui mai intai omu sa completeze aia si dupa sa-i dai optiunile care au aparut inainte
+
+wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag 
