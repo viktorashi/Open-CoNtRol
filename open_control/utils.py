@@ -56,7 +56,7 @@ def save_reactions_file(req):
 
     the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
 
-    for index in range(1,ecuatii_count):
+    for index in range(1,ecuatii_count+1):
         ec_left = req.form.get('ec_' + str(index) + '_left')
         ec_dir = req.form.get('ec_' + str(index) + '_dir')
         ec_right = req.form.get('ec_' + str(index) + '_right')
@@ -97,7 +97,7 @@ def get_reaction_meta(session , reactii_individuale : [str]) -> [[str],[str]] :
 
     ## end -- for x in s
 
-    specii = list(set(specii)) #scoate duplicatele
+    specii = list(set(specii)) #removes duplicates
     specii.sort()  # alfabetic
     session['specii'] = specii
 

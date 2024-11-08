@@ -10,7 +10,8 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new"/>
 
     <script src="../static/load-mathjax.js" async></script>
     <link rel="stylesheet" href="../static/home.css">
@@ -70,7 +71,9 @@
                 {#    used to process Antimony code and append it to the existing select/options  #}
 
                 <p class="content">You can either use the following textbox to write <a
-                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics" target=”_blank”>Antimony</a> <sup><span class="material-symbols-outlined">open_in_new</span></sup>
+                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                        target=”_blank”>Antimony</a> <sup><span
+                        class="material-symbols-outlined">open_in_new</span></sup>
 
                     code, or the +/- dropdowns below to fill out the CRN. </p>
 
@@ -87,7 +90,7 @@
         </header>
 
 
-        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="">
+        <form action="/save_reactii_antimony" method="post" name="antimony_form" >
             <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
                         <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
 C + O2 -> CO2; k2*C*O2
@@ -101,28 +104,28 @@ O2 = 20
 k1 = 0.1
 k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
             </div>
-                <div style="position: relative; left: 50%">
-                    <!--<p><b>Creare grafic personalizat.</b></p>-->
-                    <p class="w3-padding-16">
-                        <button id="buton" class="w3-button w3-black" type="submit">
-                            Process Antimony code
-                        </button>
-                    </p>
-                </div>
+            <div style="position: relative; left: 50%">
+                <!--<p><b>Creare grafic personalizat.</b></p>-->
+                <p class="w3-padding-16">
+                    <button id="buton" class="w3-button w3-black" type="submit">
+                        Process Antimony code
+                    </button>
+                </p>
+            </div>
             <br>
         </form>
-        {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii') #}
-        <form name="form" onsubmit="validateAntimonyForm()" action="/save_reactii_dropdowns" id="dropdownForm"
-              class="contact-form" method="post">
 
+        <div style="text-align: center;">
 
-            <div style="text-align: center;">
-                <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-                <button id="Remove" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
-                <button id="reset_reaction_button" title="Reset all reactions"
-                        style="height: 44px; width: 44px;">--
-                </button>
+            {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
+            <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
+            <button id="Remove" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
+            <button id="reset_reaction_button" title="Reset all reactions"
+                    style="height: 44px; width: 44px;">--
+            </button>
 
+            <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm"
+                  class="contact-form" method="post">
 
                 <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
@@ -131,7 +134,7 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
                 <div style="position: relative; left: 21%">
                     <!--<p><b>Creare grafic personalizat.</b></p>-->
                     <p class="w3-padding-16">
-                        <button id="buton" class="w3-button w3-black" type="submit">
+                        <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
                             Generate Graph
                         </button>
                     </p>
@@ -140,8 +143,9 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
 
                 <p class="error"></p>
 
-            </div>
-        </form>
+            </form>
+        </div>
+
 
         <div class="form-status-holder"></div>
 
