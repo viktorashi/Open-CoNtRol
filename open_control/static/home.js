@@ -17,7 +17,6 @@ function genTextBox(textBoxID) {
                             <br></div> `);
 }
 
-
 function validEquation(str) {
     /*
     *	when in doubt, debug it in : https://regex101.com/library/pzO5MF or https://www.debuggex.com (so you can see it visually)
@@ -34,28 +33,11 @@ function validAntimonyCRNDefinition(str) {
     return regex.test(str)
 }
 
-// Add textbox and remove textbox
-$(document).ready(() => {
-
-    const dropDownsForm = document.forms['dropDownsForm']
-
-    dropDownsForm.onformdata = (event) => {
-        console.log('form data a dat fire')
-        //data cleansing a bit before checking validity and submitting
-
-        // or     const formData = e.formData; if this one doesn't work
-        const formData = event.formData;
-
-        // formdata gets modified by the formdata event
-        for (let i = 1; i <= countEcuatii; i++) {
-            formData.set(`ec_${i}_left`, formData.get(`ec_${i}_left`).trim())
-            formData.set(`ec_${i}_right`, formData.get(`ec_${i}_right`).trim())
-        }
-
-    }
-
-    dropDownsForm.onsubmit = (e) => {
+function dropDownsFormSubmitHandler()
+{
         // construct a FormData object, which fires the formdata event
+
+        const dropDownsForm = document.forms['dropDownsForm']
 
         console.log('on submit a dat fireee')
         const submitterButton = document.getElementById('submitDropdownsButton')
@@ -83,9 +65,36 @@ $(document).ready(() => {
         }
         //it's safe to submit the form
         return true;
+}
+// Add textbox and remove textbox
+$(document).ready(() => {
+
+    const dropDownsForm = document.forms['dropDownsForm']
+
+    //will be used by de dropDownsFormSubmitHandler when it calls the FormData constructor
+    dropDownsForm.onformdata = (event) => {
+        console.log('form data a dat fire')
+        //data cleansing a bit before checking validity and submitting
+
+        // or     const formData = e.formData; if this one doesn't work
+        const formData = event.formData;
+
+        // formdata gets modified by the formdata event
+        for (let i = 1; i <= countEcuatii; i++) {
+            formData.set(`ec_${i}_left`, formData.get(`ec_${i}_left`).trim())
+            formData.set(`ec_${i}_right`, formData.get(`ec_${i}_right`).trim())
+        }
 
     }
 
+    const antimonyForm = document.forms['antimony_form']
+
+    antimonyForm.onformdata = (event) => {
+
+    }
+    antimonyForm.onsubmit = (event) => {
+
+    }
     genTextBox(countEcuatii);
     updateFormReactCount(countEcuatii);
 
