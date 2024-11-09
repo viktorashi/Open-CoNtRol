@@ -90,7 +90,7 @@
         </header>
 
 
-        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler()">
+        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="return antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler()">
             <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
                         <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
 C + O2 -> CO2; k2*C*O2
@@ -106,13 +106,15 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
             </div>
             <div style="position: relative; left: 50%">
                 <!--<p><b>Creare grafic personalizat.</b></p>-->
+                <p id="antimonyError" class="error"></p>
                 <p class="w3-padding-16">
-                    <button id="buton" class="w3-button w3-black" type="submit">
+                    <button id="antimonySubmitButton" class="w3-button w3-black" type="submit">
                         Process Antimony code
                     </button>
                 </p>
             </div>
             <br>
+
         </form>
 
         <div style="text-align: center;">
@@ -125,7 +127,7 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
             </button>
 
             <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm"
-                  class="contact-form" method="post" onsubmit="dropDownsFormSubmitHandler()" onformdata="dropDownsFormDataHandler()">
+                  class="contact-form" method="post" onsubmit="return dropDownsFormSubmitHandler()" onformdata="dropDownsFormDataHandler()">
 
                 <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
 
@@ -133,6 +135,7 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
 
                 <div style="position: relative; left: 21%">
                     <!--<p><b>Creare grafic personalizat.</b></p>-->
+                    <p id="dropDownsError" class="error"></p>
                     <p class="w3-padding-16">
                         <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
                             Generate Graph
@@ -141,7 +144,6 @@ k2 = 0.5" cols="35" rows="15" name="antimony-textarea"></textarea>
 
                 </div>
 
-                <p class="error"></p>
 
             </form>
         </div>

@@ -139,6 +139,37 @@ def get_reaction_meta(session , reactii_individuale : [str]) -> [[str],[str]] :
 
     return specii, reacts
 
+def get_numerical_analysis(antimony_code):
+    """
+    :param antimony_code: what is sounds like: https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics
+    :return: stoichiometry matrix along with the differential equations used to describe the system. Before being put in a template
+    they'll preferably be put in LaTeX form
+    """
+
+    #TODO: make it so that it detects when the user hasn't even initialised the values themselves
+    # (preferably in the frontend to reduce the load over here) and just delete the parameter definitions from the code before submitting
+    #orr just see if it throws the RuntimeError
+
+    road_runner = 'lmao'
+    try:
+        road_runner = te.loada(antimony_code)
+        #gets thrown if the user hasn't specified a value for the parameters specified
+    except RuntimeError:
+        # k1, k2 ... params need to be initialised for it to work, so we'll just initialise them all with 0
+        param_initialisation = ''
+        #double newline means the ned of a section in my format, the first section is the declaration part, and then we see how many lines are in that
+        no_declaration_lines = len(antimony_code.split('\n\n')[0].split('\n'))
+
+        antimony_code = antimony_code + '\r\n'
+        for i in range(1, no_declaration_lines + 1):
+            param_initialisation = param_initialisation + 'k' + str(i) + ' = 0 \r\n'
+
+        antimony_code = antimony_code + param_initialisation
+        road_runner = te.loada(antimony_code)
+
+    stoich = road_runner.getFullStoichiometryMatrix()
+    return [stoich, 'ax = b lol lorem ipsum', antimony_code]
+
 def create_figure(session ):
     """
     takes the data from the session and simulates then plots the simulation results to a file,
@@ -204,7 +235,7 @@ def create_figure(session ):
     print(type(stoicm))
 
     # "template not found" error keeps popping up for some reason (it works lol)
-    return [render_template("home.html"), listaToShowEcuatii, stoichiometric_in_tex(stoicm)]
+    return [render_template("home.html"), listaToShowEcuatii, stoichiometry_in_tex(stoicm)]
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
 def crn2antimony(session , filename:str):
@@ -291,7 +322,7 @@ def crn2antimony(session , filename:str):
     print('aici stringu final')
     return tel
 
-def stoichiometric_in_tex(stoichiometric_matrix):
+def stoichiometry_in_tex(stoichiometric_matrix):
     """
 
     :param stoichiometric_matrix: type: roadrunner._roadrunner.NamedArray

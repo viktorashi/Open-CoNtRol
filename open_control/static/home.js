@@ -52,13 +52,7 @@ function dropDownsFormSubmitHandler() {
     // construct a FormData object, which fires the formdata event
 
     const dropDownsForm = document.forms['dropDownsForm']
-
-    console.log('on submit a dat fireee')
     const submitterButton = document.getElementById('submitDropdownsButton')
-
-    console.log('cum erau astea inainte');
-    console.log(dropDownsForm.querySelector('input[name="ec_1_left"]').value); // FOO
-    console.log(dropDownsForm.querySelector('input[name="ec_1_right"]').value); // FOO
 
     const formData = new FormData(dropDownsForm, submitterButton);
 
@@ -71,7 +65,7 @@ function dropDownsFormSubmitHandler() {
         console.log(box_right)
 
         if (!(validEquation(box_left) || validEquation(box_right))) {
-            document.getElementsByClassName('error')[0].innerText = 'A chemical reaction not valid'
+            document.getElementById('dropDownsError').innerText = 'A chemical reaction not valid'
             console.log('NA DAT MATCHH')
             //it's not safe to submit the form
             return false;
@@ -93,15 +87,22 @@ function antimonyFormDataHandler(event) {
     formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
 }
 
-function antimonyFormSubmitHandler(event) {
-    console.log('form data a dat fire');
+function antimonyFormSubmitHandler() {
+    const dropDownsForm = document.forms['antimony_form']
+    const submitterButton = document.getElementById('antimonySubmitButton')
 
-    //data cleansing a bit before checking validity and submitting
+    const formData = new FormData(dropDownsForm, submitterButton);
 
-    // or     const formData = e.formData; if this one doesn't work
-    const formData = event.formData;
+    const antimonyCode =formData.get('antimony-textarea')
 
-    formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
+    if (!validAntimonyCRNDefinition(antimonyCode.split('\n\n')[0])) {
+        document.getElementById('antimonyError').innerText = 'Definition part of Antimony Code not valid!!'
+        console.log('NA DAT MATCHH')
+        //it's not safe to submit the form
+        return false;
+    }
+    //it's safe to submit the form
+    return true;
 }
 
 // Add textbox and remove textbox

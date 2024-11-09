@@ -87,11 +87,11 @@ si asta tot aceasi chestie:  \frac{numerator}{denominator}
 DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
 
 
-S0 --> KS1 
-KS1 --> S2
-S2 + F --> FS2
-FS2 --> F
-F --> S0 + F
+S0 -> KS1; k1*S0
+KS1 -> S2; k2*KS1
+S2 + F -> FS2; k3*S2*F
+FS2 -> F; k4*FS2
+F -> S0 + F; k5*F
 
 F = 0.874108
 FS2 = 7.620157734

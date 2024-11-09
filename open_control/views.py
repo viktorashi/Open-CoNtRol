@@ -26,7 +26,11 @@ def save_reactii_antimony():
     Only used when submitting the form via the Antimony code textarea
     :return:
     """
-    pass
+    antimony_code = request.form.get('antimony-textarea')
+    print(antimony_code)
+    [stoicm, equations, new_antimony] = get_numerical_analysis(antimony_code)
+
+    return render_template("numerical_analysis.html", antimony_code = new_antimony, stoichMatrix=stoichiometry_in_tex(stoicm))
 
 @app.get('/input_user')
 def input_user():
