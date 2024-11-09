@@ -28,9 +28,9 @@ def save_reactii_antimony():
     """
     antimony_code = request.form.get('antimony-textarea')
     print(antimony_code)
-    [stoicm, equations, new_antimony] = get_numerical_analysis(antimony_code)
+    [stoicm, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
 
-    return render_template("numerical_analysis.html", antimony_code = new_antimony, stoichMatrix=stoichiometry_in_tex(stoicm))
+    return render_template("numerical_analysis.html", stoichMatrix=stoichiometry_in_tex(stoicm),  antimony_code = new_antimony,equations=tex_equations, species_mapping = species_to_index_mapping )
 
 @app.get('/input_user')
 def input_user():

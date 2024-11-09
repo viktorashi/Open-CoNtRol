@@ -85,6 +85,7 @@ function antimonyFormDataHandler(event) {
     const formData = event.formData;
 
     formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
+    formData.set('antimony-textarea', formData.get('antimony-textarea').replace(/ +/gm, ' ')); //delete extra spacing
 }
 
 function antimonyFormSubmitHandler() {
