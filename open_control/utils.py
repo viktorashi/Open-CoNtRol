@@ -298,11 +298,13 @@ def get_numerical_analysis(antimony_code):
     # it did a surprisingly good job in correcting its bugs after several iterations
 
     converter = AntimonyConverter()
+
     reactions = antimony_code.split('\n')
     equations = converter.generate_differential_equations(reactions)
-    species_to_index_mapping = converter.species_to_index
     tex_equations = converter.generate_tex_equations(equations)
     tex_equations = '\n'.join(tex_equations)
+
+    species_to_index_mapping = converter.species_to_index
 
     stoich = road_runner.getFullStoichiometryMatrix()
     return [stoich,antimony_code, tex_equations, species_to_index_mapping ]
