@@ -38,7 +38,7 @@ function dropDownsFormDataHandler(event) {
     console.log('form data a dat fire')
     //data cleansing a bit before checking validity and submitting
 
-    // or     const formData = e.formData; if this one doesn't work
+    // or     const formData = e.originalEvent.formData; if this one doesn't work
     const formData = event.formData;
 
     // formdata gets modified by the formdata event
@@ -64,7 +64,7 @@ function dropDownsFormSubmitHandler() {
         console.log(box_left)
         console.log(box_right)
 
-        if (!(validEquation(box_left) || validEquation(box_right))) {
+        if (!validEquation(box_left) || !validEquation(box_right)) {
             document.getElementById('dropDownsError').innerText = 'A chemical reaction not valid'
             console.log('NA DAT MATCHH')
             //it's not safe to submit the form
