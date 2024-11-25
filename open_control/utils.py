@@ -86,7 +86,7 @@ class AntimonyConverter:
             for product in products:
                 species, coef = parse_species_term(product)
                 if coef > 1:
-                    term = f"+{coef}*{converted_rate}"
+                    term = f"+{coef}\dot{converted_rate}"
                 else:
                     term = f"+{converted_rate}"
                 species_terms[species].append(term)
@@ -327,9 +327,6 @@ def create_figure(session ):
     print(select)
     print(end_time)
 
-    #teltest =' -> A; k1\n2 A + 3 B -> 4 C; k2*A*A*B*B*B\n4 C -> 2 A + 3 B; k3*C*C*C*C\n2 B -> C + 3 A; k4*B*B\n2 B -> C; k5*B*B\nC -> 2 B; k6*C\nC -> ; k7*C\n\nk1 = 7;\nk2 = 7;\nk3 = 7;\nk4 = 7;\nk5 = 7;\nk6 = 7;\nk7 = 7;\n\n\nA = 1;\nB = 1;\nC = 1;\n'
-    #simu = te.loada(teltest)
-
     # Am modificat aici !!! ------------------------------------------------
     import matplotlib
     matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct
@@ -417,7 +414,7 @@ def crn2antimony(session , filename:str):
                 print('countu de coefieicent e')
                 print(cnt)
                 for i in range(cnt):
-                    krate = krate + '*' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
+                    krate = krate + '\dot' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
                     #daca e 3ABC devine k1*ABC*ABC*ABC
                     #daca e ABC3 devine k1*ABC3
                     #daca e 3ABC + 3C -> 2C

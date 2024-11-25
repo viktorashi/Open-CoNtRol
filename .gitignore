@@ -168,3 +168,8 @@ qodana.yaml
 *.swp
 *.svg
 open_control/templates/metode_lucru/
+
+#Run configu de la debuggeru de pycharm
+.run/
+./.run
+./.run/

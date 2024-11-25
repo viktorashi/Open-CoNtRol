@@ -90,7 +90,7 @@
         </header>
 
 
-        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="return antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler()">
+        <form action="/save_reactii_antimony" method="post" name="antimony_form" onsubmit="return antimonyFormSubmitHandler()" onformdata="return antimonyFormDataHandler(event)">
             <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
                         <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
 C + O2 -> CO2; k2*C*O2

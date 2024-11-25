@@ -49,7 +49,6 @@ def input_user():
 
     return render_template("input_user.html", data=temp)
 
-
 @app.get('/crn_data')
 def get_crn_data():
     """
