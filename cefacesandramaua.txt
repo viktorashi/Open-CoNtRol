@@ -39,6 +39,9 @@ trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium c
 
 sa apra deasupra asa si reaction networku gen
 A + B -> C (fara k-uri)
+
+asta de la profu so fOLOSESTI PE ASTA
+
 \begin{equation*}
 \begin{array}{ll}
 \dot{x}_1(t) = -k_1 x_1(t) x_2(t) \\
@@ -46,6 +49,7 @@ A + B -> C (fara k-uri)
 \dot{x}_3(t) =  k_1 x_1(t) x_2(t) + k_2 x_2^3(t) 
 \end{array}
 \end{equation*}
+
  sa scrie deasupra "The dynamical system from the CRN"
 
 si fa totlul acelasi font 
@@ -126,6 +130,8 @@ k4 = 0.1329759342
 k5 = 1
 
 checkbox ca sa selecteze la cate din specii sa dea plot
+
+pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
 
 Detailed feature (destul de bonus):
       Calea pt bonus daca inca ai timp

@@ -3,8 +3,12 @@ import re
 from flask import  render_template
 from typing import List, Tuple, Dict
 
-def parse_reaction(reaction: str) -> Tuple[List[str], List[str], str]:
-    """Parse a single reaction line into reactants, products, and rate law."""
+def parse_reaction(reaction: str):
+    """
+    Parse a single reaction line into reactants, products, and rate law.
+    :param reaction: reaction of example A + B -> C;k1*A*B
+    :return Tuple[reactants, products, rate_law] in this case
+    """
     reaction_parts = reaction.split(';')
     if len(reaction_parts) != 2:
         raise ValueError("Invalid reaction format. Expected 'reaction; rate_law'")
@@ -30,14 +34,14 @@ def parse_species_term(term: str) -> Tuple[str, int]:
     coef = int(coef) if coef else 1
     return species, coef
 
-#This probably has so much functionality that I can reuse in the project and delete the old stuff ong
+#This probably has so much functionality that I can reuse in the project and delete the old stuff ong too lazy to see what it is tho
 class AntimonyConverter:
     def __init__(self):
         self.species = []
-        self.species_to_index = {}
+        self.species_to_index = {} # a mapping for clarification which xi corresponds to which species
 
     def collect_species(self, reactions: List[str]):
-        """Collect all unique species and assign them indices."""
+        """Collect all unique species and assign them indices to the properties of the class."""
         all_species = set()
         for reaction in reactions:
             reactants, products, _ = parse_reaction(reaction)
@@ -59,8 +63,24 @@ class AntimonyConverter:
                 rate_law = re.sub(rf'\b{species}\b', f"{index}(t)", rate_law)
         return rate_law
 
-    def generate_differential_equations(self, reactions: List[str]) -> Dict[str, str]:
-        """Generate differential equations from list of reactions."""
+    def generate_diff_equations_in_tex_format(self, reactions: List[str]) -> str:
+        """
+        Title says it all \s
+        :param reactions: reactions in antimony definition format ( https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics ):
+        example:
+            A + B -> C; k1*A*B
+            2B -> C; k2*B*B
+
+        :return: system of differential equations for the system with the corresponding form for the example above being :
+        \begin{equation*}
+        \begin{array}{ll}
+        \dot{x}_1(t) = -k_1 x_1(t) x_2(t) \\
+        \dot{x}_2(t) = -k_1 x_1(t) x_2(t) - k_2 x_2^3(t) \\
+        \dot{x}_3(t) =  k_1 x_1(t) x_2(t) + k_2 x_2^3(t)
+        \end{array}
+        \end{equation*}
+        """
+
         self.collect_species(reactions)
         species_terms = {species: [] for species in self.species}
 
@@ -101,16 +121,16 @@ class AntimonyConverter:
             else:
                 equations[species] = '0'
 
-        return equations
+        # equations nw has all the equations
 
-    def generate_tex_equations(self, equations: Dict[str, str]) -> List[str]:
-        """Generate TeX formatted equations."""
+        """And now we write them in TeX format"""
         tex_equations = []
         for i, species in enumerate(self.species, 1):
             eqn = equations[species]
             tex_eqn = f"$$ x_{i}'(t) = {eqn} $$"
             tex_equations.append(tex_eqn)
-        return tex_equations
+
+        return "\n".join(tex_equations)
 
 def reactions_to_tellurium_format(filename : str) -> [str]:
     """
@@ -249,32 +269,12 @@ def get_reaction_meta(session , reactii_individuale : [str]) -> [[str],[str]] :
 
     return specii, reacts
 
-def get_numerical_analysis(antimony_code):
+def get_stoichiometry_matrix(antimony_code : str):
     """
-    :param antimony_code: what is sounds like: https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics
-    :return: stoichiometry matrix along with the differential equations (in LaTeX form) used to describe the system.
-
-        Example: for a system :
-            A + B -> C; k1*A*B
-            3B -> C; k2*B*B*B
-
-        we get the list of species: [A, B, C], corresponding to the functions [x1, x2, x3] respectively.
-        we have the equations:
-            x_1' = -k_1*x_1*x_2
-            x_2' = -k_1*x_1*x_2 - k_2*x_2^3
-            x_3' = k_1*x_1*x_2 + k_2*x_2^3
-
-        which, in TeX should look like:
-        $$ x_1'(t) = -k_1 \cdot x_1(t) \cdot x_2(t) $$
-        $$ x_2'(t) = -k_1 \cdot x_1(t) \cdot x_2(t) - k_2 \cdot x_2^3(t) $$
-        $$ x_3'(t) = k_1 \cdot x_1(t) \cdot x_2(t) + k_2 \cdot x_2^3(t) $$
-
+    Get the resulting stoichiometry matrix from the definitions of the system in antimony code
+    :param antimony_code:
+    :return:
     """
-
-    #TODO: make it so that it detects when the user hasn't even initialised the values themselves
-    # (preferably in the frontend to reduce the load over here) and just delete the parameter definitions from the code before submitting
-    #orr just see if it throws the RuntimeError
-
     road_runner = 'lmao'
     antimony_code_with_init = ''
     try:
@@ -293,20 +293,36 @@ def get_numerical_analysis(antimony_code):
         antimony_code_with_init = antimony_code_with_init + param_initialisation
         road_runner = te.loada(antimony_code_with_init)
 
+    return road_runner.getFullStoichiometryMatrix()
 
-    #ok i done used claude for this cuz i got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
-    # it did a surprisingly good job in correcting its bugs after several iterations
+def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
+    """
+    :param antimony_code: what is sounds like: https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics
+    :return: stoichiometry matrix along with the differential equations (in LaTeX form) used to describe the system and the species to index mapping to better understand the equations.
+
+        Example: for a system :
+            A + B -> C; k1*A*B
+            3B -> C; k2*B*B*B
+
+        we get the list of species: [A, B, C], corresponding to the functions [x1, x2, x3] respectively.
+        we have the equations:
+            x_1' = -k_1*x_1*x_2
+            x_2' = -k_1*x_1*x_2 - k_2*x_2^3
+            x_3' = k_1*x_1*x_2 + k_2*x_2^3
+
+        which, in TeX should look like:
+        $$ x_1'(t) = -k_1 \cdot x_1(t) \cdot x_2(t) $$
+        $$ x_2'(t) = -k_1 \cdot x_1(t) \cdot x_2(t) - k_2 \cdot x_2^3(t) $$
+        $$ x_3'(t) = k_1 \cdot x_1(t) \cdot x_2(t) + k_2 \cdot x_2^3(t) $$
+
+    """
+    #ok I done used claude for this cuz i got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
 
     converter = AntimonyConverter()
-
-    reactions = antimony_code.split('\n')
-    equations = converter.generate_differential_equations(reactions)
-    tex_equations = converter.generate_tex_equations(equations)
-    tex_equations = '\n'.join(tex_equations)
-
+    tex_equations = converter.generate_diff_equations_in_tex_format(antimony_code.split('\n'))
     species_to_index_mapping = converter.species_to_index
+    stoich = get_stoichiometry_matrix(antimony_code)
 
-    stoich = road_runner.getFullStoichiometryMatrix()
     return [stoich,antimony_code, tex_equations, species_to_index_mapping ]
 
 def create_figure(session ):

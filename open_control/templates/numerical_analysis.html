@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!doctype html>
-        <html>
-        <title>Chemical Reaction Network(CRN)</title>
+    <title>Chemical Reaction Network(CRN)</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -40,9 +38,9 @@
             <h1 style="text-align:center;">
                 <b>{{ pageName }}</b>
             </h1>
-            <center style="transform:scale(0.8);margin-top:-3.5%">
-                <div id='chart' class='chart' ”></div>
-</body>
+            <div id="chart" class="chart" style="transform:scale(0.8);margin-top:-3.5%; text-align: center;"></div>
+        </header>
+
 <div class="gen_graph" style="margin-top:0%">
     <br>
     <br>
@@ -53,7 +51,7 @@
                 <th>Stoichiometric Matrix</th>
             </tr>
             <tr>
-                <td style="text-align: right;" >
+                <td style="text-align: right;">
                     {{ equations }}
                 </td>
                 <td style="vertical-align: top;">
@@ -61,8 +59,8 @@
                 </td>
             </tr>
             <tr>
-                <th style="text-align: center;" >Species to index mapping</th>
-                <th style="text-align: center;" >Code that generated it</th>
+                <th style="text-align: center;">Species to index mapping</th>
+                <th style="text-align: center;">Code that generated it</th>
             </tr>
             <tr>
                 <td style="text-align: center; vertical-align: top">
@@ -70,9 +68,9 @@
                 </td>
                 <td style="text-align: center;">
                     {% for e in antimony_code.split('\n') %}
-                        {% autoescape false %}
-                            {{ e | replace(" ","&nbsp;") }} <br>
-                        {% endautoescape %}
+                    {% autoescape false %}
+                    {{ e | replace(" ","&nbsp;") }} <br>
+                    {% endautoescape %}
                     {% endfor %}
                 </td>
             </tr>
@@ -87,23 +85,14 @@
         </table>
     </div>
 </div>
-</header>
+</div>
 </div>
 <!--Footer-->
 <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
         style="/*!margin-top:128px; margin-left:-2px;*/  bottom:0.7%;  width:100%; padding-top:2%; padding-bottom:2%">
-    <p class="w3-medium">2022@
-        <target
-        ="_blank" class="w3-hover-text-green">
-        </a>
+    <p class="w3-medium"> <a target="_blank" class="w3-hover-text-green" >2022@</a>
     </p>
 </footer>
 <script type="application/javascript" src="../static/graph.js"></script>
-</body>
-</html>
-</title>
-</head>
-<body>
-
 </body>
 </html>
