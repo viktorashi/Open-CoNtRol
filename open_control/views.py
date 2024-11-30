@@ -25,8 +25,6 @@ def save_reactii_antimony():
     :return:
     """
     antimony_code = request.form.get('antimony-textarea')
-    print('mlmao cekkt astre frateeee')
-    print('mlmao cekkt astre frateeee')
     print(antimony_code)
     [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
 
