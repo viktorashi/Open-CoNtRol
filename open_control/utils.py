@@ -112,7 +112,6 @@ class AntimonyConverter:
                 species_powers[species] = coefficient
 
             # Convert the rate law
-            #TODO: cand ai putere mai mare de 1 nu-ti schimba speciile cu indexu la care apartine si nu stiu de unde o veni kktu
             converted_rate = self.convert_rate_law(rate, species_powers)
 
             # Process reactants (negative terms)
@@ -125,7 +124,7 @@ class AntimonyConverter:
             for product in products:
                 species, coefficient = parse_species_term(product)
                 if coefficient > 1:
-                    term = f"+{coefficient}\*{converted_rate}"
+                    term = f"+{coefficient}\cdot{converted_rate}"
                 else:
                     term = f"+{converted_rate}"
                 species_terms[species].append(term)
