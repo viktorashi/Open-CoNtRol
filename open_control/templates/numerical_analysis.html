@@ -47,27 +47,33 @@
             <div>
                 <table>
                     <tr>
-                        <th>The dynamical system of the CRN</th>
+                        <th>The Chemical Reaction Network</th>
                         <th>Stoichiometric Matrix</th>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="vertical-align: top">
+                            <br/>
                             {% for definition in definitions %}
-                                {{ definition }} <br />
+                                {{ definition }} <br/>
                             {% endfor %}
+                        </td>
+                        <td style="vertical-align: top; margin-top: 3px">
+                            <div style="margin-top: 1px; vertical-align: top">
+                                {{ stoichMatrix }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">The Dynamical System of the CRN</th>
+                        <th style="text-align: center;">Species to index mapping</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; vertical-align: top">
                             {{ equations }}
                         </td>
-                        <td style="vertical-align: top;">
-                            {{ stoichMatrix }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="text-align: center;">Species to index mapping</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center; vertical-align: top">
+                        <td style="text-align: center; vertical-align: top">
                             {# it normally prints it in python dict form and looks annoying with the quotes, it's easier to distinguish them with the | and the braces were just hanging in there#}
-                            {{ species_mapping | replace("'", "") | replace(',',' | ') | trim(chars='{') | trim(chars='}')}}
+                            {{ species_mapping | replace("'", "") | replace(',',' | ') | trim(chars='{') | trim(chars='}') }}
                         </td>
                     </tr>
                     <!-- <tr> -->

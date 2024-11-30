@@ -152,11 +152,9 @@ class AntimonyConverter:
         #whatever else is necessary to make the equations symmetric
         tex_equations = f"""
         \\begin{{equation*}}
-        \left\\{{ 
         \\begin{{array}}{{ll}}
         {tex_equations}
         \\end{{array}}
-        \\right.
         \\end{{equation*}}
         """
         return tex_equations
@@ -527,10 +525,8 @@ def stoichiometry_in_tex(stoichiometric_matrix):
         $$
     """
 
-    no_species , no_equations = stoichiometric_matrix.shape
-
     #begin
-    tex = ("$$\n"
+    tex = ("$$"
             "\matrix{ \n")
 
     #append the equation names on the first (header) line
