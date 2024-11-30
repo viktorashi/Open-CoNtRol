@@ -27,8 +27,11 @@ def save_reactii_antimony():
     antimony_code = request.form.get('antimony-textarea')
     print(antimony_code)
     [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
+    #absolutely unreadable but it just deletes all the right-hand side (rate laws with k1*A..) of the equations
+    definitions = [definition.split(';')[0] for definition in new_antimony.split('\n') ]
+    species_to_index_in_tex =  {key: f"${ value }$" for key, value in species_to_index_mapping.items()}
 
-    return render_template("numerical_analysis.html", stoichMatrix=stoichiometry_in_latex,  antimony_code = new_antimony,equations=tex_equations, species_mapping = species_to_index_mapping )
+    return render_template("numerical_analysis.html", definitions = definitions  , stoichMatrix=stoichiometry_in_latex, equations=tex_equations, species_mapping = species_to_index_in_tex )
 
 @app.get('/input_user')
 def input_user():

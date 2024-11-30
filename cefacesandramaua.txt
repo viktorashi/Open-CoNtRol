@@ -1,11 +1,29 @@
-#eu explicand mie codu:
+#####eu explicand mie codu:########
 
 deci pe front e un formular cu toate reactiile care da post la /save_reactii cu cate reactii sunt si formulelel lor na si dupa scrie in fisieru de crn.txt reactia aia apoi de dupa pe pagina 2 de unde iti citeste din primu fisier care il gaseste alfabetic in templates/metode_lucru care se intampla sa fie ala care incepe cu c lmao ce coinkiding.
 dupa ia taote elementele si reactiile din fisieru ala ca sa le arate pe ecran sa poti sa pui coeficient pentru fiecare specie si cate o constanta pentru fiecare sageata din fiecare reactie, gen daca pui reactie dupa se transofrmai n 2 reactii si chestii din astea
 
 aaaa valk de la VALOARE kAPPA
+##### gata eu explicand mie codu #########
 
-#potentiale buguri cu idei de feateruri
+###### academic ###############
+
+gamma = ala de il avem deja e stoichiometric matrix normal
+left stoic se refere la termenu stang din ecuatii
+right la termenu drept
+right - left = gamma normal
+
+de explicat aia cu mass action
+si rankul lui gamma
+
+ok deci asta e o comanda cu mai multe arguemnte:  \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+si asta tot aceasi chestie:  \frac{numerator}{denominator}
+DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
+
+
+###### gata academic ##############
+
+############potentiale buguri cu idei de feateruri#############
 vezi sa se uite mai intai daca are requestu datele pe el necesare, daca nu sa ia din session si daca nici asa sa dea return la un page cu "go to /<previous_page> and complete the data there"
 DAR sa nu faci asta inainte sa faci pagini separate pentru fiecare chestie pe care o vrei pentru ca dupaia o sa trebuiasca sa rescrii "previous_pageu" ca n-o sa mai fie la fel ma gandesc presupun
 
@@ -24,42 +42,7 @@ si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii 
 
 Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
 
-validari pe formulare (probabil cu WTForms) #kinda done igig idk
-https://regex101.com/r/lMMDKS/1 pt forma ecuatiei
-
 sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
-
-trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium ceva sa-ti faca mai usor) 
-	pt asta generezi mai intai octave
-
-      o data sa nu mai fie pusa inmultire 
-
-
-      fa-l mai bine sa urmeze structura asta
-
-sa apra deasupra asa si reaction networku gen
-A + B -> C (fara k-uri)
-
-asta de la profu so fOLOSESTI PE ASTA
-
-\begin{equation*}
-\begin{array}{ll}
-\dot{x}_1(t) = -k_1 x_1(t) x_2(t) \\
-\dot{x}_2(t) = -k_1 x_1(t) x_2(t) - k_2 x_2^3(t) \\
-\dot{x}_3(t) =  k_1 x_1(t) x_2(t) + k_2 x_2^3(t) 
-\end{array}
-\end{equation*}
-
- sa scrie deasupra "The dynamical system from the CRN"
-
-si fa totlul acelasi font 
-
-gamma = ala de il avem deja e stoichiometric matrix normal
-left stoic se refere la termenu stang din ecuatii
-right la termenu drept
-right - left = gamma normal
-
-si rankul lui gamma
 
 si matricea coloana vkx si pot isa folosesti multiplicart simbolica ca sa generezi sistmul cand faci gamma *ori coloana aia
 
@@ -74,42 +57,54 @@ gen draw sa faca nebunia asta https://sys-bio.github.io/SBMLDiagrams/Introductio
 
 de DSR graph asta e ala 
 
-de explicat aia cu mass action
-
 sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
 
-x/p sau xpp iti face oscilatii 
+x/p sau xpp iti face oscilatii
+
+checkbox ca sa selecteze la cate din specii sa dea plot
+
+pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
+
+#SEMI DONE APROAPE TOTT LA ASTAAA omomog (nu era deloc cat de bonus credeam, e cam singuru pot cum pot sa-mi dau seama cum kkt se face lmao
+Detailed feature (destul de bonus):
+      Calea pt bonus daca inca ai timp
+      OMG CE IAD A FOST SA TREBUIASCA SA RESCRIU COPY PASTE DE FIECARE DATA ASTA FA UN TEXTBOX SA ITI IA DIRET TEXT DE ANTIMONY din ala simplu tho it DOESN'T SUPPORT ANYMOONT FUNCTIONS WHAT WHTEVRETH EELL
+
+      gen fa in side bar ca la ala de crn cu generate antimony code ca la americani
+
+      sauuu in sidebar ca un buton care sa deschida asa ca un uhh din ala gen dropdown sa zica
+      in bara din stanga daca vrei si se deschide asa cu animatie ca si cum
+      si asta se desshcide sub alea normale alealate
 
 
-#resurse tEx
+      1. pui antimony si daca contine initial values specifice inseamna ca omu vrea un graph, caz in care
+      2. ceri ca si cele facute cu dropdown si ++ / -- sa li se puna valori initiale
+
+      MVP: daca exista orice cod valid in textareau ala, ia doar tot ce e acolo si nimic din dropdown (verifici pe frontend daca e valid inainte sa triniti si dai warning ca o sa se foloseasca ala de jos, (doar daca e ceva valid scris si acolo) si te pune sa dai confirm ca trimiti alea de jos, daca nu e nici ala valid dai alt warning ca nu-i ok)
+      Daca contine initial values faci cu graph ca stii ca vrea, daca nu faci doar analiza din aia cum iiz ce
+      SA VERIFICI NUMA CA TOATE AU INITIAL VALUES PUSE
+      sa nu mai pui lumea sa puna neaparat patyea de la final de "k1*S1" de la "S1 -> S2; k1*S1" ca se intelege ce si de unde si cum
+      daca sunt filled out initial values iti apare pagina cu ce fel de graph vrei sa-ti faca
+      antimonyu ala tre sa fie mai intai de forma sa fie ecuatiile dupa valorile, sa fiem ai usor sa verific daca le are la toate valori sau ba
+
+      ca sa poti sa ai acelasi behaviour si de la alea de dropdown probabil tre sa faci ca un translator intre ce a scris ala si la ce cod de antimony ar fi echivalent ca sa poti doar sa-l bagi prin aceeasi functie sa-ti faca analiza numerica
+
+poate o baza de date de doamne ajuta
+
+sa fac sa apara cumva pe prima pagina direct direct toate fisierele pe care le am eu ca asa nu are niciun rost sa pui mai intai omu sa completeze aia si dupa sa-i dai optiunile care au aparut inainte
+
+########resurse sau exemple care sa te ajute la feateruri ##########
+
 folosesti https://www.mathjax.org/ pt generat sa arate frumix
-sa apara cv de genu ala cu labeluri: https://www.overleaf.com/project/618957d82a1ed75a5fb0fd2c
 il explica asta aici: https://shantoroy.com/latex/matrix-labeling-in-latex
 STIU CA NU PARE CA AM FCT CV DAR INVAT LATEX ONG https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes
 https://www.math-linux.com/latex/faq/latex-faq/article/latex-how-to-write-bar
-
-as folosti pt stoichiometric matrix
-
-$$
- \matrix{ & \bar{f_1}  & \bar{f_2}  & \bar{f_3} \cr
-      k_1 & 0 & 0 & 1 \cr
-      k_2 & 1 & 0 & 0 \cr
-      k_3 & 0 & 0 & 1 \cr
-      k_4 & 0 & 1 & 0 } 
-$$
-vezi ca sa nu mai apara 1.0  -1.0 0.0 sa nu trunghieze daca e 
-SUNT TOATE NUMERE INTREGI sau lasa si optiunea
 
 vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
 https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
 potential geniale exemplele astea cum sa poti sa-l folosesti: https://mathjax.github.io/MathJax-demos-web/
 easily cel mai bun repo de mathjax ca iti da exmple si chestii https://github.com/mathjax/MathJax-demos-web?tab=readme-ov-file
-vezi ca are si screen reader automat pt accediblity asta e extra extra nice to have cam la W din MoSCoW
-
-ok deci asta e o comanda cu mai multe arguemnte:  \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
-si asta tot aceasi chestie:  \frac{numerator}{denominator}
-DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
-
+vezi ca are si screen reader automat mathjax pt accediblity asta e extra extra nice to have cam la W din MoSCoW
 
 S0 -> KS1; k1*S0
 KS1 -> S2; k2*KS1
@@ -129,34 +124,50 @@ k3 = 2
 k4 = 0.1329759342
 k5 = 1
 
-checkbox ca sa selecteze la cate din specii sa dea plot
+wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag
+######## gataaa resurse sau exemple care sa te ajute la feateruri ##########
 
-pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
+############gataa potentiale buguri cu idei de feateruri#############
 
-Detailed feature (destul de bonus):
-      Calea pt bonus daca inca ai timp
-      OMG CE IAD A FOST SA TREBUIASCA SA RESCRIU COPY PASTE DE FIECARE DATA ASTA FA UN TEXTBOX SA ITI IA DIRET TEXT DE ANTIMONY din ala simplu tho it DOESN'T SUPPORT ANYMOONT FUNCTIONS WHAT WHTEVRETH EELL
+#####FACUTTT#####
+trebuie si generat sistemul dinamic de ecuatii (vezi poate gasest in tellurium ceva sa-ti faca mai usor)
+	pt asta generezi mai intai octave
 
-      gen fa in side bar ca la ala de crn cu generate antimony code ca la americani
-
-      sauuu in sidebar ca un buton care sa deschida asa ca un uhh din ala gen dropdown sa zica
-      in bara din stanga daca vrei si se deschide asa cu animatie ca si cum 
-      si asta se desshcide sub alea normale alealate
-      
-      
-      1. pui antimony si daca contine initial values specifice inseamna ca omu vrea un graph, caz in care 
-      2. ceri ca si cele facute cu dropdown si ++ / -- sa li se puna valori initiale
-
-      MVP: daca exista orice cod valid in textareau ala, ia doar tot ce e acolo si nimic din dropdown (verifici pe frontend daca e valid inainte sa triniti si dai warning ca o sa se foloseasca ala de jos, (doar daca e ceva valid scris si acolo) si te pune sa dai confirm ca trimiti alea de jos, daca nu e nici ala valid dai alt warning ca nu-i ok)
-      Daca contine initial values faci cu graph ca stii ca vrea, daca nu faci doar analiza din aia cum iiz ce
-      SA VERIFICI NUMA CA TOATE AU INITIAL VALUES PUSE
-      sa nu mai pui lumea sa puna neaparat patyea de la final de "k1*S1" de la "S1 -> S2; k1*S1" ca se intelege ce si de unde si cum
-      daca sunt filled out initial values iti apare pagina cu ce fel de graph vrei sa-ti faca
-      antimonyu ala tre sa fie mai intai de forma sa fie ecuatiile dupa valorile, sa fiem ai usor sa verific daca le are la toate valori sau ba
+      o data sa nu mai fie pusa inmultire
 
 
-poate o baza de date de doamne ajuta
+      fa-l mai bine sa urmeze structura asta
+asta de la profu so fOLOSESTI PE ASTA
 
-sa fac sa apara cumva pe prima pagina direct direct toate fisierele pe care le am eu ca asa nu are niciun rost sa pui mai intai omu sa completeze aia si dupa sa-i dai optiunile care au aparut inainte
+\begin{equation*}
+\begin{array}{ll}
+\dot{x}_1(t) = -k_1 x_1(t) x_2(t) \\
+\dot{x}_2(t) = -k_1 x_1(t) x_2(t) - k_2 x_2^3(t) \\
+\dot{x}_3(t) =  k_1 x_1(t) x_2(t) + k_2 x_2^3(t)
+\end{array}
+\end{equation*}
 
-wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag 
+validari pe formulare (probabil cu WTForms) #kinda done igig idk
+https://regex101.com/r/lMMDKS/1 pt forma ecuatiei
+
+sa apra deasupra asa si reaction networku gen
+A + B -> C (fara k-uri)
+
+sa scrie deasupra "The dynamical system from the CRN"
+
+i guess done idk???:
+    si fa totlul acelasi font
+
+nu mai e nevoie ca nu vrem sa fie chiar asa ca nu-i asa
+    sa apara cv de genu ala cu labeluri: https://www.overleaf.com/project/618957d82a1ed75a5fb0fd2c
+as folosti pt stoichiometric matrix
+
+$$
+ \matrix{ & \bar{f_1}  & \bar{f_2}  & \bar{f_3} \cr
+      k_1 & 0 & 0 & 1 \cr
+      k_2 & 1 & 0 & 0 \cr
+      k_3 & 0 & 0 & 1 \cr
+      k_4 & 0 & 1 & 0 }
+$$
+vezi ca sa nu mai apara 1.0  -1.0 0.0 sa nu trunghieze daca e
+SUNT TOATE NUMERE INTREGI sau lasa si optiunea

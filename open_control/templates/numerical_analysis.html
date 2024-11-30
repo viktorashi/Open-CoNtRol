@@ -41,56 +41,52 @@
             <div id="chart" class="chart" style="transform:scale(0.8);margin-top:-3.5%; text-align: center;"></div>
         </header>
 
-<div class="gen_graph" style="margin-top:0%">
-    <br>
-    <br>
-    <div>
-        <table>
-            <tr>
-                <th>Chemical Reaction Network</th>
-                <th>Stoichiometric Matrix</th>
-            </tr>
-            <tr>
-                <td style="text-align: right;">
-                    {{ equations }}
-                </td>
-                <td style="vertical-align: top;">
-                    {{ stoichMatrix }}
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: center;">Species to index mapping</th>
-                <th style="text-align: center;">Code that generated it</th>
-            </tr>
-            <tr>
-                <td style="text-align: center; vertical-align: top">
-                    {{ species_mapping }}
-                </td>
-                <td style="text-align: center;">
-                    {% for e in antimony_code.split('\n') %}
-                    {% autoescape false %}
-                    {{ e | replace(" ","&nbsp;") }} <br>
-                    {% endautoescape %}
-                    {% endfor %}
-                </td>
-            </tr>
-            <!-- <tr> -->
-            <!-- <td>Test</td> -->
-            <!-- <td>Test</td> -->
-            <!-- </tr> -->
-            <!-- <tr> -->
-            <!-- <td>{{ message }}</td> -->
-            <!-- <td>Test</td> -->
-            <!-- </tr> -->
-        </table>
+        <div class="gen_graph" style="margin-top:0%">
+            <br>
+            <br>
+            <div>
+                <table>
+                    <tr>
+                        <th>The dynamical system of the CRN</th>
+                        <th>Stoichiometric Matrix</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% for definition in definitions %}
+                                {{ definition }} <br />
+                            {% endfor %}
+                            {{ equations }}
+                        </td>
+                        <td style="vertical-align: top;">
+                            {{ stoichMatrix }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: center;">Species to index mapping</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center; vertical-align: top">
+                            {# looks annoying with the quotes it's easier to distinguish them with the | and the braces were just there#}
+                            {{ species_mapping | replace("'", "") | replace(',',' | ') | trim(chars='{') | trim(chars='}')}}
+                        </td>
+                    </tr>
+                    <!-- <tr> -->
+                    <!-- <td>Test</td> -->
+                    <!-- <td>Test</td> -->
+                    <!-- </tr> -->
+                    <!-- <tr> -->
+                    <!-- <td>{{ message }}</td> -->
+                    <!-- <td>Test</td> -->
+                    <!-- </tr> -->
+                </table>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 </div>
 <!--Footer-->
 <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
         style="/*!margin-top:128px; margin-left:-2px;*/  bottom:0.7%;  width:100%; padding-top:2%; padding-bottom:2%">
-    <p class="w3-medium"> <a target="_blank" class="w3-hover-text-green" >2022@</a>
+    <p class="w3-medium"><a target="_blank" class="w3-hover-text-green">2022@</a>
     </p>
 </footer>
 <script type="application/javascript" src="../static/graph.js"></script>
