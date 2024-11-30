@@ -9,8 +9,6 @@ import os
 def home():
     return render_template("home.html")
 
-
-
 @app.post("/save_reactii_dropdowns")
 def save_reactii_dropdowns():
     """
@@ -27,10 +25,12 @@ def save_reactii_antimony():
     :return:
     """
     antimony_code = request.form.get('antimony-textarea')
+    print('mlmao cekkt astre frateeee')
+    print('mlmao cekkt astre frateeee')
     print(antimony_code)
-    [stoicm, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
+    [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
 
-    return render_template("numerical_analysis.html", stoichMatrix=stoichiometry_in_tex(stoicm),  antimony_code = new_antimony,equations=tex_equations, species_mapping = species_to_index_mapping )
+    return render_template("numerical_analysis.html", stoichMatrix=stoichiometry_in_latex,  antimony_code = new_antimony,equations=tex_equations, species_mapping = species_to_index_mapping )
 
 @app.get('/input_user')
 def input_user():

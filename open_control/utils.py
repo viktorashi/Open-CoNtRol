@@ -53,17 +53,35 @@ class AntimonyConverter:
         self.species_to_index = {species: f"x_{i + 1}" for i, species in enumerate(self.species)}
 
     def convert_rate_law(self, rate_law: str, species_powers: Dict[str, int]) -> str:
-        """Convert species names in rate law to x_i notation with powers."""
-        # First convert all species to their x_i notation with appropriate powers
+        """
+        Convert species names in rate law to x_i notation with powers.
+
+        example: k1*S0*S0 becomes k_1 x_4^2 given if the species S0 maps to x_4
+
+        param: rate_law of the form k{integer}\*{species}+
+        param: species_powers of the
+        return:
+        """
+
+        # Convert all species to their x_i notation with appropriate powers
         for species, power in species_powers.items():
             index = self.species_to_index[species]
             if power > 1:
                 rate_law = re.sub(rf'\b{species}\b(?:\*{species}\b)*', f"{index}^{power}(t)", rate_law)
             else:
-                rate_law = re.sub(rf'\b{species}\b', f"{index}(t)", rate_law)
+                old_rate = rate_law
+                rate_law = re.sub(rf'\b{species}\b\*', f"{index}(t)", rate_law)
+                #if it doesn't have a star for multiplication, meaning its at the end
+                if old_rate == rate_law:
+                    rate_law = re.sub(rf'\b{species}\b', f"{index}(t)", rate_law)
+
+        # k1*x_t(t) to k1 x_t(t)
+        k_index = re.match(r'k(\d+)', rate_law).groups()[0]
+        rate_law = re.sub(r'k(\d+\*)', f'k_{k_index} ', rate_law)
+
         return rate_law
 
-    def generate_diff_equations_in_tex_format(self, reactions: List[str]) -> str:
+    def diff_equations_in_tex_format(self, reactions: List[str]) -> str:
         """
         Title says it all \s
         :param reactions: reactions in antimony definition format ( https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics ):
@@ -90,8 +108,8 @@ class AntimonyConverter:
             # Count species occurrences in reactants
             species_powers = {}
             for reactant in reactants:
-                species, coef = parse_species_term(reactant)
-                species_powers[species] = coef
+                species, coefficient = parse_species_term(reactant)
+                species_powers[species] = coefficient
 
             # Convert the rate law
             converted_rate = self.convert_rate_law(rate, species_powers)
@@ -104,9 +122,9 @@ class AntimonyConverter:
 
             # Process products (positive terms)
             for product in products:
-                species, coef = parse_species_term(product)
-                if coef > 1:
-                    term = f"+{coef}\dot{converted_rate}"
+                species, coefficient = parse_species_term(product)
+                if coefficient > 1:
+                    term = f"+{coefficient}\*{converted_rate}"
                 else:
                     term = f"+{converted_rate}"
                 species_terms[species].append(term)
@@ -127,10 +145,21 @@ class AntimonyConverter:
         tex_equations = []
         for i, species in enumerate(self.species, 1):
             eqn = equations[species]
-            tex_eqn = f"$$ x_{i}'(t) = {eqn} $$"
+            tex_eqn = f"\dot{{x}}_{i}(t) = {eqn} \\\\"
             tex_equations.append(tex_eqn)
 
-        return "\n".join(tex_equations)
+        tex_equations = "\n".join(tex_equations)
+        #whatever else is necessary to make the equations symmetric
+        tex_equations = f"""
+        \\begin{{equation*}}
+        \left\\{{ 
+        \\begin{{array}}{{ll}}
+        {tex_equations}
+        \\end{{array}}
+        \\right.
+        \\end{{equation*}}
+        """
+        return tex_equations
 
 def reactions_to_tellurium_format(filename : str) -> [str]:
     """
@@ -316,14 +345,14 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
         $$ x_3'(t) = k_1 \cdot x_1(t) \cdot x_2(t) + k_2 \cdot x_2^3(t) $$
 
     """
-    #ok I done used claude for this cuz i got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
+    #ok I done used claude for this cuz I got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
 
     converter = AntimonyConverter()
-    tex_equations = converter.generate_diff_equations_in_tex_format(antimony_code.split('\n'))
+    tex_equations = converter.diff_equations_in_tex_format(antimony_code.split('\n'))
     species_to_index_mapping = converter.species_to_index
-    stoich = get_stoichiometry_matrix(antimony_code)
+    stoichiometry_in_latex  = stoichiometry_in_tex(get_stoichiometry_matrix(antimony_code))
 
-    return [stoich,antimony_code, tex_equations, species_to_index_mapping ]
+    return [stoichiometry_in_latex,antimony_code, tex_equations, species_to_index_mapping ]
 
 def create_figure(session ):
     """
