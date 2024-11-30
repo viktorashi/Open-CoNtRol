@@ -9,15 +9,6 @@ import os
 def home():
     return render_template("home.html")
 
-@app.post("/save_reactii_dropdowns")
-def save_reactii_dropdowns():
-    """
-    Only used when submitting the form via the manual writing dropdowns
-    :return:
-    """
-    save_reactions_file(request)
-    return redirect(url_for('input_user'))
-
 @app.post("/save_reactii_antimony")
 def save_reactii_antimony():
     """
@@ -31,7 +22,24 @@ def save_reactii_antimony():
     definitions = [definition.split(';')[0] for definition in new_antimony.split('\n') ]
     species_to_index_in_tex =  {key: f"${ value }$" for key, value in species_to_index_mapping.items()}
 
-    return render_template("numerical_analysis.html", definitions = definitions  , stoichMatrix=stoichiometry_in_latex, equations=tex_equations, species_mapping = species_to_index_in_tex )
+    session['definitions'] = definitions
+    session['stoichiometry_in_latex'] = stoichiometry_in_latex
+    session['tex_equations'] = tex_equations
+    session['species_to_index_in_tex'] = species_to_index_in_tex
+    return redirect(url_for('numerical_analysis'))
+
+@app.get("/numerical_analysis")
+def numerical_analysis():
+    return render_template("numerical_analysis.html", definitions = session.get('definitions')  , stoichMatrix=session.get('stoichiometry_in_latex'), equations=session.get('tex_equations'), species_mapping = session.get('species_to_index_in_tex') )
+
+@app.post("/save_reactii_dropdowns")
+def save_reactii_dropdowns():
+    """
+    Only used when submitting the form via the manual writing dropdowns
+    :return:
+    """
+    save_reactions_file(request)
+    return redirect(url_for('input_user'))
 
 @app.get('/input_user')
 def input_user():
@@ -40,15 +48,15 @@ def input_user():
     that contain CNR's
     """
     files = sorted(os.listdir('open_control/templates/metode_lucru/'))
-    temp = []
+    filename_data = []
     for file in files:
-        temp.append({'name': file})
+        filename_data.append({'name': file})
 
     specii = session.get("specii")
     print('speciiles deja in sesiune:')
     print(specii)
 
-    return render_template("input_user.html", data=temp)
+    return render_template("input_user.html", data=filename_data)
 
 @app.get('/crn_data')
 def get_crn_data():
