@@ -21,13 +21,13 @@ function validEquation(str) {
     /*
     *	when in doubt, debug it in : https://regex101.com/library/pzO5MF or https://www.debuggex.com (so you can see it visually)
     *  */
-    const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm;
+    const regex = /^\s*[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*\s*$/gm;
     return regex.test(str);
 }
 
 function validAntimonyCRNDefinition(str) {
     /*
-    *	when in doubt, debug it in : https://regex101.com/library/hjRLci sau https://www.debuggex.com (ca sa vezi vizual)
+    *	when in doubt, debug it in : https://regex101.com/library/hjRLci or https://www.debuggex.com (to visually see it)
     *  */
     const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *-> *[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *; *[a-z][0-9]+( *\* *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm
     return regex.test(str)
@@ -54,6 +54,7 @@ function dropDownsFormSubmitHandler() {
     const dropDownsForm = document.forms['dropDownsForm']
     const submitterButton = document.getElementById('submitDropdownsButton')
 
+    // dropDownsFromDataHandler is called when calling this constructor
     const formData = new FormData(dropDownsForm, submitterButton);
 
     console.log('cum au ajuns dupa');

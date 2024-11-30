@@ -457,7 +457,7 @@ def crn2antimony(session , filename:str):
                 print('countu de coefieicent e')
                 print(cnt)
                 for i in range(cnt):
-                    krate = krate + '\dot' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
+                    krate = krate + '*' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
                     #daca e 3ABC devine k1*ABC*ABC*ABC
                     #daca e ABC3 devine k1*ABC3
                     #daca e 3ABC + 3C -> 2C
@@ -526,7 +526,7 @@ def stoichiometry_in_tex(stoichiometric_matrix):
     """
 
     #begin
-    tex = ("$$"
+    tex = ("$$\n"
             "\matrix{ \n")
 
     #append the equation names on the first (header) line
