@@ -546,6 +546,8 @@ def stoichiometry_in_tex(stoichiometric_matrix):
         #the header of the line
         tex = tex + species
         values_in_each_eq = stoichiometric_matrix[species]
+        #truncate to an integer if it ends in .0 for each digit
+        values_in_each_eq = [int(value) if value.is_integer() else value for value in values_in_each_eq]
         #the value that species has in each equation
         for value in values_in_each_eq:
             if value >= 0:
