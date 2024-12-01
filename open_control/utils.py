@@ -1,6 +1,6 @@
 import tellurium as te
 import re
-from flask import  render_template
+from flask import  render_template, session
 from typing import List, Tuple, Dict
 
 def parse_reaction(reaction: str):
@@ -159,7 +159,9 @@ class AntimonyConverter:
         """
         return tex_equations
 
-def reactions_to_tellurium_format(filename : str) -> [str]:
+#TODO e total usefull functia asta, doar trebuie sa schimbi cum e salvat in fisier sa nu mai fie nevoie conversia asta
+#dap, confirmed asta total useless nu e folosit nicicum formatu ala nici din front-end nici backend
+def reactions2tellurium_format(filename : str) -> [str]:
     """
     :param filename: numele fisierului din care reactii sa le faci in format antimony
     :return reactii_individuale:
@@ -211,8 +213,6 @@ def save_reactions_file(req):
     """
     ecuatii_count = int(req.form.get('ecuatiiCount'))
 
-    the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
-
     for index in range(1,ecuatii_count+1):
         ec_left = req.form.get('ec_' + str(index) + '_left')
         ec_dir = req.form.get('ec_' + str(index) + '_dir')
@@ -228,14 +228,15 @@ def save_reactions_file(req):
 
         ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
 
-#asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
+        the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
+        #asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
         the_file.write(ecuatie_finala)
         the_file.write("\n")
 
     the_file.close()
-#TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
 
-def get_reaction_meta(session , reactii_individuale : [str]) -> [[str],[str]] :
+#TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
+def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
     """
     :param session: the global object session for the current user
     :param reactii_individuale: The reactions in Antimony format
@@ -365,7 +366,6 @@ def create_figure(session ):
     x_titlu = session.get('x_titlu')
     y_titlu = session.get('y_titlu')
 
-    antimony_code = crn2antimony(session, select)  #   tellurium output !!!
 
     print(select)
     print(end_time)
@@ -375,6 +375,7 @@ def create_figure(session ):
     matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct
     te.setDefaultPlottingEngine('matplotlib') #o sa foloseasca backendu acela bun din matplot
 
+    antimony_code = crn2antimony(select)  #   tellurium output !!!
     print('coadele de antiomony')
     print(antimony_code)
     print('------pana aici-------------')
@@ -417,66 +418,22 @@ def create_figure(session ):
     return [render_template("home.html"), listaToShowEcuatii, stoichiometry_in_tex(stoicm)]
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
-def crn2antimony(session , filename:str):
+def crn2antimony(filename:str):
     """
-    :param session: the global object session for the current user
+    :session: the global object session for the current user
     :param filename:
         Name of the file whose contents will be transformed in a full Antimony syntax
          network with species, constants and everything, as opposed to
-         "reactions_to_tellurium_format" which only does that for the reactions
+         "reactions2tellurium_format" which only does that for the reactions
     :return:
     """
     ## filename = 'crn_a_b_c.txt'
     #  filename = 'crn.txt'
 
-    reactii_individuale = reactions_to_tellurium_format(filename)
-
     kcont = 0  # cate reactii sunt
     krates = []  # lista cu vitezele de reactie
 
-    for reactie in reactii_individuale:  # gaseste vitezele de reactie
-        kcont = kcont + 1  # de la 1 la cate reactii sunt
-        krate = 'k' + str(kcont) #incepe cu 1:  k1 k2 k3
-
-        reactii_stanga = reactie.split('->')[0].split('+')
-        #scoate coeficientul din fata de la fiecare specie
-
-        #scoate coeficientul din fata de la fiecare specie
-
-        for specie in reactii_stanga:
-            if specie != '0':
-                coeficient = re.findall(r'^[0-9]*', specie)[0]  # este sir vid '' daca nu gaseste
-                subtanta = re.findall(r'[a-zA-Z]+.*', specie)[0]
-
-                cnt = 0
-                if coeficient == '':
-                    cnt = 1
-                else:
-                    cnt = int(coeficient)
-
-                print('countu de coefieicent e')
-                print(cnt)
-                for i in range(cnt):
-                    krate = krate + '*' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
-                    #daca e 3ABC devine k1*ABC*ABC*ABC
-                    #daca e ABC3 devine k1*ABC3
-                    #daca e 3ABC + 3C -> 2C
-                    #       3C -> 2A devine [ k1*ABC*ABC*ABC*3C , k2*C*C*C ]
-        krates.append(krate)
-
-    print('krates: ')
-    print(krates)
-    specii, reacts = get_reaction_meta(session, reactii_individuale)
-
-    ## --- creeaza stringul de Tellurium
-
-    tel = ''
-    ii = 0
-    for reactie in reacts:
-        tel = tel + reactie + '; ' + krates[ii] + '\n'
-        ii = ii + 1
-
-    tel = tel + '\n'
+    tel, species =  crn2antimony_definitions(filename, kcont, krates)
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
     reaction_constants = session.get('react_constants')
@@ -500,6 +457,57 @@ def crn2antimony(session , filename:str):
 
     print('aici stringu final')
     return tel
+
+def crn2antimony_definitions(filename:str, kcont = 0 , krates = []):
+
+    reactii_individuale = reactions2tellurium_format(filename)
+
+    for reactie in reactii_individuale:  # gaseste vitezele de reactie
+        kcont = kcont + 1  # de la 1 la cate reactii sunt
+        krate = 'k' + str(kcont)  # incepe cu 1:  k1 k2 k3
+
+        reactii_stanga = reactie.split('->')[0].split('+')
+        # scoate coeficientul din fata de la fiecare specie
+
+        # scoate coeficientul din fata de la fiecare specie
+        for specie in reactii_stanga:
+            if specie != '0':
+                coeficient = re.findall(r'^[0-9]*', specie)[0]  # este sir vid '' daca nu gaseste
+                subtanta = re.findall(r'[a-zA-Z]+.*', specie)[0]
+
+                cnt = 0
+                if coeficient == '':
+                    cnt = 1
+                else:
+                    cnt = int(coeficient)
+
+                print('countu de coefieicent e')
+                print(cnt)
+                for i in range(cnt):
+                    krate = krate + '*' + subtanta  # adauga *A*A*A de cata ori era, ex: A3. edit viktorashi: darr astsa face daca e 3A nu A3
+                    # daca e 3ABC devine k1*ABC*ABC*ABC
+                    # daca e ABC3 devine k1*ABC3
+                    # daca e 3ABC + 3C -> 2C
+                    #       3C -> 2A devine [ k1*ABC*ABC*ABC*3C , k2*C*C*C ]
+        krates.append(krate)
+
+    print('krates: ')
+    print(krates)
+
+    specii, reacts = get_reaction_meta(reactii_individuale)
+
+    ## --- creeaza stringul de Tellurium
+
+    tel = ''
+    ii = 0
+    for reactie in reacts:
+        tel = tel + reactie + '; ' + krates[ii] + '\n'
+        ii = ii + 1
+
+    tel = tel + '\n'
+
+    return tel, specii
+
 
 def stoichiometry_in_tex(stoichiometric_matrix):
     """
