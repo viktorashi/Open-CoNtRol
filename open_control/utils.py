@@ -448,13 +448,9 @@ def crn2antimony(filename:str):
     ## filename = 'crn_a_b_c.txt'
     #  filename = 'crn.txt'
 
-    kcont = 0  # cate reactii sunt
     krates = []  # lista cu vitezele de reactie
 
-    #am crezut ca schimba asta cand intra in functie dar nu il schimba deloc lmao
-    print('kcont, krates inainte', kcont, krates)
-    tel, specii =  crn2antimony_definitions(filename, kcont, krates)
-    print('kcont, krates dupa', kcont, krates)
+    tel, specii =  crn2antimony_definitions(filename, 0, krates)
     kcont = len(krates)
 
 
