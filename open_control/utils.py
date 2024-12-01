@@ -370,19 +370,19 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
 
     return [stoichiometry_in_latex,antimony_code, tex_equations, species_to_index_mapping ]
 
-def create_figure(session ):
+def create_figure():
     """
     takes the data from the session and simulates then plots the simulation results to a file,
     which will then be used in the template to be displayed do the frontend
     :return: the antimony code and stoichiometry matrix
     """
+
     select = session.get('select')
     end_time = session.get('end_time')
     start_time = session.get('start_time')
     titlu = session.get('titlu')
     x_titlu = session.get('x_titlu')
     y_titlu = session.get('y_titlu')
-
 
     print(select)
     print(end_time)
@@ -451,7 +451,12 @@ def crn2antimony(filename:str):
     kcont = 0  # cate reactii sunt
     krates = []  # lista cu vitezele de reactie
 
+    #am crezut ca schimba asta cand intra in functie dar nu il schimba deloc lmao
+    print('kcont, krates inainte', kcont, krates)
     tel, specii =  crn2antimony_definitions(filename, kcont, krates)
+    print('kcont, krates dupa', kcont, krates)
+    kcont = len(krates)
+
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
     reaction_constants = session.get('react_constants')

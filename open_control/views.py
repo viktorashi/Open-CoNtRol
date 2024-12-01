@@ -82,19 +82,19 @@ def numerical_analysis():
                            stoichMatrix=session.get('stoichiometry_in_latex'), equations=session.get('tex_equations'),
                            species_mapping=session.get('species_to_index_in_tex'))
 
-@app.get('/input_user')
+@app.get('/time_graph_input')
 def input_user():
     """
     :return: The template with the inputs required to generate the graph, with all the file names
     that contain CRN's
 
-    dupa da return la input_user.html ca sa poti sa scrii datele pentru a face graph in form
+    dupa da return la time_graph_input.html ca sa poti sa scrii datele pentru a face graph in form
 
     deci ca sa poti sa dai call la endpointu asta
     1. se uita in folderu de metode de lucru deci trebuie sa fie chestii care au fost scrise acolo (antimony code path n-are asta update: cred ca acum are sper ca-i bine pus)
     2. sa pui specii in session (not sure daca antimony route are chestia asta tre sa verific)
 
-    3. input_user.html face dupaia call la get_crn_data care:
+    3. time_graph_input.html face dupaia call la get_crn_data care:
         4. cauta dupaia din nou tot in acelasi fisier aparently
 
     5.Dupa care se da post la input_user care
@@ -109,12 +109,12 @@ def input_user():
     print('speciiles deja in sesiune:')
     print(specii)
 
-    return render_template("input_user.html", data=filename_data)
+    return render_template('time_graph_input.html', data=filename_data)
 
 @app.get('/crn_data')
 def get_crn_data():
     """
-    gets called by the input_user.html template with the filename, parses its data
+    gets called by the time_graph_input.html template with the filename, parses its data
     to find its species and how many reactions are in the CRN's, returning them back
     to the same template
     :return:
@@ -139,7 +139,7 @@ def get_crn_data():
     print(jsonu)
     return jsonu
 
-@app.post('/input_user')
+@app.post('/time_graph_input')
 def input_user_post():
     """
     Saves the form data from the request to the current flask session
@@ -206,10 +206,10 @@ def plot_svg():
     """
     :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
     """
-    [listaToShow, stoichiometric_matrix] = create_figure(session)
+    [listaToShow, stoichiometric_matrix] = create_figure()
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
-    return render_template("graph.html", listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
-                           pageName="Chemical Reaction Network (CRN) - 2D")
+    return render_template('graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
+                           pageName='Chemical Reaction Network (CRN) - 2D')
 
 

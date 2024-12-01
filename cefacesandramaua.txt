@@ -21,7 +21,7 @@ si asta tot aceasi chestie:  \frac{numerator}{denominator}
 DE CE LA UNA POTI CU VIRGULA SI LA CELALATA TREBUIE PARANTEZA DUPA PARANTEZA
 
 
-###### gata academic ##############
+############33 gata academic ##############
 
 ############potentiale buguri cu idei de feateruri #############
 vezi sa se uite mai intai daca are requestu datele pe el necesare, daca nu sa ia din session si daca nici asa sa dea return la un page cu "go to /<previous_page> and complete the data there"
