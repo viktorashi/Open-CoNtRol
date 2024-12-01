@@ -49,58 +49,51 @@
                   <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
                 -->
                 <div class="content">
-
-                    Chemical reaction network theory is an area of applied mathematics
-                    that attempts to model the behavior of real-world chemical systems.
-                    Since its foundation in the 1960s, it has attracted a growing research community,
-                    mainly due to its applications in biochemistry and theoretical chemistry
+                    You can either use the following textbox to write <a
+                        href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                        target=”_blank”>Antimony</a> <sup><span
+                        class="material-symbols-outlined">open_in_new</span></sup>
+                    code, or the +/- dropdowns below to fill out the CRN.
                 </div>
 
                 <div class="content" style="padding-top:1%">
-                    A chemical reaction network (CRN) comprises a set of reactants, a set of products and a
-                    set of reactions. For example, the pair of combustion reactions:
+                    It's optional to also write the initial values for each species / reaction constant, if not filled
+                    out the equations and stoichiometric matrix will be shown.
                 </div>
-                <div class="content" style="padding-top:1%">
 
-                    2H<p style="font-size:9px; display:inline">2</p> + O<p style="font-size:9px; display:inline">2
-                </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
-                    &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
-                        style="font-size:9px; display:inline">2</p>
+                <div class="content" style="padding-top:1%">
+                    If filled out inside the textbox, you'll be prompted to choose what type of graph do you want
+                    represented.
+                    <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span>
+                    <hr>
                 </div>
             </div>
         </header>
 
 
-        <div style="text-align: center;">
+        <div style="text-align: left;">
 
-            {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
-            <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-            <button id="Remove" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
-            <button id="reset_reaction_button" title="Reset all reactions"
-                    style="height: 44px; width: 44px;">--
-            </button>
-
-            <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm"
-                  class="contact-form" method="post" onsubmit="return dropDownsFormSubmitHandler()"
-                  onformdata="dropDownsFormDataHandler()">
-
-                <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
-
-                <div id="textboxDiv"></div>
-
-                <div style="position: relative; left: 21%">
+            <form action="/save_reactii_antimony" method="post" name="antimony_form"
+                  onsubmit="return antimonyFormSubmitHandler()" onformdata="return antimonyFormDataHandler(event)">
+                <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
+                        <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
+C + O2 -> CO2; k2*C*O2
+" cols="35" rows="15" name="antimony-textarea"></textarea>
+                </div>
+                <div style="position: relative; left: 50%">
                     <!--<p><b>Creare grafic personalizat.</b></p>-->
-                    <p id="dropDownsError" class="error"></p>
+                    <p id="antimonyError" class="error"></p>
                     <p class="w3-padding-16">
-                        <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
+                        <button id="antimonySubmitButton" class="w3-button w3-black" type="submit">
                             Get Numerical Analysis
                         </button>
                     </p>
-
                 </div>
-
+                <br>
 
             </form>
+
+
         </div>
 
 

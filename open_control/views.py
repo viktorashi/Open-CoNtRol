@@ -12,6 +12,10 @@ save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
 def home():
     return render_template("home.html")
 
+@app.get('/antimony')
+def antimony():
+    return render_template("antimony.html")
+
 @app.post("/save_reactii_antimony")
 def save_reactii_antimony():
     """
