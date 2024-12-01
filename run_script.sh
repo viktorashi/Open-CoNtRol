@@ -21,4 +21,5 @@ if [ -z "$ip" ]; then
 fi
 
 # Run the Flask application
+#TODO sa faci o chestie sa poti sa pui argument de --debug la scriptu asta daca sa dea sau nu cu debug ca sa nu se mai zica ca da de ce sa vede asa cu eroriile alea cand dau run si doar daca vrei tu flagu sa-l pui
 FLASK_APP=open_control FLASK_ENV=development flask --debug run --host="$ip"

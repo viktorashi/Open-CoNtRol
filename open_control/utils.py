@@ -3,6 +3,8 @@ import re
 from flask import  render_template, session
 from typing import List, Tuple, Dict
 
+save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
+
 def parse_reaction(reaction: str):
     """
     Parse a single reaction line into reactants, products, and rate law.
@@ -159,26 +161,49 @@ class AntimonyConverter:
         """
         return tex_equations
 
-#TODO e total useless functia asta, doar trebuie sa schimbi cum e salvat in fisier sa nu mai fie nevoie conversia asta
-#dap, confirmed asta total useless nu e folosit nicicum formatu ala nici din front-end nici backend
-def reactions2tellurium_format(filename : str) -> [str]:
+def save_reactions_in_file_from_dropdowns(req):
     """
-    :param filename: numele fisierului din care reactii sa le faci in format antimony
-    :return reactii_individuale:
+    :param req:
+         The Flask request object containing form data.
+                    Expects form data with 'ecuatiiCount' (number of reactions) and for each reaction:
+                    - 'ec_<index>_left': Left side of the reaction.
+                    - 'ec_<index>_dir': Direction of the reaction. left := <-- ; right := --> ; both := <-->
+                    - 'ec_<index>_right': Right side of the reaction.
+
+    Saves to open_control/templates/metode_lucru/crn.txt file in this format:
        converteste reactii <--> bidirectioanale in 2 catre dreapta ->
        inverseaza <-- in ->
        si --> devine ->
        practic scrie toate reactiile ca reactie cu sageata catre dreapta, si inlocuieste --> cu ->
        pt formatul antimony
        deci sa fie clar face asta DOAR cu reactiile iar functia "crn2tellurium"
-       face un string complet de Antimony
-    """
 
-    filename = 'open_control/templates/metode_lucru/' + filename
-    f = open( filename, 'rt')
-    file_lines = f.readlines()
+    :return: None
+    """
+    ecuatii_count = int(req.form.get('ecuatiiCount'))
+    equations_list = []
+
+    for index in range(1,ecuatii_count+1):
+        ec_left = req.form.get('ec_' + str(index) + '_left')
+        ec_dir = req.form.get('ec_' + str(index) + '_dir')
+        ec_right = req.form.get('ec_' + str(index) + '_right')
+
+        ec_dir_string = ""
+        if ec_dir == 'left':
+            ec_dir_string = '<--'
+        elif ec_dir == 'both':
+            ec_dir_string = '<-->'
+        elif ec_dir == 'right':
+            ec_dir_string = '-->'
+
+        ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
+
+
+        #asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
+        equations_list.append(ecuatie_finala)
+
     # scapa de un <enter> la sfarsit
-    lista_ecuatii : [] = list(map(lambda x: x.strip(), file_lines))
+    lista_ecuatii : [] = list(map(lambda x: x.strip(), equations_list))
 
     # ---- inlocuirea sagetilor si rasucirea de ecuatii -----
     reactii_individuale : [str] = []
@@ -196,44 +221,33 @@ def reactions2tellurium_format(filename : str) -> [str]:
             else:
                 reactii_individuale.append(ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
 
-    return list(map(lambda x: x.replace(" ", ""), reactii_individuale))
+    reactiile_individuale : [str] = list(map(lambda x: x.replace(" ", ""), reactii_individuale))
 
-def save_reactions_file(req):
-    """
-    :param req:
-         The Flask request object containing form data.
-                    Expects form data with 'ecuatiiCount' (number of reactions) and for each reaction:
-                    - 'ec_<index>_left': Left side of the reaction.
-                    - 'ec_<index>_dir': Direction of the reaction. left := <-- ; right := --> ; both := <-->
-                    - 'ec_<index>_right': Right side of the reaction.
-
-    Saves to open_control/templates/metode_lucru/crn.txt file in the format specified above
-
-    :return: None
-    """
-    ecuatii_count = int(req.form.get('ecuatiiCount'))
-
-    for index in range(1,ecuatii_count+1):
-        ec_left = req.form.get('ec_' + str(index) + '_left')
-        ec_dir = req.form.get('ec_' + str(index) + '_dir')
-        ec_right = req.form.get('ec_' + str(index) + '_right')
-
-        ec_dir_string = ""
-        if ec_dir == 'left':
-            ec_dir_string = '<--'
-        elif ec_dir == 'both':
-            ec_dir_string = '<-->'
-        elif ec_dir == 'right':
-            ec_dir_string = '-->'
-
-        ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
-
-        the_file = open("open_control/templates/metode_lucru/crn.txt", "w")
-        #asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
-        the_file.write(ecuatie_finala)
+    the_file = open(save_crn_filepath_location, "w")
+    for reactie in reactiile_individuale:
+        the_file.write(reactie)
         the_file.write("\n")
 
     the_file.close()
+
+def save_reactions_in_file_from_antimony_textarea(antimony_code):
+    """
+    The code comes in the format
+        A + B-> B; k1*A*B
+        and then it gets saved in the format
+        A + B -> B
+    :param antimony_code:
+        The Antimony code containing the reactions to be saved in the file.
+    :return: the thing it wrote to the file
+    """
+    weird_custom_format : [str] = [line.split(';')[0] for line in antimony_code.split('\n')]
+    the_file = open(save_crn_filepath_location, "w")
+    for line in weird_custom_format:
+        the_file.write(line)
+        the_file.write("\n")
+    the_file.close()
+
+    return weird_custom_format
 
 #TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
 def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
@@ -398,7 +412,7 @@ def create_figure(session ):
     print(reation_rates)
 
     number_of_points = 1000
-    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points) #da return la rezultate
+    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points) #da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
 
     print(select)
     print(start_time)
@@ -419,7 +433,7 @@ def create_figure(session ):
     print(type(stoicm))
 
     # "template not found" error keeps popping up for some reason (it works lol)
-    return [render_template("home.html"), listaToShowEcuatii, stoichiometry_in_tex(stoicm)]
+    return [listaToShowEcuatii, stoichiometry_in_tex(stoicm)]
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
 def crn2antimony(filename:str):
@@ -465,7 +479,7 @@ def crn2antimony(filename:str):
 def crn2antimony_definitions(filename:str, kcont = 0 , krates = []):
 
     #TODO ceva bug aici in care uneori ia ce se scria inainte si nu se schimba cu chestiile noi pe care le-ai pus in dropdowns
-    reactii_individuale = reactions2tellurium_format(filename)
+    reactii_individuale = open(save_crn_filepath_location, 'r').readlines()
 
     for reactie in reactii_individuale:  # gaseste vitezele de reactie
         kcont = kcont + 1  # de la 1 la cate reactii sunt

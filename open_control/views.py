@@ -1,10 +1,12 @@
 import json
 import os
 
-from flask import render_template, request, redirect, session, url_for
+from flask import request, redirect, url_for
 
 from open_control import app
 from open_control.utils import *
+
+save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
 
 @app.get('/')
 def home():
@@ -19,6 +21,10 @@ def save_reactii_antimony():
     antimony_code = request.form.get('antimony-textarea')
     print(antimony_code)
 
+    custom_format = save_reactions_in_file_from_antimony_textarea(antimony_code)
+
+    species , reacts = get_reaction_meta(custom_format) # this just saves specii to the session so ion even think we need it
+
     get_numerical_analysis_save_to_session(antimony_code)
 
     return redirect(url_for('numerical_analysis'))
@@ -29,7 +35,7 @@ def save_reactii_dropdowns():
     Only used when submitting the form via the manual writing dropdowns
     :return:
     """
-    save_reactions_file(request)
+    save_reactions_in_file_from_dropdowns(request)
 
     # you essentially have to have antimony code to do numerical analysis,
     # the call got get_numerical_analysis_save_to_session is with the same antimony code that it would on
@@ -37,7 +43,7 @@ def save_reactii_dropdowns():
     #with 0 init values instead of the ones from the form of input_user.
     #I know, it's spaghetti code literally schizo coding
 
-    reactii_individuale: [str] = reactions2tellurium_format('crn.txt')
+    reactii_individuale: [str] = open(save_crn_filepath_location, 'r').readlines()
 
     #parsing the reactions to get the species and the reactions
     specii, reacts = get_reaction_meta(reactii_individuale)
@@ -56,6 +62,20 @@ def save_reactii_dropdowns():
 
     return redirect(url_for('numerical_analysis'))
 
+def get_numerical_analysis_save_to_session(antimony_code: str):
+    """
+    :return: Saves the data from the numerical analysis form to the current session
+    """
+    [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
+    # absolutely unreadable but it just deletes all the right-hand side (rate laws with k1*A...) of the equations
+    definitions = [definition.split(';')[0] for definition in new_antimony.split('\n')]
+    species_to_index_in_tex = {key: f"${value}$" for key, value in species_to_index_mapping.items()}
+
+    session['definitions'] = definitions
+    session['stoichiometry_in_latex'] = stoichiometry_in_latex
+    session['tex_equations'] = tex_equations
+    session['species_to_index_in_tex'] = species_to_index_in_tex
+
 @app.get("/numerical_analysis")
 def numerical_analysis():
     return render_template("numerical_analysis.html", definitions=session.get('definitions'),
@@ -67,6 +87,18 @@ def input_user():
     """
     :return: The template with the inputs required to generate the graph, with all the file names
     that contain CRN's
+
+    dupa da return la input_user.html ca sa poti sa scrii datele pentru a face graph in form
+
+    deci ca sa poti sa dai call la endpointu asta
+    1. se uita in folderu de metode de lucru deci trebuie sa fie chestii care au fost scrise acolo (antimony code path n-are asta update: cred ca acum are sper ca-i bine pus)
+    2. sa pui specii in session (not sure daca antimony route are chestia asta tre sa verific)
+
+    3. input_user.html face dupaia call la get_crn_data care:
+        4. cauta dupaia din nou tot in acelasi fisier aparently
+
+    5.Dupa care se da post la input_user care
+
     """
     files = sorted(os.listdir('open_control/templates/metode_lucru/'))
     filename_data = []
@@ -88,7 +120,8 @@ def get_crn_data():
     :return:
     """
 
-    reactii_individuale: [str] = reactions2tellurium_format(request.args.get('filename'))
+    reactii_individuale: [str] = open(save_crn_filepath_location , 'r').readlines()
+
 
     specii, reacts = get_reaction_meta(reactii_individuale)
     data = {
@@ -131,14 +164,14 @@ def input_user_post():
     session['y_titlu'] = request.form['y_titlu']
 
     # lista cu coeficientii pt fiecare specie
-    valInitArray = []
-    valInitIndex = 0
+    val_init_array = []
+    val_init_index = 0
 
     while True:
         try:
-            request_val_init = request.form['valinit' + str(valInitIndex)]
-            valInitArray.append(str(request_val_init))
-            valInitIndex += 1
+            request_val_init = request.form['valinit' + str(val_init_index)]
+            val_init_array.append(str(request_val_init))
+            val_init_index += 1
         except:
             break
 
@@ -153,7 +186,7 @@ def input_user_post():
         except:
             break
 
-    session['init_vals'] = valInitArray
+    session['init_vals'] = val_init_array
     session['react_constants'] = const_array
 
     print(session.get('end_time'))
@@ -173,23 +206,10 @@ def plot_svg():
     """
     :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
     """
-    [fig, listaToShow, stoichiometric_matrix] = create_figure(session)
+    [listaToShow, stoichiometric_matrix] = create_figure(session)
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
     return render_template("graph.html", listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName="Chemical Reaction Network (CRN) - 2D")
 
-def get_numerical_analysis_save_to_session(antimony_code: str):
-    """
-    :return: Saves the data from the numerical analysis form to the current session
-    """
-    [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(antimony_code)
-    # absolutely unreadable but it just deletes all the right-hand side (rate laws with k1*A..) of the equations
-    definitions = [definition.split(';')[0] for definition in new_antimony.split('\n')]
-    species_to_index_in_tex = {key: f"${value}$" for key, value in species_to_index_mapping.items()}
-
-    session['definitions'] = definitions
-    session['stoichiometry_in_latex'] = stoichiometry_in_latex
-    session['tex_equations'] = tex_equations
-    session['species_to_index_in_tex'] = species_to_index_in_tex
 
