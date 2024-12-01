@@ -159,7 +159,7 @@ class AntimonyConverter:
         """
         return tex_equations
 
-#TODO e total usefull functia asta, doar trebuie sa schimbi cum e salvat in fisier sa nu mai fie nevoie conversia asta
+#TODO e total useless functia asta, doar trebuie sa schimbi cum e salvat in fisier sa nu mai fie nevoie conversia asta
 #dap, confirmed asta total useless nu e folosit nicicum formatu ala nici din front-end nici backend
 def reactions2tellurium_format(filename : str) -> [str]:
     """
@@ -375,7 +375,7 @@ def create_figure(session ):
 
     # Am modificat aici !!! ------------------------------------------------
     import matplotlib
-    matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct
+    matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct, fara sa vezi tu in terminal sau cv
     te.setDefaultPlottingEngine('matplotlib') #o sa foloseasca backendu acela bun din matplot
 
     antimony_code = crn2antimony(select)  #   tellurium output !!!
@@ -407,7 +407,8 @@ def create_figure(session ):
     print(x_titlu)
     print(y_titlu)
 
-    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = 'open_control/static/graphic.svg')
+    save_graph_to_file = 'open_control/static/graphic.svg'
+    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = save_graph_to_file)
 
     #zici ca-i naming convention TJ Miles
     listaToShowEcuatii = antimony_code.split("\n")
@@ -436,7 +437,7 @@ def crn2antimony(filename:str):
     kcont = 0  # cate reactii sunt
     krates = []  # lista cu vitezele de reactie
 
-    tel, species =  crn2antimony_definitions(filename, kcont, krates)
+    tel, specii =  crn2antimony_definitions(filename, kcont, krates)
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
     reaction_constants = session.get('react_constants')

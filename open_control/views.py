@@ -6,11 +6,9 @@ from flask import render_template, request, redirect, session, url_for
 from open_control import app
 from open_control.utils import *
 
-
 @app.get('/')
 def home():
     return render_template("home.html")
-
 
 @app.post("/save_reactii_antimony")
 def save_reactii_antimony():
@@ -24,7 +22,6 @@ def save_reactii_antimony():
     get_numerical_analysis_save_to_session(antimony_code)
 
     return redirect(url_for('numerical_analysis'))
-
 
 @app.post("/save_reactii_dropdowns")
 def save_reactii_dropdowns():
@@ -58,7 +55,6 @@ def save_reactii_dropdowns():
     get_numerical_analysis_save_to_session(antimony_code)
 
     return redirect(url_for('numerical_analysis'))
-
 
 @app.get("/numerical_analysis")
 def numerical_analysis():
@@ -109,7 +105,6 @@ def get_crn_data():
     print("jsonu de o sa se trimita")
     print(jsonu)
     return jsonu
-
 
 @app.post('/input_user')
 def input_user_post():
@@ -173,7 +168,6 @@ def input_user_post():
 
     return redirect(url_for('plot_svg'))
 
-
 @app.get('/graph')
 def plot_svg():
     """
@@ -184,7 +178,6 @@ def plot_svg():
     #    return Response(output.getvalue(), mimetype='image/png')
     return render_template("graph.html", listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName="Chemical Reaction Network (CRN) - 2D")
-
 
 def get_numerical_analysis_save_to_session(antimony_code: str):
     """
@@ -199,3 +192,4 @@ def get_numerical_analysis_save_to_session(antimony_code: str):
     session['stoichiometry_in_latex'] = stoichiometry_in_latex
     session['tex_equations'] = tex_equations
     session['species_to_index_in_tex'] = species_to_index_in_tex
+
