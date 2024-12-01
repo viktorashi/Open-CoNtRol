@@ -14,6 +14,15 @@ function genTextBox(textBoxID) {
         							<option value='right'>&#8594</option>
     							</select>
     							<input oninput="this.value = this.value.toUpperCase()" class="eq_box" name='ec_${textBoxID}_right'  type='text' size='20' maxlength='64' value='' spellcheck='false' placeholder='∅' required/>
+<!--    							delete button for the specific equations-->
+<!--make it a delete with circle cross button-->
+             					<button type='button' onclick='
+             					 if (countEcuatii > 1) { 
+             					    $(this).parent().remove(); 
+             					    countEcuatii--;
+                                    updateFormReactCount(countEcuatii);
+             					    } 
+             					    '> <i class="material-icons">delete</i> </button
                             <br></div> `);
 }
 

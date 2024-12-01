@@ -347,6 +347,9 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
     #ok I done used claude for this cuz I got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
 
     converter = AntimonyConverter()
+    print('kktu asta chiar imi ce era inainte')
+    print(antimony_code)
+    print('gata kktu asta chiar imi ce era inainte')
     tex_equations = converter.diff_equations_in_tex_format(antimony_code.split('\n'))
     species_to_index_mapping = converter.species_to_index
     stoichiometry_in_latex  = stoichiometry_in_tex(get_stoichiometry_matrix(antimony_code))
@@ -460,6 +463,7 @@ def crn2antimony(filename:str):
 
 def crn2antimony_definitions(filename:str, kcont = 0 , krates = []):
 
+    #TODO ceva bug aici in care uneori ia ce se scria inainte si nu se schimba cu chestiile noi pe care le-ai pus in dropdowns
     reactii_individuale = reactions2tellurium_format(filename)
 
     for reactie in reactii_individuale:  # gaseste vitezele de reactie
