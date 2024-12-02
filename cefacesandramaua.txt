@@ -177,3 +177,4 @@
     MVP: daca exista orice cod valid in textareau ala, ia doar tot ce e acolo si nimic din dropdown (verifici pe frontend daca e valid inainte sa triniti si dai warning ca o sa se foloseasca ala de jos, (doar daca e ceva valid scris si acolo) si te pune sa dai confirm ca trimiti alea de jos, daca nu e nici ala valid dai alt warning ca nu-i ok)
     ca sa poti sa ai acelasi behaviour si de la alea de dropdown probabil tre sa faci ca un translator intre ce a scris ala si la ce cod de antimony ar fi echivalent ca sa poti doar sa-l bagi prin aceeasi functie sa-ti faca analiza numerica
     practic cred ca nici nu-ti mai trebuie reactions2tellurium_format daca doar salvezi in fisier cu formatu normal de oameni cu cap
+lmao test pt asta nou nuj
