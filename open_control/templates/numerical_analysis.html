@@ -88,8 +88,15 @@
 </div>
 {# make button on the button of page to redirect to graph input#}
 <div class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
-        style="/*!margin-top:128px; margin-left:-2px;*/  bottom:0.7%;  width:100%; padding-top:2%; padding-bottom:2%">
-    <a href="/time_graph_input" class="w3-button w3-black w3-hover-green" style="text-decoration: none; color: white;">Graph the System</a>
+     style="/*!margin-top:128px; margin-left:-2px;*/  bottom:0.7%;  width:100%; padding-top:2%; padding-bottom:2%">
+    {#    <a href="/time_graph_input" class="w3-button w3-black w3-hover-green" style="text-decoration: none; color: white;">Graph the System</a>#}
+    <form action="/graph" method="post">
+        <label for="graph_select">Which type of graph do you want?</label>
+        <select name="graph_type" id="graph_select">
+            <option value="regular">Time Series</option>
+        </select>
+        <button type="submit">Get graph</button>
+    </form>
 </div>
 <!--Footer-->
 <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"

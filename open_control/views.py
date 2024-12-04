@@ -86,6 +86,14 @@ def numerical_analysis():
                            stoichMatrix=session.get('stoichiometry_in_latex'), equations=session.get('tex_equations'),
                            species_mapping=session.get('species_to_index_in_tex'))
 
+@app.post('/graph')
+def graph():
+    graph_type = request.form.get('graph_type')
+    print('tipu de graph', graph_type)
+
+    if graph_type == 'regular':
+        return redirect(url_for('time_graph_input'))
+
 @app.get('/time_graph_input')
 def time_graph_input():
     """
@@ -144,7 +152,7 @@ def get_crn_data():
     return jsonu
 
 @app.post('/time_graph_input')
-def input_user_post():
+def time_graph_post():
     """
     Saves the form data from the request to the current flask session
     including the "select"-ed file name
@@ -203,10 +211,10 @@ def input_user_post():
     print(session.get('select'))
     print(session.get('specii'))
 
-    return redirect(url_for('plot_svg'))
+    return redirect(url_for('time_graph'))
 
-@app.get('/graph')
-def plot_svg():
+@app.get('/time_graph')
+def time_graph():
     """
     :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
     """
@@ -216,4 +224,9 @@ def plot_svg():
     return render_template('graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName='Chemical Reaction Network (CRN) - 2D')
 
+@app.get('dsr_graph_input'):
+def dsr_graph_input():
+    pass
+
+@app.post('')
 
