@@ -71,16 +71,16 @@
         </header>
 
 
-        <div style="text-align: left;">
+        <div style="text-align: match-parent;">
 
             <form action="/save_reactii_antimony" method="post" name="antimony_form"
-                  onsubmit="return antimonyFormSubmitHandler()" onformdata="return antimonyFormDataHandler(event)">
-                <div style="width: 60%; left: 30%; padding-top:2%; position: relative">
+                  onsubmit="return antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler(event)" style="horiz-align: left">
+                <div style="width: 60%; left: 30%; padding-top:2%; position: relative; text-align: center">
                         <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
 C + O2 -> CO2; k2*C*O2
 " cols="35" rows="15" name="antimony-textarea"></textarea>
                 </div>
-                <div style="position: relative; left: 50%">
+                <div style="position: relative; left: 50%;" >
                     <!--<p><b>Creare grafic personalizat.</b></p>-->
                     <p id="antimonyError" class="error"></p>
                     <p class="w3-padding-16">

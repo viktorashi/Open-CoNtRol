@@ -264,6 +264,7 @@ def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
         #scoate coeficientul din fata de la fiecare specie
         for ato in ats:
             if ato != '0':  # sa nu fie zero barat
+                ato = ato.strip()
                 spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
                 specii.append(spec)  # in place
 

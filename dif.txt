@@ -6,9 +6,9 @@
 44,46c41
 <     specs1=session.get("specs")
 < 
-<     return render_template("input_user.html", data=temp, specs1=specs1)
+<     return render_template("time_graph_input.html", data=temp, specs1=specs1)
 ---
->     return render_template("input_user.html", data=temp)
+>     return render_template("time_graph_input.html", data=temp)
 50c45
 <     global select, text, text1, text3, text4, specs, text2, text5, text6
 ---

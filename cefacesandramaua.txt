@@ -25,6 +25,11 @@
 ############ gata academic ##############
 
 ############potentiale buguri cu idei de feateruri #############
+
+    creed ca N-am facut pe asta??
+        vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
+        https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
+
     vezi sa se uite mai intai daca are requestu datele pe el necesare, daca nu sa ia din session si daca nici asa sa dea return la un page cu "go to /<previous_page> and complete the data there"
     DAR sa nu faci asta inainte sa faci pagini separate pentru fiecare chestie pe care o vrei pentru ca dupaia o sa trebuiasca sa rescrii "previous_pageu" ca n-o sa mai fie la fel ma gandesc presupun
 
@@ -168,9 +173,6 @@
     vezi ca sa nu mai apara 1.0  -1.0 0.0 sa nu trunghieze daca e
     SUNT TOATE NUMERE INTREGI sau lasa si optiunea
 
-    creed ca l-am facut pe asta?? nu stiu daca se refera cum am facut eu doar sa-i dau download in static si dupa sa dau serve la staticu ala
-        vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
-        https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
 
     OMG CE IAD A FOST SA TREBUIASCA SA RESCRIU COPY PASTE DE FIECARE DATA ASTA FA UN TEXTBOX SA ITI IA DIRET TEXT DE ANTIMONY din ala simplu tho it DOESN'T SUPPORT ANYMOONT FUNCTIONS WHAT WHTEVRETH EELL
     2. ceri ca si cele facute cu dropdown si ++ / -- sa li se puna valori initiale

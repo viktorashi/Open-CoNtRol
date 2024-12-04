@@ -27,7 +27,7 @@ def save_reactii_antimony():
 
     custom_format = save_reactions_in_file_from_antimony_textarea(antimony_code)
 
-    species , reacts = get_reaction_meta(custom_format) # this just saves specii to the session so ion even think we need it
+    species , reacts = get_reaction_meta(custom_format) # this just saves specii to the session so ion even think we need to get its output
 
     get_numerical_analysis_save_to_session(antimony_code)
 
@@ -44,7 +44,7 @@ def save_reactii_dropdowns():
     # you essentially have to have antimony code to do numerical analysis,
     # the call got get_numerical_analysis_save_to_session is with the same antimony code that it would on
     # the save_reactii_antimony route, but this time it's read from the file (it was saved to) and generated on the fly
-    #with 0 init values instead of the ones from the form of input_user.
+    #with 0 init values instead of the ones from the form of time_graph_input.
     #I know, it's spaghetti code literally schizo coding
 
     reactii_individuale: [str] = open(save_crn_filepath_location, 'r').readlines()
@@ -87,7 +87,7 @@ def numerical_analysis():
                            species_mapping=session.get('species_to_index_in_tex'))
 
 @app.get('/time_graph_input')
-def input_user():
+def time_graph_input():
     """
     :return: The template with the inputs required to generate the graph, with all the file names
     that contain CRN's
@@ -101,7 +101,7 @@ def input_user():
     3. time_graph_input.html face dupaia call la get_crn_data care:
         4. cauta dupaia din nou tot in acelasi fisier aparently
 
-    5.Dupa care se da post la input_user care
+    5.Dupa care se da post la time_graph_input care
 
     """
     files = sorted(os.listdir('open_control/templates/metode_lucru/'))

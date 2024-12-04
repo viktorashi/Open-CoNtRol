@@ -91,7 +91,7 @@ function antimonyFormDataHandler(event) {
 
     //data cleansing a bit before checking validity and submitting
 
-    // or     const formData = e.formData; if this one doesn't work
+    // or     const formData = e.originalEvent.formData; if this one doesn't work
     const formData = event.formData;
 
     formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
@@ -102,7 +102,11 @@ function antimonyFormSubmitHandler() {
     const dropDownsForm = document.forms['antimony_form']
     const submitterButton = document.getElementById('antimonySubmitButton')
 
+    console.log('astea inainte sa dai formdata')
+    console.log(dropDownsForm)
     const formData = new FormData(dropDownsForm, submitterButton);
+    console.log('astea dupa sa dai formdata')
+    console.log(formData.get('antimony-textarea'))
 
     const antimonyCode =formData.get('antimony-textarea')
 
