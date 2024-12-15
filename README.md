@@ -4,7 +4,6 @@
 ```bash
 git clone https://github.com/viktorashi/Open-CoNtRol.git
 cd Open-CoNtRol
-pip install -r requirements.txt
 chmod +x ./run_script.sh
 ./run_script.sh
 ```
