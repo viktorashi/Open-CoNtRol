@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pip install -r requirements.txt
-
 # List of interfaces to check
 interfaces=("en0" "ens33" "ens37")
 
