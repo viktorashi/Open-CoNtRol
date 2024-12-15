@@ -224,9 +224,14 @@ def time_graph():
     return render_template('graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName='Chemical Reaction Network (CRN) - 2D')
 
-@app.get('dsr_graph_input'):
+@app.get('/dsr_graph_input')
 def dsr_graph_input():
     pass
 
-@app.post('')
+@app.post('/dsr_graph_input')
+def dsr_graph_post():
+    pass
 
+@app.get('/dsr_graph')
+def dsr_graph():
+    pass
