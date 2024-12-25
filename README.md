@@ -1,9 +1,14 @@
 # Open-CoNtRol, an open source web Chemical Reaction Network visualizer.
 
+Please note pygraphviz has to be installed *beforehad*. So if you're not on unix (for some reason) meaning the bellow command doesn't work, please consult the installation guides [here](https://pygraphviz.github.io/documentation/stable/install.html).
+
 ## To run the flask web app:
 ```bash
 git clone https://github.com/viktorashi/Open-CoNtRol.git
 cd Open-CoNtRol
+#this needs to be done beforehand
+sudo apt-get install graphviz graphviz-dev
+pip install pygraphviz
 pip install -r requirements.txt
 chmod +x ./run_script.sh
 ./run_script.sh
