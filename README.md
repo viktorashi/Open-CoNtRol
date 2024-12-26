@@ -15,6 +15,7 @@ pip install -r requirements.txt
 
 #### Then to run the server
 ```bash
+chmod +x ./set_vars.sh 
 chmod +x ./run_script.sh
 ./run_script.sh
 ```
@@ -49,6 +50,7 @@ pip install --config-settings="--global-option=build_ext" \
 
 #### Then to run the server
 ```bash
+chmod +x ./set_vars.sh 
 chmod +x ./run_script.sh
 ./run_script.sh
 ```

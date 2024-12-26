@@ -10,6 +10,7 @@ save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
 
 @app.get('/')
 def home():
+    lma = 'sa moara masa'
     return render_template("home.html")
 
 @app.get('/antimony')
