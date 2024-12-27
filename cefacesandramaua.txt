@@ -9,6 +9,16 @@
 
 ###### academic ###############
 
+    ########### ce citinguri sa faci ###########
+        SBMLDIAgram
+        (https://doi.org/10.1093/bioinformatics/btac730) and the PYPI web page (https://pypi.org/project/SBMLDiagrams/). Thanks.
+
+        Tellurium
+        Medley et al. (2018). "Tellurium notebooks—An environment for reproducible dynamical modeling in systems biology." PLoS Computational Biology, 14(6), e1006220.
+
+        Choi et al. (2018). "Tellurium: An extensible python-based modeling environment for systems and synthetic biology." Biosystems, 171, 74-79.
+    ########### citinguri ###########
+
     gamma = ala de il avem deja e stoichiometric matrix normal
     left stoic se refere la termenu stang din ecuatii
     right la termenu drept
