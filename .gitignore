@@ -168,6 +168,7 @@ cython_debug/
 qodana.yaml
 *.swp
 *.svg
+open_control/static/diagram.png
 open_control/templates/metode_lucru/
 
 #Run configu de la debuggeru de pycharm
