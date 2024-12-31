@@ -425,8 +425,16 @@ def create_figure():
     save_graph_to_file = 'open_control/static/graphic.svg'
     road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = save_graph_to_file)
 
+
+
+
+def get_system_data():
+    antimony_code = crn2antimony(save_crn_filepath_location)
+
     #zici ca-i naming convention TJ Miles
-    listaToShowEcuatii = antimony_code.split("\n")
+    lista_to_show_ecuatii = antimony_code.split("\n")
+
+    road_runner = te.loada(antimony_code)
 
     stoicm = road_runner.getFullStoichiometryMatrix()
     print('asta stoichiometrica')
@@ -434,7 +442,9 @@ def create_figure():
     print(type(stoicm))
 
     # "template not found" error keeps popping up for some reason (it works lol)
-    return [listaToShowEcuatii, stoichiometry_in_tex(stoicm)]
+    return [lista_to_show_ecuatii, stoichiometry_in_tex(stoicm)]
+
+
 
 #TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
 def crn2antimony(filename:str):
@@ -457,7 +467,10 @@ def crn2antimony(filename:str):
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
     reaction_constants = session.get('react_constants')
-    val_k = reaction_constants
+    if reaction_constants:
+        val_k = reaction_constants
+    else :
+        val_k = [0]*kcont
     print('constArrayu cu cate kuri adica reactii sunt')
     print(reaction_constants, kcont)
     #pt fiecare reactie face k1 = valoarea;
@@ -469,6 +482,9 @@ def crn2antimony(filename:str):
 
     # THE VALUE FOR THE INITIAL CONDITIONS!!!
     init_vals = session.get('init_vals')
+    if not init_vals:
+        init_vals = [0]*len(specii)
+
     for i in range(len(specii)):
         tel = tel + specii[i] + ' = ' + str(init_vals[i]) + ';\n'
         #aici pune A = ce valoare a dat useru in UI
@@ -587,3 +603,6 @@ def stoichiometry_in_tex(stoichiometric_matrix):
 
     return tex
 
+def draw_diagram():
+   rr = te.loada(crn2antimony(save_crn_filepath_location))
+   rr.draw(savefig='open_control/static/diagram.png', width=200)
