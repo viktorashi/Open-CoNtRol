@@ -170,6 +170,7 @@ qodana.yaml
 *.svg
 open_control/static/diagram.png
 open_control/templates/metode_lucru/
+unused/fig.png
 
 #Run configu de la debuggeru de pycharm
 .run/
