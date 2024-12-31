@@ -5,6 +5,9 @@
 
     aaaa valk de la VALOARE kAPPA
 
+    deci rr.draw de la road_runner da call la functia draw din SBMLDiagram si doar trebuiew sa apara pe ecran normal, nu sa-l puna intr-un fisier si sa poti sa-l trimiti sau ceva.
+    da vad sa incerc daca pot sa fac eu cumva sa bagi intr-un fisier ala sa adaug niste parametrii si poate fac un PR la tellurium (sau road_runner, nu-mi dau seama sigur 100% cine e responsanbil sincer sau la cine as putea sa fac cel mai usor schimbari) sau poate chiar pygraphviz
+
 ##### gata eu explicand mie codu #########
 
 ###### academic ###############
