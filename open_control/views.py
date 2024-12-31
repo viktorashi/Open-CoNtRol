@@ -10,6 +10,7 @@ save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
 
 @app.get('/')
 def home():
+    lma = 'sa moara masa'
     return render_template("home.html")
 
 @app.get('/antimony')
@@ -91,8 +92,13 @@ def graph():
     graph_type = request.form.get('graph_type')
     print('tipu de graph', graph_type)
 
-    if graph_type == 'regular':
-        return redirect(url_for('time_graph_input'))
+    match graph_type:
+        case 'regular':
+            return redirect(url_for('time_graph_input'))
+        case 'diagram':
+            return redirect(url_for('diagram'))
+
+
 
 @app.get('/time_graph_input')
 def time_graph_input():
@@ -218,7 +224,8 @@ def time_graph():
     """
     :return: Renders the graph front-end with the antimony code shown and stoichiometry matrix
     """
-    [listaToShow, stoichiometric_matrix] = create_figure()
+    create_figure()
+    [listaToShow, stoichiometric_matrix] = get_system_data()
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
     return render_template('graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
@@ -235,3 +242,9 @@ def dsr_graph_post():
 @app.get('/dsr_graph')
 def dsr_graph():
     pass
+
+@app.get('/diagram')
+def diagram():
+    draw_diagram()
+    [listaToShow, stoichiometric_matrix] = get_system_data()
+    return render_template('diagram.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix)

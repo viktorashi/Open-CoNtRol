@@ -1,1 +1,4 @@
 FLASK_APP=open_control
+FLASK_ENV=development
+FLASK_DEBUG=1
+FLASK_RUN_PORT=5000

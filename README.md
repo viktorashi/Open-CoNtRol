@@ -15,7 +15,9 @@ pip install -r requirements.txt
 
 #### Then to run the server
 ```bash
+chmod +x ./set_vars.sh 
 chmod +x ./run_script.sh
+./set_vars.sh 
 ./run_script.sh
 ```
 
@@ -39,7 +41,14 @@ brew install graphviz
 pip install pygraphviz
 pip install -r requirements.txt
 ```
-Note: if the `pygraphviz` installation fails try:
+Note: if the `pygraphviz` installation fails, comment out the entry for `pygraphviz` in `requirements.txt` (example)
+```
+...
+#pygraphviz==1.13
+...
+
+```
+and run the following command:
 ```bash
 pip install --config-settings="--global-option=build_ext" \
             --config-settings="--global-option=-I$(brew --prefix graphviz)/include/" \
@@ -49,7 +58,9 @@ pip install --config-settings="--global-option=build_ext" \
 
 #### Then to run the server
 ```bash
+chmod +x ./set_vars.sh 
 chmod +x ./run_script.sh
+./set_vars.sh 
 ./run_script.sh
 ```
 

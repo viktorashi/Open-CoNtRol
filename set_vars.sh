@@ -1,3 +1,7 @@
+
+#sets the environment variables for the flask app
+#used as a external tool for the .run
+
 #!/bin/bash
 
 # List of interfaces to check
@@ -25,5 +29,7 @@ fi
 
 # shellcheck disable=SC2034
 FLASK_RUN_HOST="$ip"
-
-flask run
+FLASK_DEBUG=1
+FLASK_ENV=development
+FLASK_RUN_PORT=5000
+FLASK_APP=open_control
