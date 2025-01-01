@@ -53,19 +53,7 @@
                         href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
                         target="_blank">Antimony</a> <sup><span
                         class="material-symbols-outlined">open_in_new</span></sup>
-                    code, or the +/- dropdowns below to fill out the CRN.
-                </div>
-
-                <div class="content" style="padding-top:1%">
-                    It's optional to also write the initial values for each species / reaction constant, if not filled
-                    out the equations and stoichiometric matrix will be shown.
-                </div>
-
-                <div class="content" style="padding-top:1%">
-                    If filled out inside the textbox, you'll be prompted to choose what type of graph do you want
-                    represented.
-                    <span class="error">WARNING! THIS MEANS THE OTHER INPUT FORM WILL BE LOST ALONG WITH EVERYTHING YOU WROTE INSIDE OF IT </span>
-                    <hr>
+                    or normal code in the format showed in the placeholder inside the text area below
                 </div>
             </div>
         </header>
@@ -77,8 +65,8 @@
                   onsubmit="return antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler(event)"
                   style="horiz-align: left">
                 <div style="width: 60%; left: 30%; padding-top:2%; position: relative; text-align: center">
-                        <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O;  k1*H2*H2*O2
-C + O2 -> CO2; k2*C*O2
+                        <textarea class="w31-center w3-margin-bottom" placeholder="2H2 + O2 -> 2H2O
+C + O2 -> CO2
 " cols="35" rows="15" name="antimony-textarea" required></textarea>
                 </div>
 
