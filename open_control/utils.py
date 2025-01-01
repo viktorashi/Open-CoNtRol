@@ -27,7 +27,9 @@ def parse_reaction(reaction: str):
     return reactants, products, rate_law.strip()
 
 def parse_species_term(term: str) -> Tuple[str, int]:
-    """Parse a species term to get species name and its coefficient."""
+    """Parse a species term to get species name and its coefficient.
+    returns: [species, coefficient]
+    """
     match = re.match(r'^(\d+)?([A-Za-z]\w*)$', term.strip())
     if not match:
         raise ValueError(f"Invalid species term: {term}")
@@ -230,23 +232,28 @@ def save_reactions_in_file_from_dropdowns(req):
 
     the_file.close()
 
-def save_reactions_in_file_from_antimony_textarea(antimony_code):
+def save_crn2file(custom_format):
+    the_file = open(save_crn_filepath_location, "w")
+    for line in custom_format:
+        the_file.write(line)
+        the_file.write("\n")
+    the_file.close()
+
+def save_reactions_from_antimony_textarea_to_file(antimony_code):
     """
     The code comes in the format
         A + B-> B; k1*A*B
         and then it gets saved in the format
         A + B -> B
+
+        then it writes to save_crn_filepath_location our simpler format
+
     :param antimony_code:
         The Antimony code containing the reactions to be saved in the file.
     :return: the thing it wrote to the file
     """
     weird_custom_format : [str] = [line.split(';')[0] for line in antimony_code.split('\n')]
-    the_file = open(save_crn_filepath_location, "w")
-    for line in weird_custom_format:
-        the_file.write(line)
-        the_file.write("\n")
-    the_file.close()
-
+    save_crn2file(weird_custom_format)
     return weird_custom_format
 
 #TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
@@ -453,7 +460,7 @@ def crn2antimony(filename:str):
     :param filename:
         Name of the file whose contents will be transformed in a full Antimony syntax
          network with species, constants and everything, as opposed to
-         "reactions2tellurium_format" which only does that for the reactions
+         "crn2antimony_definitions" which only does that for the reactions
     :return:
     """
     ## filename = 'crn_a_b_c.txt'

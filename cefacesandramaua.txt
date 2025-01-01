@@ -119,6 +119,14 @@
         easily cel mai bun repo de mathjax ca iti da exmple si chestii https://github.com/mathjax/MathJax-demos-web?tab=readme-ov-file
         vezi ca are si screen reader automat mathjax pt accediblity asta e extra extra nice to have cam la W din MoSCoW
 
+        S0 -> KS1
+        KS1 -> S2
+        S2 + F -> FS2
+        FS2 -> F
+        F -> S0 + F
+
+        sau mai complet asa de antimony
+
         S0 -> KS1; k1*S0
         KS1 -> S2; k2*KS1
         S2 + F -> FS2; k3*S2*F

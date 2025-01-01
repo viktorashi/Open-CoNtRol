@@ -17,20 +17,35 @@ def home():
 def antimony():
     return render_template("antimony.html")
 
+
 @app.post("/save_reactii_antimony")
 def save_reactii_antimony():
     """
     Only used when submitting the form via the Antimony code textarea
     :return:
     """
-    antimony_code = request.form.get('antimony-textarea')
-    print(antimony_code)
+    code = request.form.get('antimony-textarea')
+    #TODO fa-l sa mai aiba un hidden field de format acolo pe care o sa-l schimbe o funcutie de js dupa ce vede in regexutri
+    format = request.form.get('format')
+    print(code)
 
-    custom_format = save_reactions_in_file_from_antimony_textarea(antimony_code)
+    #TODO dar mai intai faci pe frontend sa vada daca e bn cu codu ala de regex
+    #TODO fa sa nu mai trebuiasca sa scrii in format din ala cu rate laws dupa si sa fie doar ala simplificat pe care il salvam efectiv in fisier, DAR sa poti sa faci si ala gen sa-si dea seama daca e ala
 
-    species , reacts = get_reaction_meta(custom_format) # this just saves specii to the session so ion even think we need to get its output
-
-    get_numerical_analysis_save_to_session(antimony_code)
+    match format:
+        case 'antimony':
+            custom_format = save_reactions_from_antimony_textarea_to_file(code)
+            get_numerical_analysis_save_to_session(code)
+            species , reacts = get_reaction_meta(custom_format) # this just saves specii to the session so ion even think we need to get its output
+        case 'simple':
+            code = code.split('\n')
+            save_crn2file(code)
+            tellurium_definitions, _ = crn2antimony_definitions(save_crn_filepath_location)
+            #delete last two newline characters cuz it breaks for some reason
+            tellurium_definitions = tellurium_definitions[:-2]
+            get_numerical_analysis_save_to_session(tellurium_definitions)
+        case _:
+            print("idk what the user submitted if im being honest")
 
     return redirect(url_for('numerical_analysis'))
 

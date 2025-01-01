@@ -42,6 +42,10 @@ function validAntimonyCRNDefinition(str) {
     return regex.test(str)
 }
 
+function validEquationsFormat(str) {
+
+}
+
 //will be used by de dropDownsFormSubmitHandler when it calls the FormData constructor
 function dropDownsFormDataHandler(event) {
     console.log('form data a dat fire')
@@ -80,41 +84,6 @@ function dropDownsFormSubmitHandler() {
             //it's not safe to submit the form
             return false;
         }
-    }
-    //it's safe to submit the form
-    return true;
-}
-
-//will be used by de antimonyFormSubmitHandler when it calls the FormData constructor
-function antimonyFormDataHandler(event) {
-    console.log('form data a dat fire');
-
-    //data cleansing a bit before checking validity and submitting
-
-    // or     const formData = e.originalEvent.formData; if this one doesn't work
-    const formData = event.formData;
-
-    formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
-    formData.set('antimony-textarea', formData.get('antimony-textarea').replace(/ +/gm, ' ')); //delete extra spacing
-}
-
-function antimonyFormSubmitHandler() {
-    const dropDownsForm = document.forms['antimony_form']
-    const submitterButton = document.getElementById('antimonySubmitButton')
-
-    console.log('astea inainte sa dai formdata')
-    console.log(dropDownsForm)
-    const formData = new FormData(dropDownsForm, submitterButton);
-    console.log('astea dupa sa dai formdata')
-    console.log(formData.get('antimony-textarea'))
-
-    const antimonyCode =formData.get('antimony-textarea')
-
-    if (!validAntimonyCRNDefinition(antimonyCode.split('\n\n')[0])) {
-        document.getElementById('antimonyError').innerText = 'Definition part of Antimony Code not valid!!'
-        console.log('NA DAT MATCHH')
-        //it's not safe to submit the form
-        return false;
     }
     //it's safe to submit the form
     return true;
