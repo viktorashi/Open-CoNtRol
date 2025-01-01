@@ -25,12 +25,8 @@ def save_reactii_antimony():
     :return:
     """
     code = request.form.get('antimony-textarea')
-    #TODO fa-l sa mai aiba un hidden field de format acolo pe care o sa-l schimbe o funcutie de js dupa ce vede in regexutri
     format = request.form.get('format')
     print(code)
-
-    #TODO dar mai intai faci pe frontend sa vada daca e bn cu codu ala de regex
-    #TODO fa sa nu mai trebuiasca sa scrii in format din ala cu rate laws dupa si sa fie doar ala simplificat pe care il salvam efectiv in fisier, DAR sa poti sa faci si ala gen sa-si dea seama daca e ala
 
     match format:
         case 'antimony':

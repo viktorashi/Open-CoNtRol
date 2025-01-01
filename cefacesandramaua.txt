@@ -39,6 +39,7 @@
 
 ############potentiale buguri cu idei de feateruri #############
 
+
     creed ca N-am facut pe asta??
         vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
         https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
@@ -201,3 +202,6 @@
     ca sa poti sa ai acelasi behaviour si de la alea de dropdown probabil tre sa faci ca un translator intre ce a scris ala si la ce cod de antimony ar fi echivalent ca sa poti doar sa-l bagi prin aceeasi functie sa-ti faca analiza numerica
     practic cred ca nici nu-ti mai trebuie reactions2tellurium_format daca doar salvezi in fisier cu formatu normal de oameni cu cap
 lmao test pt asta nou nuj
+    BROOO BUG de fiecare data daca folosesti un mod diferit de input o data dropdowns o data din astalalatu daca schimbi intre ele o sa-ti dea eroare ca si cum nu iti gaseste datele bune pentru celelalt
+    PUNE pe rate_laws alea care erau de dinainte for reasonnn WHAHTTA
+    AAA SE TOT ADAUGA LA krates = [] si dsa da append nu se curata ala dupa fiecare request

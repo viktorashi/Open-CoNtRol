@@ -501,11 +501,10 @@ def crn2antimony(filename:str):
     print('aici stringu final')
     return tel
 
-def crn2antimony_definitions(filename:str, kcont = 0 , krates = []):
-
-    #TODO ceva bug aici in care uneori ia ce se scria inainte si nu se schimba cu chestiile noi pe care le-ai pus in dropdowns
+def crn2antimony_definitions(filename:str, kcont = 0 , krates = None):
     reactii_individuale = open(save_crn_filepath_location, 'r').readlines()
 
+    krates = [] if krates is None else krates
     for reactie in reactii_individuale:  # gaseste vitezele de reactie
         kcont = kcont + 1  # de la 1 la cate reactii sunt
         krate = 'k' + str(kcont)  # incepe cu 1:  k1 k2 k3
