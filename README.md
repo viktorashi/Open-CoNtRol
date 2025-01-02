@@ -1,5 +1,33 @@
 # Open-CoNtRol, an open source web Chemical Reaction Network visualizer.
 
+Can use a simple way to input chemical reaction networks
+![control_home_screen.png](pics/control_home_screen.png)
+
+Or use [antimony](https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics) to input them copy-paste style easier (or the simpler format from the placeholer in the image below:
+![antimony_input.png](pics/antimony_input.png)
+yes i know it's not centered leave me alone
+
+You first get a numerical analysis of your system
+![numerical-analysis.png](pics/numerical-analysis.png)
+
+From which you can graph your results in different shenanigans and schemes
+
+The default basic one is the Time series representation, giving you a page from which you can select your initial values for 
+species and reaction rates
+![tsr-input.png](pics/tsr-input.png)
+
+and from there outcomes this beauty
+
+![a-graph-indeed.png](pics/a-graph-indeed.png)
+
+A network diagram (DSR Graph) is similar, except you don't have to fill out the complaint from beforehand
+![network-diagram.png](pics/network-diagram.png)
+
+The phase portrait is neat in that you can select either 2 or 3 species to represent and it plots a 2D and respectively 3D phase portrait
+![2D phase portrait.png](pics/2D%20phase%20portrait.png)
+![3D phase portrait.png](pics/3D%20phase%20portrait.png)
+
+# Installation
 Please note pygraphviz has to be installed *beforehad*. So if you're not on unix (for some reason) meaning the bellow command doesn't work, please consult the installation guides [here](https://pygraphviz.github.io/documentation/stable/install.html).
 
 ## To run the flask web app:
@@ -75,7 +103,7 @@ python -m flask run
 i'm not really sure tbh, i just use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 It will inherit the app name and options from `.flaskenv`
-## Or simply, if you just want to run it without contributing, create a virtualenv however way you want ( [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/stable/install.html#basic-installation) recommended by yours truly) and install it there as a package with:
+### Or simply, if you just want to run it without contributing, create a virtualenv however way you want ( [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/stable/install.html#basic-installation) recommended by yours truly) and install it there as a package with:
 ```bash
 pip install git+https://github.com/viktorashi/Open-CoNtRol.git
 flask --app open_control --debug run
