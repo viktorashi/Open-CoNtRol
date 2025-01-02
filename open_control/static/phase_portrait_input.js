@@ -1,65 +1,61 @@
 // Open and close sidebar
 function w3_open() {
-  document.getElementById("mySidebar").style.width = "100%";
-  document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("mySidebar").style.width = "100%";
+    document.getElementById("mySidebar").style.display = "block";
 }
 
 function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("mySidebar").style.display = "none";
 }
 
 // Generate Species List
-function generateSpecs(specsList)
-{
-    undeVinSpeciile = document.getElementById("undeVinSpeciile"); undeVinSpeciile.innerHTML = "";
+function generateSpecs(specsList) {
+    undeVinSpeciile = document.getElementById("undeVinSpeciile");
+    undeVinSpeciile.innerHTML = "";
     specIndex = 0;
-    for ( spec in specsList )
-    {
-        textToAppend = "<div class=\"form-group\">"+
-                      "<div class=\"input-group\">"+
-                      "<p style=\"display:inline;padding-right:10%\">"+specsList[specIndex]+"</p>"+
-                      `<input placeholder="${specsList[specIndex]} concentration" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >`+
-                      "</div>"+
-                      "</div>";
+    for (spec in specsList) {
+        textToAppend = "<div class=\"form-group\">" +
+            "<div class=\"input-group\">" +
+            "<p style=\"display:inline;padding-right:10%\">" + specsList[specIndex] + "</p>" +
+            `<input placeholder="${specsList[specIndex]} concentration" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >` +
+            "</div>" +
+            "</div>";
         specIndex++;
         undeVinSpeciile.innerHTML = undeVinSpeciile.innerHTML + textToAppend;
     }
 }
 
 // Generate Reaction Constants List
-function generateConstante(constCount)
-{
+function generateConstante(constCount) {
     let undeVinConstantele = document.getElementById("undeVinConstantele");
     undeVinConstantele.innerHTML = "";
 
-    for ( let constIndex = 0; constIndex < constCount; constIndex++ )
-    {
-        textToAppend = "<div class=\"form-group\">"+
-                "<div class=\"input-group\">"+
-                "<p style=\"display:inline; padding-right:10%\">k"+(constIndex+1)+"</p>"+
-                `<input placeholder="const ${constIndex+1} value" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >`+
-                "</div>"+
-                "</div>";
+    for (let constIndex = 0; constIndex < constCount; constIndex++) {
+        textToAppend = "<div class=\"form-group\">" +
+            "<div class=\"input-group\">" +
+            "<p style=\"display:inline; padding-right:10%\">k" + (constIndex + 1) + "</p>" +
+            `<input placeholder="const ${constIndex + 1} value" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >` +
+            "</div>" +
+            "</div>";
 
         undeVinConstantele.innerHTML = undeVinConstantele.innerHTML + textToAppend;
     }
 }
 
-function generateCheckBoxes(specsList){
-    let checkBoxes = document.getElementById("checkBoxes");
-    checkBoxes.innerHTML = "";
+function generateCheckBoxes(specsList) {
+    let checkboxes = document.getElementById("checkboxes");
+    checkboxes.innerHTML = "";
 
-    for (let i = 0; i < specsList.length; i++){
-        textToAppend = `<input type="checkbox" id="check${i}" name="check${i}" value="${specsList[i]}">`+
-                       `<label for="check${i}">${specsList[i]}</label><br>`;
+    for (let i = 0; i < specsList.length; i++) {
+        textToAppend = `<input type="checkbox" id="check${i}" name="check${i}" value="${specsList[i]}">` +
+            `<label for="check${i}">${specsList[i]}</label><br>`;
 
-        checkBoxes.innerHTML = checkBoxes.innerHTML + textToAppend;
+        checkboxes.innerHTML = checkboxes.innerHTML + textToAppend;
     }
 
 }
 
-function updateInputs(filename)
-{
+function updateInputs(filename) {
     const xhttp = new XMLHttpRequest();
 
 
@@ -92,12 +88,11 @@ function updateInputs(filename)
         }
     };
 
-    xhttp.open("GET", "/crn_data?filename="+filename);
+    xhttp.open("GET", "/crn_data?filename=" + filename);
     xhttp.send();
 }
 
-function reactionFilenameChanged()
-{
+function reactionFilenameChanged() {
     selectorItem = document.getElementById('comp_select');
 
     updateInputs(selectorItem.value);
@@ -108,26 +103,42 @@ reactionFilenameChanged();
 /*
 Enable / Disable Button
 */
-function doCheck(){
-    let allFilled = true;
-
+function checkValid() {
     let inputs = document.getElementsByTagName('input');
-    for(let i=0; i < inputs.length; i++){
-        if(inputs[i].value === '' && inputs[i].type === "number"){
-            allFilled = false;
+
+    let checked;
+    let nonEmpty = true;
+    let checkedBoxes = 0;
+    for (let i = 0 ; i < inputs.length; i++) {
+        //first checks the number inputs
+        if (inputs[i].type === "number" && inputs[i].value === '') {
+            nonEmpty = false;
             break;
+        }
+        //then checks the checkboxes
+        else if (inputs[i].type === "checkbox" && inputs[i].checked) {
+            checkedBoxes++;
+            if (checkedBoxes > 3) {
+                break;
+            }
         }
     }
 
-    document.getElementById("register").disabled = !allFilled;
+    checked = 2 <= checkedBoxes && checkedBoxes <= 3;
+
+    // enables if valid overall
+    document.getElementById("register").disabled = !(nonEmpty && checked);
 }
 
-window.onload = () =>{
+window.onload = () => {
     let inputs = document.getElementsByTagName('input');
-    for(let i=0; i < inputs.length; i++){
-        if(inputs[i].type === "number"){
-            inputs[i].onkeydown = doCheck;
-            inputs[i].onblur = doCheck;
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].type === "number") {
+            inputs[i].onkeydown = checkValid;
+            inputs[i].onblur = checkValid;
+        }
+        if (inputs[i].type === 'checkbox') {
+            inputs[i].onchange = checkValid;
         }
     }
 };
