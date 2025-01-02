@@ -20,7 +20,7 @@ and from there outcomes this beauty
 
 ![a-graph-indeed.png](pics/a-graph-indeed.png)
 
-A network diagram (DSR Graph) is similar, except you don't have to fill out the complaint from beforehand
+A network diagram (DSR Graph) is similar, except you don't have to fill out the complaint form beforehand
 ![network-diagram.png](pics/network-diagram.png)
 
 The phase portrait is neat in that you can select either 2 or 3 species to represent and it plots a 2D and respectively 3D phase portrait
