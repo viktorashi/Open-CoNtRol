@@ -47,16 +47,15 @@
     vezi sa se uite mai intai daca are requestu datele pe el necesare, daca nu sa ia din session si daca nici asa sa dea return la un page cu "go to /<previous_page> and complete the data there"
     DAR sa nu faci asta inainte sa faci pagini separate pentru fiecare chestie pe care o vrei pentru ca dupaia o sa trebuiasca sa rescrii "previous_pageu" ca n-o sa mai fie la fel ma gandesc presupun
 
+
     sa nu mai apara pagini de erori sa zica ce dastea sunt gresite si pe frontend si backend
+        pt asta doar schimbi environment in production
 
-    cum sa faci DSR graphuri
-    si faci mai multe tipuri de grafice
     sa faci macar alea in 2d prima data like gen
-    dropdown cu toate tiprule de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
-
 
     phase portaitu poti sa-l faci o substanta in functie de celelata, daca ai mai mult de 2 specii sa iti apara
     checkbox select cu care din speciile alea vrei sa iei
+    checkbox ca sa selecteze la cate din specii sa dea plot
 
     si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
 
@@ -64,26 +63,12 @@
 
     sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
 
-    si matricea coloana vkx si pot isa folosesti multiplicart simbolica ca sa generezi sistmul cand faci gamma *ori coloana aia
-
     moduri de copiat, vrei sa fie in format maple sau octave sau cv
     poate si un file upload si in formatu ala si sau sa schimbi formatul sau
-
-    ceva dropdown unde sa selectezi daca vrei sa apara doar analiza teoretica sau si poza sau fara poza
-
-    de generat asta https://tellurium.readthedocs.io/en/latest/notebooks.html#activator-system sa se vada
-
-    gen draw sa faca nebunia asta https://sys-bio.github.io/SBMLDiagrams/Introduction.html#figure-examples
-
-    de DSR graph asta e ala
 
     sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
 
     x/p sau xpp iti face oscilatii
-
-    checkbox ca sa selecteze la cate din specii sa dea plot
-
-    pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
 
     #SEMI DONE APROAPE TOTT LA ASTAAA omomog (nu era deloc cat de bonus credeam, e cam singuru pot cum pot sa-mi dau seama cum kkt se face lmao
     Detailed feature (destul de bonus):
@@ -95,7 +80,8 @@
       in bara din stanga daca vrei si se deschide asa cu animatie ca si cum
       si asta se desshcide sub alea normale alealate
 
-      1. pui antimony si daca contine initial values specifice inseamna ca omu vrea un graph, caz in care
+      cam mai grea asta sa fiu sincer lasa din asta ca nu mai trebe nici nu stie nimeni daca am fct kktu asta
+          1. pui antimony si daca contine initial values specifice inseamna ca omu vrea un graph, caz in care
 
       Daca contine initial values faci cu graph ca stii ca vrea, daca nu faci doar analiza din aia cum iiz ce
       SA VERIFICI NUMA CA TOATE AU INITIAL VALUES PUSE
@@ -161,6 +147,7 @@
 
           fa-l mai bine sa urmeze structura asta
     asta de la profu so fOLOSESTI PE ASTA
+    si matricea coloana vkx si poti sa folosesti multiplicare simbolica ca sa generezi sistemul cand faci gamma *ori coloana aia
 
     \begin{equation*}
     \begin{array}{ll}
@@ -205,3 +192,11 @@ lmao test pt asta nou nuj
     BROOO BUG de fiecare data daca folosesti un mod diferit de input o data dropdowns o data din astalalatu daca schimbi intre ele o sa-ti dea eroare ca si cum nu iti gaseste datele bune pentru celelalt
     PUNE pe rate_laws alea care erau de dinainte for reasonnn WHAHTTA
     AAA SE TOT ADAUGA LA krates = [] si dsa da append nu se curata ala dupa fiecare request
+    cum sa faci DSR graphuri
+    si faci mai multe tipuri de grafice
+    dropdown cu toate tiprule de grafuri pe pagina 0 care sa schimbe ce inputuri sunt necesare pentru fiecare tip
+    ceva dropdown unde sa selectezi daca vrei sa apara doar analiza teoretica sau si poza sau fara poza
+    de generat asta https://tellurium.readthedocs.io/en/latest/notebooks.html#activator-system sa se vada
+    gen draw sa faca nebunia asta https://sys-bio.github.io/SBMLDiagrams/Introduction.html#figure-examples
+    de DSR graph asta e ala
+    pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
