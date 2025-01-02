@@ -263,8 +263,78 @@ def phase_portrait_input():
 
 @app.post('/phase_portrait_input')
 def phase_portrait_post():
-    pass
+    """
+    Saves the form data from the request to the current flask session
+    including the "select"-ed file name
+    start_time, end_time, titlu, x_titlu, y_titlu,
+    the initial values of concentration for each species,
+    the values for the reaction rates (the k's)
+    and the species for each you want to generate the phase portrait for
+
+    :return: Redirects the user to '/phase_portrait' for displaying the graph generated
+    """
+
+    session['select'] = request.form.get('comp_select')
+
+    session['start_time'] = request.form['start_time']
+
+    session['end_time'] = request.form['end_time']
+
+    session['titlu'] = request.form['titlu']
+
+    # lista cu coeficientii pt fiecare specie
+    val_init_array = []
+    val_init_index = 0
+
+    while True:
+        try:
+            request_val_init = request.form['valinit' + str(val_init_index)]
+            val_init_array.append(str(request_val_init))
+            val_init_index += 1
+        except:
+            break
+
+    const_array = []
+    const_index = 0
+
+    while True:
+        try:
+            request_const_init = request.form['valk' + str(const_index)]
+            const_array.append(str(request_const_init))
+            const_index += 1
+        except:
+            break
+
+    checked_species = []
+    species_index = 0
+    while True:
+        try:
+            request_checked_species = request.form['check' + str(species_index)]
+            checked_species.append(str(request_checked_species))
+            species_index += 1
+        except:
+            break
+
+    session['init_vals'] = val_init_array
+    session['react_constants'] = const_array
+    session['checked_species'] = checked_species
+
+    print(session.get('end_time'))
+    print(session.get('start_time'))
+    print(session.get('titlu'))
+    print(session.get('init_vals'))
+    print(session.get('react_constants'))
+    print(session.get('checked_species'))
+    print(session.get('select'))
+    print(session.get('specii'))
+
+    return redirect(url_for('phase_portrait'))
+
 
 @app.get('/phase_portrait')
 def phase_portrait():
-    pass
+    draw_phase_portrait()
+
+    [listaToShow, stoichiometric_matrix] = get_system_data()
+    return render_template('phase_portrait.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix)
+

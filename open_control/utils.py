@@ -1,9 +1,11 @@
 import tellurium as te
+import matplotlib
 import re
-from flask import  render_template, session
+from flask import render_template, session
 from typing import List, Tuple, Dict
 
 save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
+
 
 def parse_reaction(reaction: str):
     """
@@ -26,6 +28,7 @@ def parse_reaction(reaction: str):
 
     return reactants, products, rate_law.strip()
 
+
 def parse_species_term(term: str) -> Tuple[str, int]:
     """Parse a species term to get species name and its coefficient.
     returns: [species, coefficient]
@@ -38,11 +41,12 @@ def parse_species_term(term: str) -> Tuple[str, int]:
     coef = int(coef) if coef else 1
     return species, coef
 
-#This probably has so much functionality that I can reuse in the project and delete the old stuff ong too lazy to see what it is tho
+
+# This probably has so much functionality that I can reuse in the project and delete the old stuff ong too lazy to see what it is tho
 class AntimonyConverter:
     def __init__(self):
         self.species = []
-        self.species_to_index = {} # a mapping for clarification which xi corresponds to which species
+        self.species_to_index = {}  # a mapping for clarification which xi corresponds to which species
 
     def collect_species(self, reactions: List[str]):
         """Collect all unique species and assign them indices to the properties of the class."""
@@ -75,7 +79,7 @@ class AntimonyConverter:
             else:
                 old_rate = rate_law
                 rate_law = re.sub(rf'\b{species}\b\*', f"{index}(t)", rate_law)
-                #if it doesn't have a star for multiplication, meaning its at the end
+                # if it doesn't have a star for multiplication, meaning its at the end
                 if old_rate == rate_law:
                     rate_law = re.sub(rf'\b{species}\b', f"{index}(t)", rate_law)
 
@@ -153,7 +157,7 @@ class AntimonyConverter:
             tex_equations.append(tex_eqn)
 
         tex_equations = "\n".join(tex_equations)
-        #whatever else is necessary to make the equations symmetric
+        # whatever else is necessary to make the equations symmetric
         tex_equations = f"""
         \\begin{{equation*}}
         \\begin{{array}}{{ll}}
@@ -162,6 +166,7 @@ class AntimonyConverter:
         \\end{{equation*}}
         """
         return tex_equations
+
 
 def save_reactions_in_file_from_dropdowns(req):
     """
@@ -185,7 +190,7 @@ def save_reactions_in_file_from_dropdowns(req):
     ecuatii_count = int(req.form.get('ecuatiiCount'))
     equations_list = []
 
-    for index in range(1,ecuatii_count+1):
+    for index in range(1, ecuatii_count + 1):
         ec_left = req.form.get('ec_' + str(index) + '_left')
         ec_dir = req.form.get('ec_' + str(index) + '_dir')
         ec_right = req.form.get('ec_' + str(index) + '_right')
@@ -200,30 +205,32 @@ def save_reactions_in_file_from_dropdowns(req):
 
         ecuatie_finala = ec_left + " " + ec_dir_string + " " + ec_right
 
-
-        #asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
+        # asa ii da overwrite la open_control/templates/metode_lucru/crn.txt
         equations_list.append(ecuatie_finala)
 
     # scapa de un <enter> la sfarsit
-    lista_ecuatii : [] = list(map(lambda x: x.strip(), equations_list))
+    lista_ecuatii: [] = list(map(lambda x: x.strip(), equations_list))
 
     # ---- inlocuirea sagetilor si rasucirea de ecuatii -----
-    reactii_individuale : [str] = []
+    reactii_individuale: [str] = []
     for ecuatie in lista_ecuatii:
         positionFound = ecuatie.find('<-->')
         if positionFound > -1:  # reactie bidirectionala
             reactii_individuale.append(ecuatie.replace('<-->', '->'))  # reactia directa
-            #o inverseaza si o face directa
-            reactii_individuale.append(ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
+            # o inverseaza si o face directa
+            reactii_individuale.append(
+                ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
         else:
             positionFound = ecuatie.find('<--')
             if positionFound > -1:
                 # o inverseaza ca sa aiba acelasi format
-                reactii_individuale.append(ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
+                reactii_individuale.append(
+                    ecuatie[positionFound + 4:len(ecuatie)].strip() + '->' + ecuatie[0:positionFound].strip())
             else:
-                reactii_individuale.append(ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
+                reactii_individuale.append(
+                    ecuatie.replace('-->', '->'))  # reactia este simpla, doar de la stanga la dreapta
 
-    reactiile_individuale : [str] = list(map(lambda x: x.replace(" ", ""), reactii_individuale))
+    reactiile_individuale: [str] = list(map(lambda x: x.replace(" ", ""), reactii_individuale))
 
     the_file = open(save_crn_filepath_location, "w")
     for reactie in reactiile_individuale:
@@ -232,12 +239,14 @@ def save_reactions_in_file_from_dropdowns(req):
 
     the_file.close()
 
+
 def save_crn2file(custom_format):
     the_file = open(save_crn_filepath_location, "w")
     for line in custom_format:
         the_file.write(line)
         the_file.write("\n")
     the_file.close()
+
 
 def save_reactions_from_antimony_textarea_to_file(antimony_code):
     """
@@ -252,23 +261,24 @@ def save_reactions_from_antimony_textarea_to_file(antimony_code):
         The Antimony code containing the reactions to be saved in the file.
     :return: the thing it wrote to the file
     """
-    weird_custom_format : [str] = [line.split(';')[0] for line in antimony_code.split('\n')]
+    weird_custom_format: [str] = [line.split(';')[0] for line in antimony_code.split('\n')]
     save_crn2file(weird_custom_format)
     return weird_custom_format
 
-#TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
-def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
+
+# TODO dati seama cate are in comut cu crn2antomony ca sa nu mai fie atata cod duplicat
+def get_reaction_meta(reactii_individuale: [str]) -> [[str], [str]]:
     """
     :param session: the global object session for the current user
     :param reactii_individuale: The reactions in Antimony format
     :return: The list of unique species and the reactions in Antimony format
     """
-    specii :[str] = []
+    specii: [str] = []
 
     for reactie in reactii_individuale:  # gaseste speciile
-        ats = reactie.replace('->', '+').split('+') #transforma si 4A + 5B -> C in 4A + 5B + C si le da split la +
+        ats = reactie.replace('->', '+').split('+')  # transforma si 4A + 5B -> C in 4A + 5B + C si le da split la +
 
-        #scoate coeficientul din fata de la fiecare specie
+        # scoate coeficientul din fata de la fiecare specie
         for ato in ats:
             if ato != '0':  # sa nu fie zero barat
                 ato = ato.strip()
@@ -277,24 +287,23 @@ def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
 
     ## end -- for x in s
 
-    specii = list(set(specii)) #removes duplicates
+    specii = list(set(specii))  # removes duplicates
     specii.sort()  # alfabetic
     session['specii'] = specii
 
-    #transforma din reactiile individuale de forma 2A + 3B -> 10C in 2  A  3  B -> 10  C
+    # transforma din reactiile individuale de forma 2A + 3B -> 10C in 2  A  3  B -> 10  C
     reacts = []  # lista cu reactiile
     for reactie in reactii_individuale:
 
-        [le , ri] = reactie.split('->') #reactantii si produsii
+        [le, ri] = reactie.split('->')  # reactantii si produsii
         # le = reactie.split('->')[0]  # reactantii
         # ri = reactie.split('->')[1]  # produsii
 
-        atsle = le.split('+')  #reactantii cu tot cu coeficientii
-        atsri = ri.split('+') #produsii cu tot cu coeficientii
-
+        atsle = le.split('+')  # reactantii cu tot cu coeficientii
+        atsri = ri.split('+')  # produsii cu tot cu coeficientii
 
         lle = []
-        if atsle != ['0']:  #sa nu fie zero barat in stanga
+        if atsle != ['0']:  # sa nu fie zero barat in stanga
             for ato in atsle:
                 coef = re.findall(r'^[0-9]*', ato)[0]  # este sir vid '' daca nu gaseste
                 spec = re.findall(r'[a-zA-Z]+.*', ato)[0]
@@ -319,7 +328,8 @@ def get_reaction_meta(reactii_individuale : [str]) -> [[str],[str]] :
 
     return specii, reacts
 
-def get_stoichiometry_matrix(antimony_code : str):
+
+def get_stoichiometry_matrix(antimony_code: str):
     """
     Get the resulting stoichiometry matrix from the definitions of the system in antimony code
     :param antimony_code:
@@ -329,11 +339,11 @@ def get_stoichiometry_matrix(antimony_code : str):
     antimony_code_with_init = ''
     try:
         road_runner = te.loada(antimony_code)
-        #gets thrown if the user hasn't specified a value for the parameters specified
+        # gets thrown if the user hasn't specified a value for the parameters specified
     except RuntimeError:
         # k1, k2 ... params need to be initialised for it to work, so we'll just initialise them all with 0
         param_initialisation = ''
-        #double newline means the ned of a section in my format, the first section is the declaration part, and then we see how many lines are in that
+        # double newline means the ned of a section in my format, the first section is the declaration part, and then we see how many lines are in that
         no_declaration_lines = len(antimony_code.split('\n\n')[0].split('\n'))
 
         antimony_code_with_init = antimony_code + '\r\n'
@@ -345,7 +355,8 @@ def get_stoichiometry_matrix(antimony_code : str):
 
     return road_runner.getFullStoichiometryMatrix()
 
-def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
+
+def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str, str], str, dict]:
     """
     :param antimony_code: what is sounds like: https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics
     :return: stoichiometry matrix along with the differential equations (in LaTeX form) used to describe the system and the species to index mapping to better understand the equations.
@@ -366,7 +377,7 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
         $$ x_3'(t) = k_1 \cdot x_1(t) \cdot x_2(t) + k_2 \cdot x_2^3(t) $$
 
     """
-    #ok I done used claude for this cuz I got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
+    # ok I done used claude for this cuz I got lazy https://claude.site/artifacts/bc895634-74fe-418b-bad2-f801907fc4ea
 
     converter = AntimonyConverter()
     print('kktu asta chiar imi ce era inainte')
@@ -374,9 +385,10 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str,str],str, dict]:
     print('gata kktu asta chiar imi ce era inainte')
     tex_equations = converter.diff_equations_in_tex_format(antimony_code.split('\n'))
     species_to_index_mapping = converter.species_to_index
-    stoichiometry_in_latex  = stoichiometry_in_tex(get_stoichiometry_matrix(antimony_code))
+    stoichiometry_in_latex = stoichiometry_in_tex(get_stoichiometry_matrix(antimony_code))
 
-    return [stoichiometry_in_latex,antimony_code, tex_equations, species_to_index_mapping ]
+    return [stoichiometry_in_latex, antimony_code, tex_equations, species_to_index_mapping]
+
 
 def create_figure():
     """
@@ -396,11 +408,11 @@ def create_figure():
     print(end_time)
 
     # Am modificat aici !!! ------------------------------------------------
-    import matplotlib
-    matplotlib.use('agg') #agg e un backend cu care poti sa plotuiesti in fisiere direct, fara sa vezi tu in terminal sau cv
-    te.setDefaultPlottingEngine('matplotlib') #o sa foloseasca backendu acela bun din matplot
+    matplotlib.use(
+        'agg')  # agg e un backend cu care poti sa plotuiesti in fisiere direct, fara sa vezi tu in terminal sau cv
+    te.setDefaultPlottingEngine('matplotlib')  # o sa foloseasca backendu acela bun din matplot
 
-    antimony_code = crn2antimony(select)  #   tellurium output !!!
+    antimony_code = crn2antimony(select)  # tellurium output !!!
     print('coadele de antiomony')
     print(antimony_code)
     print('------pana aici-------------')
@@ -421,7 +433,7 @@ def create_figure():
 
     number_of_points = 1000
     # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
-    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points)
+    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points)
 
     print(select)
     print(start_time)
@@ -431,15 +443,13 @@ def create_figure():
     print(y_titlu)
 
     save_graph_to_file = 'open_control/static/graphic.svg'
-    road_runner.plot(xlabel = x_titlu , ylabel = y_titlu, figsize = (9,6), title = str(titlu), savefig = save_graph_to_file)
-
-
+    road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file)
 
 
 def get_system_data():
     antimony_code = crn2antimony(save_crn_filepath_location)
 
-    #zici ca-i naming convention TJ Miles
+    # zici ca-i naming convention TJ Miles
     lista_to_show_ecuatii = antimony_code.split("\n")
 
     road_runner = te.loada(antimony_code)
@@ -453,9 +463,8 @@ def get_system_data():
     return [lista_to_show_ecuatii, stoichiometry_in_tex(stoicm)]
 
 
-
-#TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
-def crn2antimony(filename:str):
+# TODO dati seama cate are asta in comun cu get_reaction_meta sa nu mai fie atatea functii
+def crn2antimony(filename: str):
     """
     :session: the global object session for the current user
     :param filename:
@@ -469,19 +478,18 @@ def crn2antimony(filename:str):
 
     krates = []  # lista cu vitezele de reactie
 
-    tel, specii =  crn2antimony_definitions(filename, 0, krates)
+    tel, specii = crn2antimony_definitions(filename, 0, krates)
     kcont = len(krates)
-
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!
     reaction_constants = session.get('react_constants')
     if reaction_constants:
         val_k = reaction_constants
-    else :
-        val_k = [0]*kcont
+    else:
+        val_k = [0] * kcont
     print('constArrayu cu cate kuri adica reactii sunt')
     print(reaction_constants, kcont)
-    #pt fiecare reactie face k1 = valoarea;
+    # pt fiecare reactie face k1 = valoarea;
     #                k2 = valoarea;
     for k in range(kcont):
         tel = tel + 'k' + str(k + 1) + ' = ' + str(val_k[k]) + ';\n'  # era: str(valk[k-1])
@@ -491,18 +499,19 @@ def crn2antimony(filename:str):
     # THE VALUE FOR THE INITIAL CONDITIONS!!!
     init_vals = session.get('init_vals')
     if not init_vals:
-        init_vals = [0]*len(specii)
+        init_vals = [0] * len(specii)
 
     for i in range(len(specii)):
         tel = tel + specii[i] + ' = ' + str(init_vals[i]) + ';\n'
-        #aici pune A = ce valoare a dat useru in UI
+        # aici pune A = ce valoare a dat useru in UI
 
     tel = tel + '\n'
 
     print('aici stringu final')
     return tel
 
-def crn2antimony_definitions(filename:str, kcont = 0 , krates = None):
+
+def crn2antimony_definitions(filename: str, kcont=0, krates=None):
     reactii_individuale = open(save_crn_filepath_location, 'r').readlines()
 
     krates = [] if krates is None else krates
@@ -577,39 +586,119 @@ def stoichiometry_in_tex(stoichiometric_matrix):
         $$
     """
 
-    #begin
+    # begin
     tex = ("$$\n"
-            "\matrix{ \n")
+           "\matrix{ \n")
 
-    #append the equation names on the first (header) line
+    # append the equation names on the first (header) line
     # for i in range(no_equations):
     #     tex = tex + '& J_' + str(i+1)
 
-    #new matrix row
+    # new matrix row
     tex = tex + '\cr '
 
-    #now completing each line, with the name of the species as the headers for the lines
+    # now completing each line, with the name of the species as the headers for the lines
     species_names = stoichiometric_matrix.rownames
     for species in species_names:
-        #the header of the line
+        # the header of the line
         tex = tex + species
         values_in_each_eq = stoichiometric_matrix[species]
-        #truncate to an integer if it ends in .0 for each digit
+        # truncate to an integer if it ends in .0 for each digit
         values_in_each_eq = [int(value) if value.is_integer() else value for value in values_in_each_eq]
-        #the value that species has in each equation
+        # the value that species has in each equation
         for value in values_in_each_eq:
             if value >= 0:
                 tex = tex + '&\ ' + str(value)
-            else :
+            else:
                 tex = tex + '& ' + str(value)
-        #new row in matrix
+        # new row in matrix
         tex = tex + '\cr '
 
-    #aaand end it
+    # aaand end it
     tex = tex + '} \n $$'
 
     return tex
 
+
 def draw_diagram():
-   rr = te.loada(crn2antimony(save_crn_filepath_location))
-   rr.draw(savefig='open_control/static/diagram.png', width=200)
+    rr = te.loada(crn2antimony(save_crn_filepath_location))
+    rr.draw(savefig='open_control/static/diagram.png', width=200)
+
+
+def draw_phase_portrait():
+    """
+    Draws the phase diagram to open_control/static/phase_portrait.svg
+        2D if only 2 species are selected
+        3D if 3 species are selected
+    """
+
+    ##>>>>>>>INIT PART
+    select = session.get('select')
+    end_time = session.get('end_time')
+    start_time = session.get('start_time')
+    titlu = session.get('titlu')
+    x_titlu = session.get('x_titlu')
+    y_titlu = session.get('y_titlu')
+
+    print(select)
+    print(end_time)
+
+    # Am modificat aici !!! ------------------------------------------------
+    import matplotlib
+
+    matplotlib.use(
+        'agg')  # agg e un backend cu care poti sa plotuiesti in fisiere direct, fara sa vezi tu in terminal sau cv
+    te.setDefaultPlottingEngine('matplotlib')  # o sa foloseasca backendu acela bun din matplot
+
+    antimony_code = crn2antimony(select)  # tellurium output !!!
+    print('coadele de antiomony')
+    print(antimony_code)
+    print('------pana aici-------------')
+    road_runner = te.loada(antimony_code)
+
+    # sa poata plotui fara sa printeze pe ecran ceva, doar in fisier
+    print(antimony_code)
+
+    # matricea stoichiometrica
+
+    # numele ratelor de reactie
+    k_s = road_runner.getGlobalParameterIds()
+    print(k_s)
+
+    # valorile retelor de reactie
+    reation_rates = road_runner.getReactionRates()
+    print(reation_rates)
+    print(select)
+    print(start_time)
+    print(end_time)
+    print(titlu)
+    print(x_titlu)
+    print(y_titlu)
+    ##<<<<<<<<<<INIT PART
+
+    checked_species = session.get('checked_species')
+    checked_species_count = len(checked_species)
+
+    number_of_points = 1000
+    # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
+    m = road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points,
+                             selections=checked_species)
+
+    save_graph_to_file = 'open_control/static/phase_portrait.svg'
+    if checked_species_count == 2:
+
+        road_runner.plot(xlabel=checked_species[0], ylabel=checked_species[1], figsize=(9, 6), title=str(titlu),
+                         savefig=save_graph_to_file)
+    elif checked_species_count == 3:
+        import matplotlib.pyplot as plt
+
+        ax = plt.figure().add_subplot(projection='3d')
+        ax.plot(m[:, 1], m[:, 2], m[:, 0], label=str(titlu))
+        ax.legend()
+        ax.set_xlabel(checked_species[0])
+        ax.set_ylabel(checked_species[1])
+        ax.set_zlabel(checked_species[2])
+        ax.view_init(elev=20., azim=-35, roll=0)
+        plt.savefig(save_graph_to_file)
+    else:
+        print('prea multe sau prea putine specii aici maa')

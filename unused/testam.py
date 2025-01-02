@@ -1,12 +1,9 @@
 import tellurium as te
-
-r = te.loada("""
-    S1 -> S5; k1*S1;
-    k1 = 0.1; S1 = 40; S2 = 0.0;
-""")
-try:
-    import pygraphviz
-
-    r.draw(savefig='file.png')
-except ImportError:
-    pass
+rr = te.loada('''
+    A -> B; k1*A
+    B -> C; k2*B
+    A = 10; B = 0; C = 20;
+    k1 = 0.1; k2 = 0.2;
+''')
+rr.simulate(0, 10, 100, ['A', 'B'])
+rr.plot(xlabel='A', ylabel = 'B', savefig='phase-portr.svg')
