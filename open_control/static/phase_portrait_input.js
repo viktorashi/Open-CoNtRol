@@ -45,6 +45,19 @@ function generateConstante(constCount)
     }
 }
 
+function generateCheckBoxes(specsList){
+    let checkBoxes = document.getElementById("checkBoxes");
+    checkBoxes.innerHTML = "";
+
+    for (let i = 0; i < specsList.length; i++){
+        textToAppend = `<input type="checkbox" id="check${i}" name="check${i}" value="${specsList[i]}">`+
+                       `<label for="check${i}">${specsList[i]}</label><br>`;
+
+        checkBoxes.innerHTML = checkBoxes.innerHTML + textToAppend;
+    }
+
+}
+
 function updateInputs(filename)
 {
     const xhttp = new XMLHttpRequest();
@@ -75,6 +88,7 @@ function updateInputs(filename)
 
             generateSpecs(specsList);
             generateConstante(reactsCount);
+            generateCheckBoxes(specsList)
         }
     };
 

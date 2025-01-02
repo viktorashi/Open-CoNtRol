@@ -420,7 +420,8 @@ def create_figure():
     print(reation_rates)
 
     number_of_points = 1000
-    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points) #da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
+    # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
+    road_runner.simulate(start = float(start_time), end = float(end_time), points=number_of_points)
 
     print(select)
     print(start_time)

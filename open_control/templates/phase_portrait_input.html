@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<title>Chemical Reaction Network</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/input_user.css">
+<link rel="icon" href="../static/favicon.ico"/>
+<script src="../static/load-mathjax.js" async></script>
+
+<body>
+<!-- SlideBar -->
+<nav class="w3-sidebar w3-black w3-animate-top w3-xxlarge" style=" display: none; padding-top:150px" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()"
+       class="w3-button w3-black w3-xxlarge w3-padding w3-display-topright" style="padding:6px 24px">
+        <i class="fa fa-remove"></i>
+    </a>
+    <div class="w3-bar-block w3-center">
+        <a href="/" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
+    </div>
+</nav>
+<div class="w3-content" style="max-width:1500px">
+    <!--HEADER-->
+    <div class="w3-opacity">
+        <span class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()">
+          <i class="fa fa-bars"></i>
+        </span>
+        <div class="w3-clear"></div>
+        <header class="w31-center w3-margin-bottom">
+            <h1 style="text-align:center;">
+                <b>Chemical Reaction Network (CRN)</b>
+            </h1>
+            <div style="width: 70%; left:15%; position:relative; transform:scale(0.9); margin-top:1%">
+                <div style="text-align: center;">
+                    <!--<h1>C</h1>-->
+                    <form method="POST">
+                        <div class="row">
+                            <div class="content">
+                                <div class="column" style="background-color:white; color:gray">
+                                    <p style="padding-top:4%">In each txt file, we have represented a CRN with 1, 2 or 3
+                                        species and below the time of representation of graph</p>
+                                    <!-- <p style="display:inline">File</p>-->
+                                    <br>
+                                    <select id="comp_select" name="comp_select"
+                                            style="display:inline; width:70%; text-align:center; margin-top:-4%"
+                                            class="selectpicker form-control" onchange="reactionFilenameChanged()">
+                                        {% for o in data %}
+                                            <option value="{{ o.name }}"> {{ o.name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <!--Aici avem specs: {{ specs1 }}-->
+                                    <p style="display:inline; padding-right:10%">Start Time</p>
+                                    <input value="0" placeholder="0" min=0 required id="NumberButton" type="number"
+                                           step="any" class="w3-input w3-hover-blue"
+                                           style="width:40%; display:inline; text-align:center" name="start_time"/>
+                                    <br>
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <br>
+                                            <p style="display:inline; padding-right:10%">End Time</p>
+                                            <input value="1000" min=1 required id="NumberButton" type="number"
+                                                   step="any" class="w3-input w3-hover-blue"
+                                                   style="width:40%; display:inline; text-align:center"
+                                                   name="end_time"/>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <br>
+                                                    <div></div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Am modificat aici -->
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <br>
+                                            <p style="display:inline; padding-right:10%">Title of the Graph</p>
+                                            <input value="Time " placeholder="Time dependency graph" type="text"
+                                                   class="w3-input w3-hover-blue"
+                                                   style="width:80%; display:inline; text-align:center" name="titlu">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <br>
+                                                    <div></div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <p style="display:inline; padding-right:10%">x_title</p>
+                                            <input value="time" placeholder="time" type="text"
+                                                   class="w3-input w3-hover-blue"
+                                                   style="width:80%; display:inline; text-align:center" name="x_titlu">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <br>
+                                                    <div></div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <p style="display:inline; padding-right:10%">y_title</p>
+                                            <input value="concentration" placeholder="concentration" type="text"
+                                                   class="w3-input w3-hover-blue"
+                                                   style="width:80%; display:inline; text-align:center" name="y_titlu">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <br>
+                                                    <div></div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Pana aici -->
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="column"
+                                     style="background-color:white; color:gray; border-left-width:1px; border-left-style:solid; border-right-width:1px; border-right-style:solid">
+                                    <p style="padding-top:4%">A, B, C represent the species of the chemical reaction
+                                        network together with the initial values of each species</p>
+                                    <div id="undeVinSpeciile">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline;padding-right:10%">A</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%; display:inline; text-align:center" type="text"
+                                                       name="valinit">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline;padding-right:10%">B</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%; display:inline; text-align:center" type="text"
+                                                       name="valinit2">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline;padding-right:10%">C</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%;display: inline;text-align:center" type="text"
+                                                       name="valinit3">
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="column" style="background-color:white; color:gray">
+                                    <p style="padding-top:4%">k1, k2, k3 represent the constants of the each reaction in
+                                        CRN and their values</p>
+                                    <div id="undeVinConstantele">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline; padding-right:10%">k1</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
+                                                       type="text" name="valk">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline; padding-right:10%">k2</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
+                                                       type="text" name="valk2">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <p style="display:inline; padding-right:10%">k3</p>
+                                                <input class="w3-input w3-hover-blue"
+                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
+                                                       type="text" name="valk3">
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="register" type="submit" value="submit" class="w3-button w3-black"
+                                        style="margin-top:1.8%; float:right" disabled="true">Generate Graph
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+    </div>
+</div>
+<script type="application/javascript" src="../static/phase_portrait_input.js"></script>
+</body>
+</html>

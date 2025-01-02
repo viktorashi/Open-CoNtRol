@@ -108,6 +108,9 @@ def graph():
             return redirect(url_for('time_graph_input'))
         case 'diagram':
             return redirect(url_for('diagram'))
+        case 'phase_portrait':
+            return redirect(url_for('phase_portrait_input'))
+            
 
 
 
@@ -247,3 +250,21 @@ def diagram():
     draw_diagram()
     [listaToShow, stoichiometric_matrix] = get_system_data()
     return render_template('diagram.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix)
+
+@app.get('/phase_portrait_input')
+def phase_portrait_input():
+    #apparently need this for some reason
+    files = sorted(os.listdir('open_control/templates/metode_lucru/'))
+    filename_data = []
+    for file in files:
+        filename_data.append({'name': file})
+
+    return render_template('phase_portrait_input.html', data=filename_data)
+
+@app.post('/phase_portrait_input')
+def phase_portrait_post():
+    pass
+
+@app.get('/phase_portrait')
+def phase_portrait():
+    pass
