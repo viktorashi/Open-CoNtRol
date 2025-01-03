@@ -40,6 +40,8 @@
 ############potentiale buguri cu idei de feateruri #############
 
 
+    sa faci pe prima pagina sa te duca direct catre ce fel de graphic vrei dinaitne sa te dea la numerical analysis
+
     creed ca N-am facut pe asta??
         vezi dupa sa incerci sa-i dai host la tine pe MathJax ca sa nu mai trebuiasca sa tot dea requesturi
         https://docs.mathjax.org/en/latest/web/hosting.html#web-hosting
@@ -64,7 +66,21 @@
     sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
 
     moduri de copiat, vrei sa fie in format maple sau octave sau cv
-    poate si un file upload si in formatu ala si sau sa schimbi formatul sau
+    poate si un file upload si in formatu ala sau in antimony adica cum se face normal
+
+
+    al treile buton de pe primu UI da reset la taote fieldruile si face o singura ecuatie sa fie inapoi
+    probabil poti sa faci innerhmtl = "" si dupa sa dai add la 1
+
+    la TSR sa poti sa selectezi ce specii vrei plotuite
+
+    fa svg dsr graphu ala in loc de png
+
+    si sa lasi numerical analysis sa apra pe fiecare grahpic adica de-antregu
+
+    implenetneaza chestia de bifurcation diagram de la tellurium
+
+    fa burgeru ala sa fie doar un buton de home nu mai kktu ala de slide de sus
 
     sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
 
