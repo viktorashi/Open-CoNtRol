@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <title>Chemical Reaction Network</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,22 +11,10 @@
 <script src="../static/load-mathjax.js" async></script>
 
 <body>
-<!-- SlideBar -->
-<nav class="w3-sidebar w3-black w3-animate-top w3-xxlarge" style=" display: none; padding-top:150px" id="mySidebar">
-    <a href="javascript:void(0)" onclick="w3_close()"
-       class="w3-button w3-black w3-xxlarge w3-padding w3-display-topright" style="padding:6px 24px">
-        <i class="fa fa-remove"></i>
-    </a>
-    <div class="w3-bar-block w3-center">
-        <a href="/" class="w3-bar-item w3-button w3-text-grey w3-hover-black">Home</a>
-    </div>
-</nav>
 <div class="w3-content" style="max-width:1500px">
     <!--HEADER-->
     <div class="w3-opacity">
-        <span class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()">
-          <i class="fa fa-bars"></i>
-        </span>
+        <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-right"><i class="fa fa-home"></i></span></a>
         <div class="w3-clear"></div>
         <header class="w31-center w3-margin-bottom">
             <h1 style="text-align:center;">
@@ -80,7 +68,8 @@
                                         <div class="form-group">
                                             <br>
                                             <p style="display:inline; padding-right:10%">Title of the Graph</p>
-                                            <input value="Phase portrait" placeholder="Time dependency graph" type="text"
+                                            <input value="Phase portrait" placeholder="Time dependency graph"
+                                                   type="text"
                                                    class="w3-input w3-hover-blue"
                                                    style="width:80%; display:inline; text-align:center" name="titlu">
                                             <div class="form-group">
@@ -129,7 +118,7 @@
                                         </div>
                                     </div>
 
-                                    <p style="padding-bottom: 10px;">Select Species to Display</p>
+                                    <p style="padding-bottom: 10px;">Select 2-3 Species to Display (2D or 3D)</p>
                                     <div class="form-group" style="margin-top: 20px;" id="checkboxes">
                                         <input type="checkbox" id="check" name="check0"
                                                value="A">
@@ -148,7 +137,7 @@
                             </div>
                             <div class="content">
                                 <div class="column" style="background-color:white; color:gray">
-                                    <p style="padding-top:4%">k1, k2, k3 represent the constants of the each reaction in
+                                    <p style="padding-top:4%">k1, k2, k3 represent the constants of each reaction in
                                         CRN and their values</p>
                                     <div id="undeVinConstantele">
                                         <div class="form-group">
@@ -181,7 +170,7 @@
                                     </div>
                                 </div>
                                 <button id="register" type="submit" value="submit" class="w3-button w3-black"
-                                        style="margin-top:1.8%; float:right" disabled="true">Generate Graph
+                                        style="margin-top:1.8%; float:right" disabled>Generate Graph
                                 </button>
                             </div>
                         </div>

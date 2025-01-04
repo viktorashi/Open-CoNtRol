@@ -55,12 +55,6 @@
 
     sa faci macar alea in 2d prima data like gen
 
-    phase portaitu poti sa-l faci o substanta in functie de celelata, daca ai mai mult de 2 specii sa iti apara
-    checkbox select cu care din speciile alea vrei sa iei
-    checkbox ca sa selecteze la cate din specii sa dea plot
-
-    si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
-
     Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
 
     sa facem un buton de vine pe prima pagina de general information ca pe platforma aia
@@ -216,3 +210,7 @@ lmao test pt asta nou nuj
     gen draw sa faca nebunia asta https://sys-bio.github.io/SBMLDiagrams/Introduction.html#figure-examples
     de DSR graph asta e ala
     pe main screen sa apara minus langa fiecare d-ala de vrei sa stergi ca sa nu stai ca prostu
+    phase portaitu poti sa-l faci o substanta in functie de celelata, daca ai mai mult de 2 specii sa iti apara
+    checkbox select cu care din speciile alea vrei sa iei
+    checkbox ca sa selecteze la cate din specii sa dea plot
+    si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
