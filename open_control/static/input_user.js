@@ -103,7 +103,7 @@ function checkValid() {
         if (inputs[i].value === '' && inputs[i].type === "number") {
             allFilled = false;
             break;
-        } else if (inputs[i].type === "checkbox" && inputs[i].checked) {
+        } else if (!atLeastACheckbox && inputs[i].type === "checkbox" && inputs[i].checked) {
             atLeastACheckbox = true;
         }
     }
