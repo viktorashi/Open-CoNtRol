@@ -228,3 +228,4 @@ lmao test pt asta nou nuj
     checkbox select cu care din speciile alea vrei sa iei
     checkbox ca sa selecteze la cate din specii sa dea plot
     si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
+    e frt pixelat pngu, fa-l svg
