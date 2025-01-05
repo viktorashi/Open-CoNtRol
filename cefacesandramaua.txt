@@ -12,6 +12,10 @@
 
 ###### academic ###############
 
+    S0 S1 sunt substrate adica fosfo
+    2 enzime = K, F
+
+
     ########### ce citinguri sa faci ###########
         SBMLDIAgram
         (https://doi.org/10.1093/bioinformatics/btac730) and the PYPI web page (https://pypi.org/project/SBMLDiagrams/). Thanks.
@@ -22,10 +26,14 @@
         Choi et al. (2018). "Tellurium: An extensible python-based modeling environment for systems and synthetic biology." Biosystems, 171, 74-79.
     ########### citinguri ###########
 
-    gamma = ala de il avem deja e stoichiometric matrix normal
-    left stoic se refere la termenu stang din ecuatii
-    right la termenu drept
-    right - left = gamma normal
+    https://scipy-lectures.org/packages/sympy.html
+    https://www.sympy.org/en/index.html
+
+    sa le pui si pe asta si left si right stoich
+        gamma = ala de il avem deja e stoichiometric matrix normal
+        left stoic se refere la termenu stang din ecuatii
+        right la termenu drept
+        right - left = gamma normal
 
     de explicat aia cu mass action
     si rankul lui gamma
@@ -38,6 +46,12 @@
 ############ gata academic ##############
 
 ############potentiale buguri cu idei de feateruri #############
+
+    BUGGG::: nu poti sa pui numar de mai multe molecuule dintr-o specie: canda screii in antimony nu t-i le vede si din dropdowns iti da eroare, nu merge din niciuna
+
+    de pus casuta in stanga (nustiu css)
+
+    de facut sa poti sa selectezi ce specii sa apara si la TSR
 
 
     sa faci pe prima pagina sa te duca direct catre ce fel de graphic vrei dinaitne sa te dea la numerical analysis

@@ -34,18 +34,6 @@ function validEquation(str) {
     return regex.test(str);
 }
 
-function validAntimonyCRNDefinition(str) {
-    /*
-    *	when in doubt, debug it in : https://regex101.com/library/hjRLci or https://www.debuggex.com (to visually see it)
-    *  */
-    const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *-> *[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *; *[a-z][0-9]+( *\* *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm
-    return regex.test(str)
-}
-
-function validEquationsFormat(str) {
-
-}
-
 //will be used by de dropDownsFormSubmitHandler when it calls the FormData constructor
 function dropDownsFormDataHandler(event) {
     console.log('form data a dat fire')
@@ -87,6 +75,12 @@ function dropDownsFormSubmitHandler() {
     }
     //it's safe to submit the form
     return true;
+}
+
+function resetTextBoxes() {
+    countEcuatii = 1;
+    genTextBox(countEcuatii);
+    updateFormReactCount(countEcuatii);
 }
 
 // Add textbox and remove textbox

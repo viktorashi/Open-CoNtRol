@@ -622,7 +622,7 @@ def stoichiometry_in_tex(stoichiometric_matrix):
 
 def draw_diagram():
     rr = te.loada(crn2antimony(save_crn_filepath_location))
-    rr.draw(savefig='open_control/static/diagram.png', width=200)
+    rr.draw(path='open_control/static/diagram.png', width=200)
 
 
 def draw_phase_portrait():

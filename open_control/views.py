@@ -261,6 +261,7 @@ def phase_portrait_input():
 
     return render_template('phase_portrait_input.html', data=filename_data)
 
+#todo nu merge pentru a+b <-> c si 1,1,1,1 la toate cu a vs c
 @app.post('/phase_portrait_input')
 def phase_portrait_post():
     """

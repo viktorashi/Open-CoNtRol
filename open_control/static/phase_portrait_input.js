@@ -17,7 +17,7 @@ function generateSpecs(specsList) {
         textToAppend = "<div class=\"form-group\">" +
             "<div class=\"input-group\">" +
             "<p style=\"display:inline;padding-right:10%\">" + specsList[specIndex] + "</p>" +
-            `<input placeholder="${specsList[specIndex]} concentration" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >` +
+            `<input required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline; text-align:center;margin-top:8%" type="number" step="any" name="valinit${specIndex}" >` +
             "</div>" +
             "</div>";
         specIndex++;
@@ -34,7 +34,7 @@ function generateConstante(constCount) {
         textToAppend = "<div class=\"form-group\">" +
             "<div class=\"input-group\">" +
             "<p style=\"display:inline; padding-right:10%\">k" + (constIndex + 1) + "</p>" +
-            `<input placeholder="const ${constIndex + 1} value" required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >` +
+            `<input required id="NumberButton" class="w3-input w3-hover-blue" style="width:60%; display:inline;text-align:center; margin-top:8%" type="number" step="any" name="valk${constIndex}" >` +
             "</div>" +
             "</div>";
 
