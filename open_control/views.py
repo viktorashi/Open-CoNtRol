@@ -17,7 +17,6 @@ def home():
 def antimony():
     return render_template("antimony.html")
 
-
 @app.post("/save_reactii_antimony")
 def save_reactii_antimony():
     """
@@ -110,9 +109,6 @@ def graph():
             return redirect(url_for('diagram'))
         case 'phase_portrait':
             return redirect(url_for('phase_portrait_input'))
-            
-
-
 
 @app.get('/time_graph_input')
 def time_graph_input():
@@ -218,6 +214,15 @@ def time_graph_post():
         except:
             break
 
+    checked_species = []
+    for i in range(val_init_index):
+        try:
+            request_checked_species = request.form['check' + str(i)]
+            checked_species.append(str(request_checked_species))
+        except:
+            pass
+
+    session['checked_species'] = checked_species
     session['init_vals'] = val_init_array
     session['react_constants'] = const_array
 
@@ -229,7 +234,11 @@ def time_graph_post():
     print(session.get('init_vals'))
     print(session.get('react_constants'))
     print(session.get('select'))
+    print('toate speciile:')
     print(session.get('specii'))
+    print('daor speciile checkuite:')
+    print(session.get('checked_species'))
+
 
     return redirect(url_for('time_graph'))
 
@@ -242,7 +251,7 @@ def time_graph():
     [listaToShow, stoichiometric_matrix] = get_system_data()
     #    FigureCanvas(fig).print_png(output)
     #    return Response(output.getvalue(), mimetype='image/png')
-    return render_template('graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
+    return render_template('time_graph.html', listaEcuatii=listaToShow, stoichMatrix=stoichiometric_matrix,
                            pageName='Chemical Reaction Network (CRN) - 2D')
 
 @app.get('/diagram')
@@ -330,7 +339,6 @@ def phase_portrait_post():
     print(session.get('specii'))
 
     return redirect(url_for('phase_portrait'))
-
 
 @app.get('/phase_portrait')
 def phase_portrait():
