@@ -77,12 +77,6 @@ function dropDownsFormSubmitHandler() {
     return true;
 }
 
-function resetTextBoxes() {
-    countEcuatii = 1;
-    genTextBox(countEcuatii);
-    updateFormReactCount(countEcuatii);
-}
-
 // Add textbox and remove textbox
 $(document).ready(() => {
 
@@ -101,7 +95,12 @@ $(document).ready(() => {
             $("#textboxDiv").children().last().remove();
         }
     });
-
+    $("#reset_reaction_button").on("click", () => {
+        countEcuatii =1;
+        $("#textboxDiv").children().slice(0).remove();
+        genTextBox(countEcuatii);
+        updateFormReactCount(countEcuatii);
+    });
 });
 
 let timeoutId;

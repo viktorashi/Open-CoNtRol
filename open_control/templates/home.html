@@ -24,8 +24,8 @@
 <!-- !PAGE CONTENT! -->
 <div class="w3-content" style="max-width:1500px">
     <!-- Header -->
-    <div class ="w3-opacity">
-         <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-right" ><i class="fa fa-home"></i></span></a>
+    <div class="w3-opacity">
+        <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-right"><i class="fa fa-home"></i></span></a>
         <div class="w3-clear"></div>
         {#        sidebar with button to open up antimony code textarea
 #}
@@ -56,7 +56,9 @@
                     &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
                         style="font-size:9px; display:inline">2</p>
 
-                    <p>  <a href="/antimony">Here</a> you can write <a href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics" target="_blank">Antimony</a> code if you're into that</p>
+                    <p><a href="/antimony">Here</a> you can write <a
+                            href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                            target="_blank">Antimony</a> code if you're into that</p>
 
                 </div>
             </div>
@@ -68,8 +70,7 @@
             {#    TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
             <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
             <button id="Remove" title="Remove last reaction" style="height: 44px; width: 44px;">–</button>
-            <button id="reset_reaction_button" title="Reset all reactions" onclick="resetTextBoxes"
-                    style="height: 44px; width: 44px;">--
+            <button id="reset_reaction_button" title="Reset all reactions" style="height: 44px; width: 44px;">--
             </button>
 
             <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm"
