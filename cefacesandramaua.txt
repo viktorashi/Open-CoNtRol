@@ -5,9 +5,6 @@
 
     aaaa valk de la VALOARE kAPPA
 
-    deci rr.draw de la road_runner da call la functia draw din SBMLDiagram si doar trebuiew sa apara pe ecran normal, nu sa-l puna intr-un fisier si sa poti sa-l trimiti sau ceva.
-    da vad sa incerc daca pot sa fac eu cumva sa bagi intr-un fisier ala sa adaug niste parametrii si poate fac un PR la tellurium (sau road_runner, nu-mi dau seama sigur 100% cine e responsanbil sincer sau la cine as putea sa fac cel mai usor schimbari) sau poate chiar pygraphviz
-
 ##### gata eu explicand mie codu #########
 
 ###### academic ###############
@@ -48,11 +45,11 @@
 ############potentiale buguri cu idei de feateruri #############
 
     BUGGG::: nu poti sa pui numar de mai multe molecuule dintr-o specie: canda screii in antimony nu t-i le vede si din dropdowns iti da eroare, nu merge din niciuna
+    dupa ce faci docker punete sa bagi niste teste, da trebuie din alea cap coada de mult se foloseste aplicatia frontend si ce se intampla pe backend cand se face reuqestu so idk honestly
 
     de pus casuta in stanga (nustiu css)
 
     de facut sa poti sa selectezi ce specii sa apara si la TSR
-
 
     sa faci pe prima pagina sa te duca direct catre ce fel de graphic vrei dinaitne sa te dea la numerical analysis
 
@@ -229,3 +226,5 @@ lmao test pt asta nou nuj
     checkbox ca sa selecteze la cate din specii sa dea plot
     si daca e sa faci aceeasi chestie doar ca cu 3 sa-ti apara checkbox cu 3 specii sa vezi ce pui
     e frt pixelat pngu, fa-l svg
+    deci rr.draw de la road_runner da call la functia draw din SBMLDiagram si doar trebuiew sa apara pe ecran normal, nu sa-l puna intr-un fisier si sa poti sa-l trimiti sau ceva.
+    da vad sa incerc daca pot sa fac eu cumva sa bagi intr-un fisier ala sa adaug niste parametrii si poate fac un PR la tellurium (sau road_runner, nu-mi dau seama sigur 100% cine e responsanbil sincer sau la cine as putea sa fac cel mai usor schimbari) sau poate chiar pygraphviz
