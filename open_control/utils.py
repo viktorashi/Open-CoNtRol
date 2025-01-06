@@ -403,6 +403,7 @@ def create_figure():
     titlu = session.get('titlu')
     x_titlu = session.get('x_titlu')
     y_titlu = session.get('y_titlu')
+    checked_species = session.get('checked_species')
 
     print(select)
     print(end_time)
@@ -431,9 +432,11 @@ def create_figure():
     reation_rates = road_runner.getReactionRates()
     print(reation_rates)
 
+    checked_species_with_time = checked_species
+    checked_species_with_time.insert(0,'time')
     number_of_points = 1000
     # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
-    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points)
+    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points, selections=checked_species_with_time)
 
     print(select)
     print(start_time)
@@ -443,7 +446,7 @@ def create_figure():
     print(y_titlu)
 
     save_graph_to_file = 'open_control/static/graphic.svg'
-    road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file)
+    road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file, ordinates=checked_species)
 
 
 def get_system_data():

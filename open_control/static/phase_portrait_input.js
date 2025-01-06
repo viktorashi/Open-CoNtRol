@@ -106,7 +106,7 @@ Enable / Disable Button
 function checkValid() {
     let inputs = document.getElementsByTagName('input');
 
-    let checked;
+    let checkedWell;
     let nonEmpty = true;
     let checkedBoxes = 0;
     for (let i = 0 ; i < inputs.length; i++) {
@@ -124,10 +124,10 @@ function checkValid() {
         }
     }
 
-    checked = 2 <= checkedBoxes && checkedBoxes <= 3;
+    checkedWell = 2 <= checkedBoxes && checkedBoxes <= 3;
 
     // enables if valid overall
-    document.getElementById("register").disabled = !(nonEmpty && checked);
+    document.getElementById("register").disabled = !( nonEmpty && checkedWell );
 }
 
 window.onload = () => {
@@ -137,7 +137,7 @@ window.onload = () => {
             inputs[i].onkeydown = checkValid;
             inputs[i].onblur = checkValid;
         }
-        if (inputs[i].type === 'checkbox') {
+        else if (inputs[i].type === 'checkbox') {
             inputs[i].onchange = checkValid;
         }
     }
