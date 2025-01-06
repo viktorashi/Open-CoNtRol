@@ -432,9 +432,11 @@ def create_figure():
     reation_rates = road_runner.getReactionRates()
     print(reation_rates)
 
+    checked_species_with_time = checked_species
+    checked_species_with_time.insert(0,'time')
     number_of_points = 1000
     # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
-    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points, selections=checked_species)
+    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points, selections=checked_species_with_time)
 
     print(select)
     print(start_time)
