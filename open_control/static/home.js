@@ -111,7 +111,7 @@ $('form input, form select').on('input propertychange change', () => {
 
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-        // Runs 1 second (1000 ms) after the last change    
+        // Runs 1 second (1000 ms) after the last change
         saveToDB();
     }, 1000);
 });
@@ -141,6 +141,10 @@ function saveToDB() {
     });
 }
 
+function toggleForm() {
+    const form = document.getElementById('crnForm');
+    form.classList.toggle('open');
+}
 
 // This is just so we don't go anywhere
 // and still save if you submit the form
@@ -148,3 +152,4 @@ function saveToDB() {
 //	saveToDB();
 //	e.preventDefault();
 // });
+

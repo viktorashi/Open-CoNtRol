@@ -21,18 +21,24 @@
 </head>
 <body>
 
+
 <!-- !PAGE CONTENT! -->
 <div class="w3-content" style="max-width:1500px">
     <!-- Header -->
-    <div class ="w3-opacity">
-         <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-right" ><i class="fa fa-home"></i></span></a>
+    <div class="w3-opacity">
+        <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-right"><i class="fa fa-home"></i></span></a>
         <div class="w3-clear"></div>
-        {#        sidebar with button to open up antimony code textarea
-#}
-        <header class="w31-center w3-margin-bottom">
 
+        <header class="w31-center w3-margin-bottom">
             <h1 style="text-align:center;"><b>CoNtRol-Simulations</b></h1>
             <h2 style="text-align:center;"><b>Chemical Reaction Network simulation tool</b></h2>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">File Input</div>
+                <div class="button" onclick="alert('Upload CRN File')">Upload CRN File</div>
+                <div class="button" onclick="toggleForm()">Write CRN</div>
+            </div>
+
             <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
                 <!--  <p><b>Apasa pentru a afisa graficul.</b></p>
                   <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
@@ -56,12 +62,21 @@
                     &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
                         style="font-size:9px; display:inline">2</p>
 
-                    <p>  <a href="/antimony">Here</a> you can write <a href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics" target="_blank">Antimony</a> code if you're into that</p>
+                    <p><a href="/antimony">Here</a> you can write <a
+                            href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                            target="_blank">Antimony</a> code if you're into that</p>
 
                 </div>
             </div>
         </header>
 
+
+        <!-- Dropdown Form Section -->
+        <div class="dropdown-form" id="crnForm">
+            <h2>Write CRN</h2>
+            <textarea placeholder="Enter CRN here..."></textarea>
+            <button class="close-btn" onclick="toggleForm()">Close</button>
+        </div>
 
         <div style="text-align: center;">
 
