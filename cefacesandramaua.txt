@@ -44,6 +44,8 @@
 
 ############potentiale buguri cu idei de feateruri #############
 
+    poti sa faci sa nu mai apara kktu ala de fisier din care se  citeste
+
     dupa ce faci docker punete sa bagi niste teste, da trebuie din alea cap coada de mult se foloseste aplicatia frontend si ce se intampla pe backend cand se face reuqestu so idk honestly
 
     de pus casuta in stanga (nustiu css)
