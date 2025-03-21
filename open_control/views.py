@@ -128,7 +128,7 @@ def numerical_analysis():
 @app.post('/graph')
 def graph():
     graph_type = request.form.get('graph_type')
-    print('tipu de graph', graph_type)
+    print('tipu de graph: ', graph_type)
 
     match graph_type:
         case 'regular':
@@ -180,7 +180,7 @@ def time_graph_post():
 
     while True:
         try:
-            request_val_init = request.form['valinit' + str(val_init_index +1)]
+            request_val_init = request.form['valinit' + str(val_init_index + 1)]
             val_init_array.append(str(request_val_init))
             val_init_index += 1
         except:
@@ -197,11 +197,10 @@ def time_graph_post():
         except:
             break
 
-#todo aici creca doar se opresta dupa primul pe care nu-l gaseste si daca ai bifat unu dupa el nu-l arata nici pe ala
     checked_species = []
     for i in range(val_init_index):
         try:
-            request_checked_species = request.form['check' + str(i+1)]
+            request_checked_species = request.form['check' + str(i + 1)]
             checked_species.append(str(request_checked_species))
         except:
             pass
@@ -245,13 +244,10 @@ def diagram():
 
 @app.get('/phase_portrait_input')
 def phase_portrait_input():
-    # apparently need this for some reason
-    files = sorted(os.listdir('open_control/templates/metode_lucru/'))
-    filename_data = []
-    for file in files:
-        filename_data.append({'name': file})
 
-    return render_template('phase_portrait_input.html', data=filename_data)
+    species_data = get_crn_species_reactions()
+
+    return render_template('phase_portrait_input.html', species_data=species_data)
 
 
 # todo nu merge pentru a+b <-> c si 1,1,1,1 la toate cu a vs c
