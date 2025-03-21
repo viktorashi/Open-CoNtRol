@@ -1,3 +1,5 @@
+const {onloadFunc} = require('./onload.js');
+
 /*
 Enable / Disable Button
 */
@@ -19,14 +21,5 @@ function checkValid() {
 }
 
 window.onload = () => {
-    let inputs = document.getElementsByTagName('input');
-    for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].type === "number") {
-            inputs[i].onkeydown = checkValid;
-            inputs[i].onblur = checkValid;
-        } else if (inputs[i].type === 'checkbox') {
-            inputs[i].onchange = checkValid;
-        }
-
-    }
-};
+    onloadFunc(checkValid)
+}

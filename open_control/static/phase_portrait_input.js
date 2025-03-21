@@ -1,3 +1,5 @@
+const {onloadFunc} = require('./onload.js');
+
 // Open and close sidebar
 function w3_open() {
     document.getElementById("mySidebar").style.width = "100%";
@@ -34,13 +36,5 @@ function checkValid() {
 }
 
 window.onload = () => {
-    let inputs = document.getElementsByTagName('input');
-    for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].type === "number") {
-            inputs[i].onkeydown = checkValid;
-            inputs[i].onblur = checkValid;
-        } else if (inputs[i].type === 'checkbox') {
-            inputs[i].onchange = checkValid;
-        }
-    }
-};
+    onloadFunc(checkValid)
+}
