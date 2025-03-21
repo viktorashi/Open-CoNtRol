@@ -449,7 +449,7 @@ def create_figure():
     road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file, ordinates=checked_species)
 
 
-def get_system_data():
+def get_crn_equations_stoich():
     antimony_code = crn2antimony(save_crn_filepath_location)
 
     # zici ca-i naming convention TJ Miles
