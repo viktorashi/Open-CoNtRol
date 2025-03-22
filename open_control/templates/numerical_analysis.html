@@ -61,14 +61,10 @@
                             {{ species_mapping | replace("'", "") | replace(',',' | ') | trim(chars='{') | trim(chars='}') }}
                         </td>
                     </tr>
-                    <!-- <tr> -->
-                    <!-- <td>Test</td> -->
-                    <!-- <td>Test</td> -->
-                    <!-- </tr> -->
-                    <!-- <tr> -->
-                    <!-- <td>{{ message }}</td> -->
-                    <!-- <td>Test</td> -->
-                    <!-- </tr> -->
+                    <tr>
+                        <td></td> <!-- Empty cell to align with the previous layout -->
+                        <td colspan="2" style="text-align: center; padding-top: 2px;">Matrix rank: {{ stoich_matrix_rank }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
