@@ -147,7 +147,7 @@ def time_graph_input():
     """
     species_data = get_crn_species_reactions()
 
-    return render_template('time_graph_input.html', species_data=species_data)
+    return render_template('time_series_graph_input.html', species_data=species_data)
 
 
 @app.post('/time_graph_input')
