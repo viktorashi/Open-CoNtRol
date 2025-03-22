@@ -1,4 +1,4 @@
-const {onloadFunc} = require('./onload.js');
+import {onloadFunc} from './onload.js'
 
 // Open and close sidebar
 function w3_open() {

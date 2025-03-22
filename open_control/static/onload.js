@@ -1,5 +1,5 @@
 // assigns the validation function to the input fields
-export const onloadFunc = (validationFunc) => {
+export function onloadFunc(validationFunc) {
     let inputs = document.getElementsByTagName('input');
     for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].type === "number") {
