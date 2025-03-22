@@ -106,7 +106,7 @@ def get_numerical_analysis_save_to_session(antimony_code: str):
     """
     :return: Saves the data from the numerical analysis form to the current session
     """
-    [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping] = get_numerical_analysis(
+    [stoichiometry_in_latex, new_antimony, tex_equations, species_to_index_mapping, stoich_matrix_rank] = get_numerical_analysis(
         antimony_code)
     # absolutely unreadable but it just deletes all the right-hand side (rate laws with k1*A...) of the equations
     definitions = [definition.split(';')[0] for definition in new_antimony.split('\n')]
@@ -116,13 +116,14 @@ def get_numerical_analysis_save_to_session(antimony_code: str):
     session['stoichiometry_in_latex'] = stoichiometry_in_latex
     session['tex_equations'] = tex_equations
     session['species_to_index_in_tex'] = species_to_index_in_tex
+    session['stoich_matrix_rank'] = stoich_matrix_rank
 
 
 @app.get("/numerical_analysis")
 def numerical_analysis():
     return render_template("numerical_analysis.html", definitions=session.get('definitions'),
                            stoichMatrix=session.get('stoichiometry_in_latex'), equations=session.get('tex_equations'),
-                           species_mapping=session.get('species_to_index_in_tex'))
+                           species_mapping=session.get('species_to_index_in_tex'), stoich_matrix_rank=session.get('stoich_matrix_rank'))
 
 
 @app.post('/graph')

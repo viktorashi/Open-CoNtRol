@@ -2,7 +2,7 @@ import tellurium as te
 import matplotlib
 import re
 from flask import render_template, session
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Any, LiteralString
 
 save_crn_filepath_location = 'open_control/templates/metode_lucru/crn.txt'
 
@@ -329,11 +329,11 @@ def get_reaction_meta(reactii_individuale: [str]) -> [[str], [str]]:
     return specii, reacts
 
 
-def get_stoichiometry_matrix(antimony_code: str):
+def get_stoichiometry_matrix_and_rank(antimony_code: str) -> list[2]:
     """
     Get the resulting stoichiometry matrix from the definitions of the system in antimony code
     :param antimony_code:
-    :return:
+    :return: [ "the stoichiomatreic matrix in the roadRunner doubleMatrix format" , "the rank of the matrix" ]
     """
     road_runner = 'lmao'
     antimony_code_with_init = ''
@@ -353,10 +353,11 @@ def get_stoichiometry_matrix(antimony_code: str):
         antimony_code_with_init = antimony_code_with_init + param_initialisation
         road_runner = te.loada(antimony_code_with_init)
 
-    return road_runner.getFullStoichiometryMatrix()
+    return_val = [road_runner.getFullStoichiometryMatrix(), road_runner.getNrMatrix().shape[0]]
+    return return_val
 
 
-def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str, str], str, dict]:
+def get_numerical_analysis(antimony_code):
     """
     :param antimony_code: what is sounds like: https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics
     :return: stoichiometry matrix along with the differential equations (in LaTeX form) used to describe the system and the species to index mapping to better understand the equations.
@@ -385,9 +386,10 @@ def get_numerical_analysis(antimony_code) -> Tuple[Tuple[str, str], str, dict]:
     print('gata kktu asta chiar imi ce era inainte')
     tex_equations = converter.diff_equations_in_tex_format(antimony_code.split('\n'))
     species_to_index_mapping = converter.species_to_index
-    stoichiometry_in_latex = stoichiometry_in_tex(get_stoichiometry_matrix(antimony_code))
+    [stoich_matrix, stoich_matrix_rank] = get_stoichiometry_matrix_and_rank(antimony_code)
+    stoichiometry_in_latex = stoichiometry_in_tex(stoich_matrix)
 
-    return [stoichiometry_in_latex, antimony_code, tex_equations, species_to_index_mapping]
+    return [stoichiometry_in_latex, antimony_code, tex_equations, species_to_index_mapping, stoich_matrix_rank]
 
 
 def create_figure():
@@ -433,10 +435,11 @@ def create_figure():
     print(reation_rates)
 
     checked_species_with_time = checked_species
-    checked_species_with_time.insert(0,'time')
+    checked_species_with_time.insert(0, 'time')
     number_of_points = 1000
     # da return la rezultate si pot fi folosite rezultatele din simulare pentru plot()
-    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points, selections=checked_species_with_time)
+    road_runner.simulate(start=float(start_time), end=float(end_time), points=number_of_points,
+                         selections=checked_species_with_time)
 
     print(select)
     print(start_time)
@@ -446,7 +449,8 @@ def create_figure():
     print(y_titlu)
 
     save_graph_to_file = 'open_control/static/graphic.svg'
-    road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file, ordinates=checked_species)
+    road_runner.plot(xlabel=x_titlu, ylabel=y_titlu, figsize=(9, 6), title=str(titlu), savefig=save_graph_to_file,
+                     ordinates=checked_species)
 
 
 def get_crn_equations_stoich():
