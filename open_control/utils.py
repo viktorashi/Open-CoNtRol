@@ -33,7 +33,7 @@ def parse_species_term(term: str) -> Tuple[str, int]:
     """Parse a species term to get species name and its coefficient.
     returns: [species, coefficient]
     """
-    match = re.match(r'^(\d+)?([A-Za-z]\w*)$', term.strip())
+    match = re.match(r'^(\d+)?\s*([A-Za-z]\w*)$', term.strip())
     if not match:
         raise ValueError(f"Invalid species term: {term}")
 
@@ -54,7 +54,7 @@ class AntimonyConverter:
         for reaction in reactions:
             reactants, products, _ = parse_reaction(reaction)
             for term in reactants + products:
-                species, _ = parse_species_term(term)
+                species, coeff = parse_species_term(term)
                 all_species.add(species)
 
         self.species = sorted(list(all_species))
@@ -124,15 +124,18 @@ class AntimonyConverter:
 
             # Process reactants (negative terms)
             for reactant in reactants:
-                species, _ = parse_species_term(reactant)
-                term = f"-{converted_rate}"
+                species, coefficient = parse_species_term(reactant)
+                if coefficient > 1:
+                    term = f"-{coefficient}\cdot {converted_rate}"
+                else:
+                    term = f"-{converted_rate}"
                 species_terms[species].append(term)
 
             # Process products (positive terms)
             for product in products:
                 species, coefficient = parse_species_term(product)
                 if coefficient > 1:
-                    term = f"+{coefficient}\cdot{converted_rate}"
+                    term = f"+{coefficient}\cdot {converted_rate}"
                 else:
                     term = f"+{converted_rate}"
                 species_terms[species].append(term)
