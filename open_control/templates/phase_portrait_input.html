@@ -27,21 +27,11 @@
                         <div class="row">
                             <div class="content">
                                 <div class="column" style="background-color:white; color:gray">
-                                    <p style="padding-top:4%">In each txt file, we have represented a CRN with 1, 2 or 3
-                                        species and below the time of representation of graph</p>
-                                    <!-- <p style="display:inline">File</p>-->
+
                                     <br>
-                                    <select id="comp_select" name="comp_select"
-                                            style="display:inline; width:70%; text-align:center; margin-top:-4%"
-                                            class="selectpicker form-control" onchange="reactionFilenameChanged()">
-                                        {% for o in data %}
-                                            <option value="{{ o.name }}"> {{ o.name }} </option>
-                                        {% endfor %}
-                                    </select>
-                                    <br>
-                                    <br>
-                                    <!--Aici avem specs: {{ specs1 }}-->
-                                    <p style="display:inline; padding-right:10%">Start Time</p>
+                                    {#                                    TODO vezi cum schimbi idu de NumberButton sa nu fie acleasi lable pt 2 inputuri si sa schimbi idu si in js dupa si in celalte htmluri de input#}
+                                    <label for="NumberButton" style="display:inline; padding-right:10%">Start
+                                        Time</label>
                                     <input value="0" placeholder="0" min=0 required id="NumberButton" type="number"
                                            step="any" class="w3-input w3-hover-blue"
                                            style="width:40%; display:inline; text-align:center" name="start_time"/>
@@ -86,51 +76,35 @@
                             <div class="content">
                                 <div class="column"
                                      style="background-color:white; color:gray; border-left-width:1px; border-left-style:solid; border-right-width:1px; border-right-style:solid">
+
                                     <p style="padding-top:4%">A, B, C represent the species of the chemical reaction
                                         network together with the initial values of each species</p>
                                     <div id="undeVinSpeciile">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline;padding-right:10%">A</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%; display:inline; text-align:center" type="text"
-                                                       name="valinit0">
-                                                <br>
+                                        {% for species in species_data.speciiList %}
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <label style="display:inline;padding-right:10%"
+                                                           for="NumberButton">{{ species }}</label>
+                                                    <input
+                                                            required id="NumberButton"
+                                                            class="w3-input w3-hover-blue"
+                                                            style="width:60%; display:inline; text-align:center;margin-top:8%"
+                                                            type="number" step="any"
+                                                            name="valinit{{ loop.index }}">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline;padding-right:10%">B</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%; display:inline; text-align:center" type="text"
-                                                       name="valinit1">
-                                                <br>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline;padding-right:10%">C</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%;display: inline;text-align:center" type="text"
-                                                       name="valinit2">
-                                                <br>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
 
                                     <p style="padding-bottom: 10px;">Select 2-3 Species to Display (2D or 3D)</p>
                                     <div class="form-group" style="margin-top: 20px;" id="checkboxes">
-                                        <input type="checkbox" id="check" name="check0"
-                                               value="A">
-                                        <label for="species1">species 1</label><br>
-
-                                        <input type="checkbox" id="check" name="check1"
-                                               value="B">
-                                        <label for="species2">species 2</label><br>
-
-                                        <input type="checkbox" id="check" name="check2"
-                                               value="C">
-                                        <label for="species3">species 3</label><br>
+                                        {% for species in species_data.speciiList %}
+                                            <input type="checkbox" id="check{{ loop.index }}"
+                                                   name="check{{ loop.index }}"
+                                                   value="{{ species }}">
+                                            <label for="check{{ loop.index }}">{{ species }}</label>
+                                            <br>
+                                        {% endfor %}
                                     </div>
 
                                 </div>
@@ -140,33 +114,17 @@
                                     <p style="padding-top:4%">k1, k2, k3 represent the constants of each reaction in
                                         CRN and their values</p>
                                     <div id="undeVinConstantele">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline; padding-right:10%">k1</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
-                                                       type="text" name="valk0">
-                                                <br>
+                                        {% for constIndex in range(species_data.reactsCount) %}
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <label for="NumberButton"
+                                                           style="display:inline; padding-right:10%">k{{ constIndex + 1 }} </label>
+                                                    <input required id="NumberButton" class="w3-input w3-hover-blue"
+                                                           style="width:60%; display:inline;text-align:center; margin-top:8%"
+                                                           type="number" step="any" name="valk{{ constIndex }}">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline; padding-right:10%">k2</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
-                                                       type="text" name="valk1">
-                                                <br>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <p style="display:inline; padding-right:10%">k3</p>
-                                                <input class="w3-input w3-hover-blue"
-                                                       style="width:60%; display:inline;text-align:center; margin-top:8%"
-                                                       type="text" name="valk2">
-                                                <br>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <button id="register" type="submit" value="submit" class="w3-button w3-black"
@@ -180,6 +138,6 @@
         </header>
     </div>
 </div>
-<script type="application/javascript" src="../static/phase_portrait_input.js"></script>
+<script type="module" src="../static/phase_portrait_input.js"></script>
 </body>
 </html>
