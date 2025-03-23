@@ -13,132 +13,123 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2-/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new" />
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new"/>
 
     <script src="../static/load-mathjax.js" async></script>
     <link rel="stylesheet" href="../static/home.css">
-    <link rel="icon" href="../static/favicon.ico" />
+    <link rel="icon" href="../static/favicon.ico"/>
 
 </head>
 
 <body>
 
-    <!-- !PAGE CONTENT! -->
-    <div class="w3-content" style="max-width:1500px">
-        <!-- Header -->
-        <div class="w3-opacity">
-            <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-left"><i class="fa fa-home"></i></span></a>
-            <div class="w3-clear"></div>
-            {# sidebar with button to open up antimony code textarea
+<div class="w3-content" style="max-width:1500px">
+    <div class="w3-opacity">
+        <a href="/"> <span class="w3-button w3-xxlarge w3-white w3-left"><i class="fa fa-home"></i></span></a>
+        {# sidebar with button to open up antimony code textarea
             #}
-            <header class="w31-center w3-margin-bottom">
+        <header class="w31-center w3-margin-bottom">
+            <h1 style="text-align:center;"><b>CoNtRol-Simulations</b></h1>
+            <h2 style="text-align:center;"><b>Chemical Reaction Network simulation tool</b></h2>
+        </header>
 
-                <!-- !PAGE CONTENT! -->
-                <div class="w3-content" style="max-width:1500px">
-                    <!-- Header -->
-                    <div class="w3-opacity">
-                        <div class="w3-clear"></div>
+        <!-- !PAGE CONTENT! -->
+        <div class="w3-content" style="max-width:1500px">
 
-                        <header class="w31-center w3-margin-bottom">
-                            <h1 style="text-align:center;"><b>CoNtRol-Simulations</b></h1>
-                            <h2 style="text-align:center;"><b>Chemical Reaction Network simulation tool</b></h2>
-                            <!-- Sidebar -->
-                            <div class="sidebar">
-                                <div class="sidebar-section">File Input</div>
-                                <div class="button" onclick="alert('Upload CRN File')">Upload CRN File</div>
-                                <div class="button" onclick="toggleForm()">Write CRN</div>
-                            </div>
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-section">File Input</div>
+                    <div class="button" onclick="alert('Upload CRN File')">Upload CRN File</div>
+                    <div class="button" onclick="toggleForm()">Write CRN</div>
+                </div>
 
-                            <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
-                                <!--  <p><b>Apasa pentru a afisa graficul.</b></p>
-                  <p class="w3-padding-16"><button id="buton" class="w3-button w3-black" onclick="window.location='graph2';">Vezi graficul</button></p>
-                -->
-                                <div class="content">
+                <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
+                    <div class="content">
 
-                                    Chemical reaction network theory is an area of applied mathematics
-                                    that attempts to model the behavior of real-world chemical systems.
-                                    Since its foundation in the 1960s, it has attracted a growing research community,
-                                    mainly due to its applications in biochemistry and theoretical chemistry
-                                </div>
-
-                                <div class="content" style="padding-top:1%">
-                                    A chemical reaction network (CRN) comprises a set of reactants, a set of products
-                                    and a
-                                    set of reactions. For example, the pair of combustion reactions:
-                                </div>
-                                <div class="content" style="padding-top:1%">
-
-                                    2H<p style="font-size:9px; display:inline">2</p> + O<p
-                                        style="font-size:9px; display:inline">2
-                                    </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
-                                    &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
-                                        style="font-size:9px; display:inline">2</p>
-
-                                    <p><a href="/antimony">Here</a> you can write <a
-                                            href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
-                                            target="_blank">Antimony</a> code if you're into that</p>
-
-                                </div>
-                            </div>
-                        </header>
-
-
-                        <!-- Dropdown Form Section -->
-                        <div class="dropdown-form" id="crnForm">
-                            <h2>Write CRN</h2>
-                            <textarea placeholder="Enter CRN here..."></textarea>
-                            <button class="close-btn" onclick="toggleForm()">Close</button>
-                        </div>
-
-                        <div style="text-align: center;">
-
-                            {# TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
-                            <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-                            <button id="Remove" title="Remove last reaction"
-                                style="height: 44px; width: 44px;">–</button>
-                            <button id="reset_reaction_button" title="Reset all reactions"
-                                style="height: 44px; width: 44px;">--
-                            </button>
-
-                            <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm" class="contact-form"
-                                method="post" onsubmit="return dropDownsFormSubmitHandler()"
-                                onformdata="dropDownsFormDataHandler()">
-
-                                <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required />
-
-                                <div id="textboxDiv"></div>
-
-                                <div style="position: relative; left: 21%">
-                                    <!--<p><b>Creare grafic personalizat.</b></p>-->
-                                    <p id="dropDownsError" class="error"></p>
-                                    <p class="w3-padding-16">
-                                        <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
-                                            Get Numerical Analysis
-                                        </button>
-                                    </p>
-
-                                </div>
-
-
-                            </form>
-                        </div>
-
-
-                        <div class="form-status-holder"></div>
-
-                        {# <img src="/static/grafic.svg" alt="my plot" width="150" height="150">#}
+                        Chemical reaction network theory is an area of applied mathematics
+                        that attempts to model the behavior of real-world chemical systems.
+                        Since its foundation in the 1960s, it has attracted a growing research community,
+                        mainly due to its applications in biochemistry and theoretical chemistry
                     </div>
 
+                    <div class="content" style="padding-top:1%">
+                        A chemical reaction network (CRN) comprises a set of reactants, a set of products
+                        and a
+                        set of reactions. For example, the pair of combustion reactions:
+                    </div>
+                    <div class="content" style="padding-top:1%">
 
-                    <!-- Footer -->
-                    <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
-                        style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
+                        2H<p style="font-size:9px; display:inline">2</p> + O<p
+                            style="font-size:9px; display:inline">2
+                    </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
+                        &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
+                            style="font-size:9px; display:inline">2</p>
 
-                        <p class="w3-medium">2024@ <a target="_blank" class="w3-hover-text-green"></a></p>
+                        <p><a href="/antimony">Here</a> you can write <a
+                                href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                                target="_blank">Antimony</a> code if you're into that</p>
 
-                    </footer>
-                    <script type="application/javascript" src="../static/home.js"></script>
+                    </div>
                 </div>
+
+
+                <!-- Dropdown Form Section -->
+                <div class="dropdown-form" id="crnForm">
+                    <h2>Write CRN</h2>
+                    <textarea placeholder="Enter CRN here..."></textarea>
+                    <button class="close-btn" onclick="toggleForm()">Close</button>
+                </div>
+
+                <div style="text-align: center;">
+
+                    {# TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
+                    <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
+                    <button id="Remove" title="Remove last reaction"
+                            style="height: 44px; width: 44px;">–
+                    </button>
+                    <button id="reset_reaction_button" title="Reset all reactions"
+                            style="height: 44px; width: 44px;">--
+                    </button>
+
+                    <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm" class="contact-form"
+                          method="post" onsubmit="return dropDownsFormSubmitHandler()"
+                          onformdata="dropDownsFormDataHandler()">
+
+                        <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+
+                        <div id="textboxDiv"></div>
+
+                        <div style="position: relative; left: 21%">
+                            <!--<p><b>Creare grafic personalizat.</b></p>-->
+                            <p id="dropDownsError" class="error"></p>
+                            <p class="w3-padding-16">
+                                <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
+                                    Get Numerical Analysis
+                                </button>
+                            </p>
+
+                        </div>
+
+
+                    </form>
+                </div>
+
+
+                <div class="form-status-holder"></div>
+
+
+
+            <!-- Footer -->
+            <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
+                    style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
+
+                <p class="w3-medium">2024@ <a target="_blank" class="w3-hover-text-green"></a></p>
+
+            </footer>
+            <script type="application/javascript" src="../static/home.js"></script>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
