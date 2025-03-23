@@ -77,6 +77,82 @@ function dropDownsFormSubmitHandler() {
     return true;
 }
 
+function validEquation(str) {
+    /*
+    *	when in doubt, debug it in : https://regex101.com/library/pzO5MF or https://www.debuggex.com (so you can see it visually)
+    *  */
+    const regex = /^\s*[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*\s*$/gm;
+    return regex.test(str);
+}
+
+function validAntimonyCRNDefinition(str) {
+    /*
+    *	when in doubt, debug it in : https://regex101.com/library/hjRLci or https://www.debuggex.com (to visually see it)
+    *  */
+    const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *-> *[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *; *[a-z][0-9]+( *\* *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm
+    return regex.test(str)
+}
+
+function validEquationsFormat(str) {
+    /**
+     * combines validEquation and just looks to see if there's an arrow in there between them
+     */
+        // check if it has only one occurance of '->'
+    const equations = str.split('\n')
+    for (const equation of equations) {
+        const theSplit = equation.split('->')
+        if (theSplit.length !== 2) {
+            return false;
+        }
+        const [leftSide, rightSide] = theSplit
+        if (!validEquation(leftSide) || !validEquation(rightSide))
+            return false;
+    }
+    return true;
+}
+
+//will be used by de antimonyFormSubmitHandler when it calls the FormData constructor
+function antimonyFormDataHandler(event) {
+    console.log('form data a dat fire');
+
+    //data cleansing a bit before checking validity and submitting
+
+    // or     const formData = e.originalEvent.formData; if this one doesn't work
+    const formData = event.formData;
+
+    formData.set('antimony-textarea', formData.get('antimony-textarea').trim());
+    formData.set('antimony-textarea', formData.get('antimony-textarea').replace(/ +/gm, ' ')); //delete extra spacing
+}
+
+function antimonyFormSubmitHandler() {
+    const antimony_code = document.forms['antimony_form']
+    const submitterButton = document.getElementById('antimonySubmitButton')
+
+    console.log('astea inainte sa dai formdata')
+    console.log(antimony_code)
+    const formData = new FormData(antimony_code, submitterButton);
+    console.log('astea dupa sa dai formdata')
+    console.log(formData.get('antimony-textarea'))
+
+    const code = formData.get('antimony-textarea').split('\n\n')[0]
+
+    if (validAntimonyCRNDefinition(code)) {
+        $('#format').val('antimony')
+        //it's safe to submit the form
+        return true;
+    }
+
+    if (validEquationsFormat(code)) {
+        $('#format').val('simple')
+        //it's safe to submit the form
+        return true;
+    }
+    document.getElementById('antimonyError').innerText = 'Neither antimony nor simple format valid'
+    console.log('NA DAT MATCHH')
+    //it's not safe to submit the form
+    return false;
+}
+
 // Add textbox and remove textbox
 $(document).ready(() => {
 
@@ -96,54 +172,14 @@ $(document).ready(() => {
         }
     });
     $("#reset_reaction_button").on("click", () => {
-        countEcuatii =1;
+        countEcuatii = 1;
         $("#textboxDiv").children().slice(0).remove();
         genTextBox(countEcuatii);
         updateFormReactCount(countEcuatii);
     });
 });
 
-let timeoutId;
-
-$('form input, form select').on('input propertychange change', () => {
-    console.log('Textarea Change');
-
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-        // Runs 1 second (1000 ms) after the last change    
-        saveToDB();
-    }, 1000);
-});
-
-function saveToDB() {
-    console.log('Saving to the db');
-    //form = genauto(),
-    // form = $('.textboxDiv');
-    form = $('.textbox');
-    //  form = $('.textbox').each(() => {
-    //          form += $(this).val() + "\n";
-    //      });
-    $.ajax({
-        url: "/echo/html/",
-        type: "POST",
-        data: form.serialize(), // serializes the form's elements.
-        beforeSend: (xhr) => {
-            // Let them know we are saving
-            $('.form-status-holder').html('Saving...');
-        },
-        success: (data) => {
-            let jqObj = jQuery(data); // You can get data returned from your ajax call here. ex. jqObj.find('.returned-data').html()
-            // Now show them we saved and when we did
-            let d = new Date();
-            $('.form-status-holder').html('Saved! Last: ' + d.toLocaleTimeString());
-        },
-    });
+function toggleForm() {
+    const form = document.getElementById('crnForm');
+    form.classList.toggle('open');
 }
-
-
-// This is just so we don't go anywhere
-// and still save if you submit the form
-// $('.contact-form').submit((e) => {
-//	saveToDB();
-//	e.preventDefault();
-// });
