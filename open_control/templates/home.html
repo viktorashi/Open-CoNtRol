@@ -36,87 +36,104 @@
         <!-- !PAGE CONTENT! -->
         <div class="w3-content" style="max-width:1500px">
 
-                <!-- Sidebar -->
-                <div class="sidebar">
-                    <div class="sidebar-section">File Input</div>
-                    <div class="button" onclick="alert('Upload CRN File')">Upload CRN File</div>
-                    <div class="button" onclick="toggleForm()">Write CRN</div>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">File Input</div>
+                <div class="button" onclick="alert('Upload CRN File')">Upload CRN File</div>
+                <div class="button" onclick="toggleForm()">Write CRN</div>
+            </div>
+
+            <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
+                <div class="content">
+
+                    Chemical reaction network theory is an area of applied mathematics
+                    that attempts to model the behavior of real-world chemical systems.
+                    Since its foundation in the 1960s, it has attracted a growing research community,
+                    mainly due to its applications in biochemistry and theoretical chemistry
                 </div>
 
-                <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
-                    <div class="content">
-
-                        Chemical reaction network theory is an area of applied mathematics
-                        that attempts to model the behavior of real-world chemical systems.
-                        Since its foundation in the 1960s, it has attracted a growing research community,
-                        mainly due to its applications in biochemistry and theoretical chemistry
-                    </div>
-
-                    <div class="content" style="padding-top:1%">
-                        A chemical reaction network (CRN) comprises a set of reactants, a set of products
-                        and a
-                        set of reactions. For example, the pair of combustion reactions:
-                    </div>
-                    <div class="content" style="padding-top:1%">
-
-                        2H<p style="font-size:9px; display:inline">2</p> + O<p
-                            style="font-size:9px; display:inline">2
-                    </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
-                        &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
-                            style="font-size:9px; display:inline">2</p>
-
-                        <p><a href="/antimony">Here</a> you can write <a
-                                href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
-                                target="_blank">Antimony</a> code if you're into that</p>
-
-                    </div>
+                <div class="content" style="padding-top:1%">
+                    A chemical reaction network (CRN) comprises a set of reactants, a set of products
+                    and a
+                    set of reactions. For example, the pair of combustion reactions:
                 </div>
+                <div class="content" style="padding-top:1%">
+
+                    2H<p style="font-size:9px; display:inline">2</p> + O<p
+                        style="font-size:9px; display:inline">2
+                </p> &rarr; 2H<p style="font-size:9px;display:inline">2</p>O<br>
+                    &nbsp;&nbsp;&nbsp;C + O<p style="font-size:9px; display:inline">2</p> &rarr; CO<p
+                        style="font-size:9px; display:inline">2</p>
+
+{#                    fai cnad dai pe "here" sa se deschida dropdownu ala #}
+                    <p><a onclick="toggleForm()">Here</a> you can write <a
+                            href="https://tellurium.readthedocs.io/en/latest/antimony.html#introduction-and-basics"
+                            target="_blank">Antimony</a> code if you're into that</p>
+
+                </div>
+            </div>
 
 
-                <!-- Dropdown Form Section -->
-                <div class="dropdown-form" id="crnForm">
+            <!-- Dropdown Form Section -->
+            <div class="dropdown-form" id="crnForm">
+                <form action="/save_reactii_antimony" method="post" name="antimony_form"
+                      onsubmit="return antimonyFormSubmitHandler()" onformdata="antimonyFormDataHandler(event)">
+
                     <h2>Write CRN</h2>
-                    <textarea placeholder="Enter CRN here..."></textarea>
-                    <button class="close-btn" onclick="toggleForm()">Close</button>
-                </div>
 
-                <div style="text-align: center;">
+                    <textarea required name="antimony-textarea" placeholder="2H2 + O2 -> 2H2O
+C + O2 -> CO2"></textarea>
 
-                    {# TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
-                    <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
-                    <button id="Remove" title="Remove last reaction"
-                            style="height: 44px; width: 44px;">–
-                    </button>
-                    <button id="reset_reaction_button" title="Reset all reactions"
-                            style="height: 44px; width: 44px;">--
-                    </button>
+                    <input id="format" type="hidden" name="format" required/>
 
-                    <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm" class="contact-form"
-                          method="post" onsubmit="return dropDownsFormSubmitHandler()"
-                          onformdata="dropDownsFormDataHandler()">
+                    <div style="position: relative; left: 50%;">
+                        <p id="antimonyError" class="error"></p>
+                        <p class="w3-padding-16">
+                            <button id="antimonySubmitButton" class="w3-button w3-black" type="submit">
+                                Get Numerical Analysis
+                            </button>
+                        </p>
+                    </div>
 
-                        <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+                </form>
+            </div>
 
-                        <div id="textboxDiv"></div>
+            <div style="text-align: center;">
 
-                        <div style="position: relative; left: 21%">
-                            <!--<p><b>Creare grafic personalizat.</b></p>-->
-                            <p id="dropDownsError" class="error"></p>
-                            <p class="w3-padding-16">
-                                <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
-                                    Get Numerical Analysis
-                                </button>
-                            </p>
+                {# TODO tine minte sa incerci sa pui cu url_for('save_reactii_dropdowns') #}
+                <button id="Add" title="Add new reaction" style="height: 44px; width: 44px;">+</button>
+                <button id="Remove" title="Remove last reaction"
+                        style="height: 44px; width: 44px;">–
+                </button>
+                <button id="reset_reaction_button" title="Reset all reactions"
+                        style="height: 44px; width: 44px;">--
+                </button>
 
-                        </div>
+                <form name="form" action="/save_reactii_dropdowns" id="dropDownsForm" class="contact-form"
+                      method="post" onsubmit="return dropDownsFormSubmitHandler()"
+                      onformdata="dropDownsFormDataHandler()">
+
+                    <input id="ecuatiiCount" type="hidden" value="f" name="ecuatiiCount" required/>
+
+                    <div id="textboxDiv"></div>
+
+                    <div style="position: relative; left: 21%">
+                        <!--<p><b>Creare grafic personalizat.</b></p>-->
+                        <p id="dropDownsError" class="error"></p>
+                        <p class="w3-padding-16">
+                            <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
+                                Get Numerical Analysis
+                            </button>
+                        </p>
+
+                    </div>
 
 
-                    </form>
-                </div>
+                </form>
+            </div>
 
 
-                <div class="form-status-holder"></div>
-
+            <div class="form-status-holder"></div>
 
 
             <!-- Footer -->

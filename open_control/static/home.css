@@ -64,6 +64,7 @@ textarea {
 
 a {
     color: cornflowerblue;
+    cursor:pointer ;
 }
 
 .material-symbols-outlined {
