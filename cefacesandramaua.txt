@@ -48,8 +48,6 @@
 
     dupa ce faci docker punete sa bagi niste teste, da trebuie din alea cap coada de mult se foloseste aplicatia frontend si ce se intampla pe backend cand se face reuqestu so idk honestly
 
-    de pus casuta in stanga (nustiu css)
-
     sa faci pe prima pagina sa te duca direct catre ce fel de graphic vrei dinaitne sa te dea la numerical analysis
 
     creed ca N-am facut pe asta??
@@ -61,9 +59,7 @@
 
 
     sa nu mai apara pagini de erori sa zica ce dastea sunt gresite si pe frontend si backend
-        pt asta doar schimbi environment in production
-
-    sa faci macar alea in 2d prima data like gen
+        pt asta doar schimbi environment in production (o sa fie singur cand ai dockeru dep prod)
 
     Gen sa ai cate un fisier salvat pentru fiecare session de user si poti sa le denoti cu ceva cod generat random pentru sesiunea aia care il pui append in numele fisierlui
 
@@ -72,19 +68,14 @@
     moduri de copiat, vrei sa fie in format maple sau octave sau cv
     poate si un file upload si in formatu ala sau in antimony adica cum se face normal
 
-
     al treile buton de pe primu UI da reset la taote fieldruile si face o singura ecuatie sa fie inapoi
     probabil poti sa faci innerhmtl = "" si dupa sa dai add la 1
-
-    la TSR sa poti sa selectezi ce specii vrei plotuite
 
     fa svg dsr graphu ala in loc de png
 
     si sa lasi numerical analysis sa apra pe fiecare grahpic adica de-antregu
 
     implenetneaza chestia de bifurcation diagram de la tellurium
-
-    fa burgeru ala sa fie doar un buton de home nu mai kktu ala de slide de sus
 
     sa vezi cum se pot face sa gasesti unde sunt oscilatiile bruh
 
@@ -111,8 +102,6 @@
 
 
     poate o baza de date de doamne ajuta
-
-    sa fac sa apara cumva pe prima pagina direct direct toate fisierele pe care le am eu ca asa nu are niciun rost sa pui mai intai omu sa completeze aia si dupa sa-i dai optiunile care au aparut inainte
 
     ########resurse sau exemple care sa te ajute la feateruri featureuri ##########
 
@@ -229,3 +218,8 @@ lmao test pt asta nou nuj
     da vad sa incerc daca pot sa fac eu cumva sa bagi intr-un fisier ala sa adaug niste parametrii si poate fac un PR la tellurium (sau road_runner, nu-mi dau seama sigur 100% cine e responsanbil sincer sau la cine as putea sa fac cel mai usor schimbari) sau poate chiar pygraphviz
     BUGGG::: nu poti sa pui numar de mai multe molecuule dintr-o specie: canda screii in antimony nu t-i le vede si din dropdowns iti da eroare, nu merge din niciuna
     de facut sa poti sa selectezi ce specii sa apara si la TSR
+    de pus casuta in stanga (nustiu css)
+    sa faci macar alea in 2d prima data like gen
+    la TSR sa poti sa selectezi ce specii vrei plotuite
+    fa burgeru ala sa fie doar un buton de home nu mai kktu ala de slide de sus
+    sa fac sa apara cumva pe prima pagina direct direct toate fisierele pe care le am eu ca asa nu are niciun rost sa pui mai intai omu sa completeze aia si dupa sa-i dai optiunile care au aparut inainte
