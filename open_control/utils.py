@@ -251,6 +251,7 @@ def save_crn2file(custom_format):
     the_file.close()
 
 
+# TODO introduci open reactions, n-o sa mai mearga asta
 def save_reactions_from_antimony_textarea_to_file(antimony_code):
     """
     The code comes in the format

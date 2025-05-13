@@ -97,6 +97,7 @@ def save_reactii_dropdowns():
     return redirect(url_for('numerical_analysis'))
 
 
+# TODO introduci open reactions, n-o sa mai mearga asta
 def get_numerical_analysis_save_to_session(antimony_code: str):
     """
     :return: Saves the data from the numerical analysis form to the current session
