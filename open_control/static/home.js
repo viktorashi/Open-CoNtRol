@@ -80,6 +80,10 @@ function dropDownsFormSubmitHandler() {
 function validEquation(str) {
     /*
     *	when in doubt, debug it in : https://regex101.com/library/pzO5MF or https://www.debuggex.com (so you can see it visually)
+    *   It checks, for example:
+    *       A + B
+    *       2H2 + O2
+    *       2H2O
     *  */
     const regex = /^\s*[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))*\s*$/gm;
     return regex.test(str);
@@ -88,6 +92,10 @@ function validEquation(str) {
 function validAntimonyCRNDefinition(str) {
     /*
     *	when in doubt, debug it in : https://regex101.com/library/hjRLci or https://www.debuggex.com (to visually see it)
+    *
+    *   It checks, for example:
+    *       2H2 + O2 -> 2H2O;  k1*H2*H2*O2
+    *       C + O2 -> CO2; k2*C*O2
     *  */
     const regex = /^[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *-> *[0-9]* *([a-zA-Z]+[0-9]*)+( *\+ *[0-9]*([a-zA-Z]{1,2}[0-9]*))* *; *[a-z][0-9]+( *\* *[0-9]*([a-zA-Z]{1,2}[0-9]*))*$/gm
     return regex.test(str)

@@ -255,10 +255,8 @@ def save_reactions_from_antimony_textarea_to_file(antimony_code):
     """
     The code comes in the format
         A + B-> B; k1*A*B
-        and then it gets saved in the format
+        and then it gets saved in our (simpler) format in / to save_crn_filepath_location
         A + B -> B
-
-        then it writes to save_crn_filepath_location our simpler format
 
     :param antimony_code:
         The Antimony code containing the reactions to be saved in the file.
@@ -521,7 +519,7 @@ def crn2antimony(filename: str):
     return tel
 
 
-def crn2antimony_definitions(filename: str, kcont=0, krates=None):
+def crn2antimony_definitions(kcont=0, krates=None):
     reactii_individuale = open(save_crn_filepath_location, 'r').readlines()
 
     krates = [] if krates is None else krates
