@@ -41,20 +41,20 @@ def save_reactii_antimony():
     :return:
     """
     code = request.form.get('antimony-textarea')
-    format = request.form.get('format')
+    eqs_format = request.form.get('format')
     print(code)
 
-    match format:
+    match eqs_format:
         case 'antimony':
             custom_format = save_reactions_from_antimony_textarea_to_file(code)
             get_numerical_analysis_save_to_session(code)
-            species, reacts = get_reaction_meta(
+            get_reaction_meta(
                 custom_format)  # this just saves specii to the session so ion even think we need to get its output
         case 'simple':
             code = code.split('\n')
             save_crn2file(code)
-            tellurium_definitions, _ = crn2antimony_definitions(save_crn_filepath_location)
-            # delete last two newline characters cuz it breaks for some reason
+            tellurium_definitions, _ = crn2antimony_definitions()
+            # delete last two newline characters cuz it breaks for some reason TODO: ar trb fct asta si in dataFormu din front-end direct
             tellurium_definitions = tellurium_definitions[:-2]
             get_numerical_analysis_save_to_session(tellurium_definitions)
         case _:
