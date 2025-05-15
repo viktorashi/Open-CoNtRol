@@ -131,6 +131,8 @@
         easily cel mai bun repo de mathjax ca iti da exmple si chestii https://github.com/mathjax/MathJax-demos-web?tab=readme-ov-file
         vezi ca are si screen reader automat mathjax pt accediblity asta e extra extra nice to have cam la W din MoSCoW
 
+ Exemple:
+1###################################1
         S0 -> KS1
         KS1 -> S2
         S2 + F -> FS2
@@ -156,6 +158,16 @@
         k3 = 2
         k4 = 0.1329759342
         k5 = 1
+2##################################2
+
+	K + S0 -> KS0
+	KS0 -> K + S0
+	KS0 -> K + S1
+	F + S1 -> FS1
+	FS1 -> F + S1
+	FS1 -> F + S0	
+
+	N-am exemplu de vreun initial condition sau cv, doar de network structure n shiz. 
 
         wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag
 
