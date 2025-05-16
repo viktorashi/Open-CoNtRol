@@ -14,6 +14,9 @@
 
      Exemple / exercitii / chestii de pus in aplicatie gen si sa le ai:
 1###################################1
+	
+d-asta mai simplu i guess sincer nu stiu deu nde vine asta ca nu are niciun Kinase vad
+
         S0 -> KS1
         KS1 -> S2
         S2 + F -> FS2
@@ -44,6 +47,8 @@
 	La toate urmatoarele n-am exemplu de vreun initial condition sau cv, doar de network structure n shiz.
 2##################################2
 
+primu exemplu ciclic fara bifurcatii
+
 	K + S0 -> KS0
 	KS0 -> K + S0
 	KS0 -> K + S1
@@ -54,6 +59,7 @@
 
 3##################################3
 
+al doilea exemplu ciclic fara bifurcatii
 
 S0 + K -> KS0
 KS0 -> S0 + K
