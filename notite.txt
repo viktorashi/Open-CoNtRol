@@ -158,6 +158,9 @@
         k3 = 2
         k4 = 0.1329759342
         k5 = 1
+
+#########################
+	La toate urmatoarele n-am exemplu de vreun initial condition sau cv, doar de network structure n shiz. 
 2##################################2
 
 	K + S0 -> KS0
@@ -167,8 +170,22 @@
 	FS1 -> F + S1
 	FS1 -> F + S0	
 
-	N-am exemplu de vreun initial condition sau cv, doar de network structure n shiz. 
 
+3##################################3
+
+
+S0 + K -> KS0
+KS0 -> S0 + K
+KS0 -> S1 + K
+S1 + K -> KS1
+KS1 -> S1 + K
+KS1 -> S2 + K
+
+S2 + F -> FS2 
+FS2 -> S2 + F
+FS2 -> S0 + F
+
+####################################
         wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag
 
     ######## gataaa resurse sau exemple care sa te ajute la feateruri ##########
