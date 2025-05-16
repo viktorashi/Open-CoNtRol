@@ -12,6 +12,62 @@
     S0 S1 sunt substrate adica fosfo
     2 enzime = K, F
 
+     Exemple / exercitii / chestii de pus in aplicatie gen si sa le ai:
+1###################################1
+        S0 -> KS1
+        KS1 -> S2
+        S2 + F -> FS2
+        FS2 -> F
+        F -> S0 + F
+
+        sau mai complet asa de antimony
+
+        S0 -> KS1; k1*S0
+        KS1 -> S2; k2*KS1
+        S2 + F -> FS2; k3*S2*F
+        FS2 -> F; k4*FS2
+        F -> S0 + F; k5*F
+
+        F = 0.874108
+        FS2 = 7.620157734
+        KS1 = 7.620157734
+        S0 = 7.270157734
+        S2 = 0.6000000000
+
+        k1 = 0.1329759342
+        k2 = 0.1329759342
+        k3 = 2
+        k4 = 0.1329759342
+        k5 = 1
+
+#########################
+	La toate urmatoarele n-am exemplu de vreun initial condition sau cv, doar de network structure n shiz.
+2##################################2
+
+	K + S0 -> KS0
+	KS0 -> K + S0
+	KS0 -> K + S1
+	F + S1 -> FS1
+	FS1 -> F + S1
+	FS1 -> F + S0
+
+
+3##################################3
+
+
+S0 + K -> KS0
+KS0 -> S0 + K
+KS0 -> S1 + K
+S1 + K -> KS1
+KS1 -> S1 + K
+KS1 -> S2 + K
+S2 + F -> FS2
+FS2 -> S2 + F
+FS2 -> S0 + F
+
+####################################
+
+
 
     ########### ce citinguri sa faci ###########
         SBMLDIAgram
@@ -43,6 +99,8 @@
 ############ gata academic ##############
 
 ############potentiale buguri cu idei de feateruri #############
+
+    PR la tellurium sa faci o functie care sa dea retreive eficient la left, sau right stoichiometric matrix, deocamdata poti doar sa le pui un issue acolo sa le comentezi tbh
 
     poti sa faci sa nu mai apara kktu ala de fisier din care se  citeste
 
@@ -131,60 +189,6 @@
         easily cel mai bun repo de mathjax ca iti da exmple si chestii https://github.com/mathjax/MathJax-demos-web?tab=readme-ov-file
         vezi ca are si screen reader automat mathjax pt accediblity asta e extra extra nice to have cam la W din MoSCoW
 
- Exemple:
-1###################################1
-        S0 -> KS1
-        KS1 -> S2
-        S2 + F -> FS2
-        FS2 -> F
-        F -> S0 + F
-
-        sau mai complet asa de antimony
-
-        S0 -> KS1; k1*S0
-        KS1 -> S2; k2*KS1
-        S2 + F -> FS2; k3*S2*F
-        FS2 -> F; k4*FS2
-        F -> S0 + F; k5*F
-
-        F = 0.874108
-        FS2 = 7.620157734
-        KS1 = 7.620157734
-        S0 = 7.270157734
-        S2 = 0.6000000000
-
-        k1 = 0.1329759342
-        k2 = 0.1329759342
-        k3 = 2
-        k4 = 0.1329759342
-        k5 = 1
-
-#########################
-	La toate urmatoarele n-am exemplu de vreun initial condition sau cv, doar de network structure n shiz. 
-2##################################2
-
-	K + S0 -> KS0
-	KS0 -> K + S0
-	KS0 -> K + S1
-	F + S1 -> FS1
-	FS1 -> F + S1
-	FS1 -> F + S0	
-
-
-3##################################3
-
-
-S0 + K -> KS0
-KS0 -> S0 + K
-KS0 -> S1 + K
-S1 + K -> KS1
-KS1 -> S1 + K
-KS1 -> S2 + K
-S2 + F -> FS2 
-FS2 -> S2 + F
-FS2 -> S0 + F
-
-####################################
         wait creca s poate doar sa pun telluriumu la intr-un <math></math> tag
 
     ######## gataaa resurse sau exemple care sa te ajute la feateruri ##########
