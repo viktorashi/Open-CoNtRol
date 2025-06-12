@@ -1,0 +1,39 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;
+\f3\fnil\fcharset0 .SFNS-Regular_wdth_opsz110000_GRAD_wght1F40000;}
+{\colortbl;\red255\green255\blue255;\red236\green244\blue251;\red12\green14\blue18;\red0\green0\blue0;
+\red127\green134\blue144;\red12\green14\blue18;}
+{\*\expandedcolortbl;;\cssrgb\c94118\c96471\c98824;\cssrgb\c5098\c6667\c9020;\cssrgb\c0\c0\c0;
+\cssrgb\c56863\c59608\c63137;\cssrgb\c5098\c6667\c9020;}
+\paperw5952\paperh4251\margl1440\margr1440\vieww19060\viewh11140\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs34 \cf0 pip install --global-option=build_ext --global-option="/opt/homebrew/Cellar/graphviz/12.2.1/include"  --global-option="/opt/homebrew/Cellar/graphviz/12.2.1/lib" pygraphviz\
+\
+\
+pip install --install-option="--include-path=/opt/homebrew/Cellar/graphviz/12.2.1/include/graphviz"  --install-option="--library-path=/opt/homebrew/Cellar/graphviz/12.2.1/lib/graphviz" pygraphviz\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 pip install --config-settings=\'84--include-path=/opt/homebrew/Cellar/graphviz/12.2.1/include/graphviz"  --config-settings=\'84--library-path=/opt/homebrew/Cellar/graphviz/12.2.1/lib/graphviz" pygraphviz\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+/opt/homebrew/Cellar/graphviz/12.2.1/include/graphviz> ln -s . graphviz\
+\
+sudo pip install pygraphviz --global-option=build_ext --global-option="-I/opt/homebrew/Cellar/graphviz/12.2.1/include/graphviz\'84\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+nvm era totu cu\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs23\fsmilli11900 \cf5 \cb6 \outl0\strokewidth0 \strokec5 pip install --no-cache-dir \\\
+  --config-settings="--global-option=build_ext" \\\
+  --config-settings="--global-option=-I$(brew --prefix graphviz)/include/" \\\
+  --config-settings="--global-option=-L$(brew --prefix graphviz)/lib/" \\\
+  pygraphviz\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs28 \cf5 \cb1 \
+}
