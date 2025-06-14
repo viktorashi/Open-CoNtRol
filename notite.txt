@@ -169,22 +169,6 @@ FS2 -> S0 + F
 
     ########resurse sau exemple care sa te ajute la feateruri featureuri ##########
 
-        un meniu pe dreapta unde sa aopara direct ce fel de simulare vrei de dinainte sa dai get numerical analysis
-        primu dropdown
-
-        analyze CRN
-        time series representation
-        phase portrait
-        DSR graph
-
-        mai scurticica casuta ai din dreapta
-
-        fa sa aparat toate alea de numerical analysis sub fiecare graph
-
-
-        sa dispara linia aia nu siut ce are
-
-        textul ala de pus mai sus
 
         folosesti https://www.mathjax.org/ pt generat sa arate frumix
         il explica asta aici: https://shantoroy.com/latex/matrix-labeling-in-latex

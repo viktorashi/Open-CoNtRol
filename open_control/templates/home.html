@@ -43,18 +43,6 @@
                 <div class="button" onclick="toggleForm()">Write CRN</div>
             </div>
 
-{#                        sidebar pe dreapta#}
-            <div class="right-sidebar">
-                <label for="analysis-type"></label>
-                <select multiple name="analysis-type" id="analysis-type">
-                    <option value="1">Numerical Analysis</option>
-                    <option value="2">Time Series</option>
-                    <option value="3">Phase Portait</option>
-                    <option value="4">DSR Graph</option>
-                </select>
-            </div>
-
-
             <div style="width: 60%; left: 21%; padding-top:2%; position: relative">
                 <div class="content">
 
@@ -102,7 +90,7 @@ C + O2 -> CO2"></textarea>
                         <p id="antimonyError" class="error"></p>
                         <p class="w3-padding-16">
                             <button id="antimonySubmitButton" class="w3-button w3-black" type="submit">
-                                Get Results
+                                Get Numerical Analysis
                             </button>
                         </p>
                     </div>
@@ -134,7 +122,7 @@ C + O2 -> CO2"></textarea>
                         <p id="dropDownsError" class="error"></p>
                         <p class="w3-padding-16">
                             <button id="submitDropdownsButton" class="w3-button w3-black" type="submit">
-                                Get Results
+                                Get Numerical Analysis
                             </button>
                         </p>
 
@@ -146,6 +134,8 @@ C + O2 -> CO2"></textarea>
 
 
             <div class="form-status-holder"></div>
+
+
             <!-- Footer -->
             <footer class="w3-container w3-padding-54 w3-light-grey w3-center w3-opacity w3-xlarge"
                     style="/*!margin-top:128px;  margin-left:-20px;*/ position:absolute;/*! bottom:0;*/ width:100%; padding-top:2%; padding-bottom:2%">
@@ -153,10 +143,10 @@ C + O2 -> CO2"></textarea>
                 <p class="w3-medium">2024@ <a target="_blank" class="w3-hover-text-green"></a></p>
 
             </footer>
+            <script type="application/javascript" src="../static/home.js"></script>
         </div>
     </div>
 </div>
-<script type="application/javascript" src="../static/home.js"></script>
 </body>
 
 </html>
