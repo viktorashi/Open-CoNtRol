@@ -344,7 +344,7 @@ def get_stoichiometry_matrix_and_rank(antimony_code: str) -> list[2]:
     except RuntimeError:
         # k1, k2 ... params need to be initialised for it to work, so we'll just initialise them all with 0
         param_initialisation = ''
-        # double newline means the ned of a section in my format, the first section is the declaration part, and then we see how many lines are in that
+        # double newline means the end of a section in my format, the first section is the declaration part, and then we see how many lines are in that
         no_declaration_lines = len(antimony_code.split('\n\n')[0].split('\n'))
 
         antimony_code_with_init = antimony_code + '\r\n'
@@ -486,7 +486,7 @@ def crn2antimony(filename: str):
 
     krates = []  # lista cu vitezele de reactie
 
-    tel, specii = crn2antimony_definitions(filename, 0, krates)
+    tel, specii = crn2antimony_definitions(0, krates)
     kcont = len(krates)
 
     # THE VALUE FOR THE CONSTANTS REACTIONS!!!

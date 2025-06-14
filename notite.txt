@@ -31,11 +31,13 @@ d-asta mai simplu i guess sincer nu stiu deu nde vine asta ca nu are niciun Kina
         FS2 -> F; k4*FS2
         F -> S0 + F; k5*F
 
+
         F = 0.874108
         FS2 = 7.620157734
         KS1 = 7.620157734
         S0 = 7.270157734
         S2 = 0.6000000000
+
 
         k1 = 0.1329759342
         k2 = 0.1329759342
